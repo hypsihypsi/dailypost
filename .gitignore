@@ -1,0 +1,15 @@
+# credentials
+credentials.json
+token.json
+instagram_cookies.txt
+*.env
+
+# output (large files, not needed on GitHub)
+output/
+references/video_to_recreate/
+references/img_to_recreate/done/
+
+# system
+.DS_Store
+__pycache__/
+*.pyc

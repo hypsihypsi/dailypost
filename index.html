@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Daily Post</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0a0a;--surface:#111;--card:#161616;--border:#1e1e1e;--border2:#2a2a2a;
+  --text:#f0f0f0;--muted:#666;--muted2:#444;
+  --gold:#c9a96e;--gold-bg:rgba(201,169,110,0.1);--gold-border:rgba(201,169,110,0.2);
+  --green:#4caf7d;--green-bg:rgba(76,175,125,0.1);--green-border:rgba(76,175,125,0.2);
+  --blue:#6495ed;--blue-bg:rgba(100,149,237,0.1);--blue-border:rgba(100,149,237,0.2);
+  --red:#e05c5c;--red-bg:rgba(224,92,92,0.12);
+  --ig:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding-bottom:80px;overflow-x:hidden}
+
+/* NAV */
+.nav{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-btn{flex:1;padding:12px 4px;border:none;background:none;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;transition:.15s}
+.nav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.nav-btn i{display:block;font-size:18px;margin-bottom:3px}
+
+/* PANELS */
+.panel{display:none;padding:16px}
+.panel.active{display:block}
+
+/* HEADER */
+.header{padding:14px 16px 0;background:var(--surface);border-bottom:1px solid var(--border)}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.header-date{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.header-title{font-size:19px;font-weight:300;color:var(--text);margin-bottom:1px}
+.header-sub{font-size:10px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
+.header-badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;margin-left:10px}
+.streak-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(201,169,110,.12);color:var(--gold);font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;letter-spacing:.03em}
+.progress-label{font-size:10px;color:var(--muted2);text-align:right}
+.header-progress{height:3px;background:var(--border2)}
+.header-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e8c07e);transition:width .4s}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.card-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* PHOTO */
+.photo-wrap{width:100%;border-radius:10px;overflow:hidden;background:#1a1a1a;margin-bottom:12px}
+.photo-wrap img{width:100%;display:block;object-fit:cover}
+.photo-wrap.feed{aspect-ratio:4/5}
+.photo-wrap.story{aspect-ratio:9/16}
+.photo-no-img{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:80px;font-size:12px;color:var(--muted2);font-style:italic;padding:20px;text-align:center}
+
+/* TEXT + CHAR COUNT */
+.textbox{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:14px;line-height:1.65;font-style:italic;color:#ddd;margin-bottom:4px}
+.textbox.story-cap{color:var(--muted);font-size:13px;border-style:dashed}
+.tags{font-size:11px;color:var(--gold);opacity:.55;margin-bottom:6px;line-height:1.9}
+.char-count{font-size:10px;color:var(--muted2);text-align:right;margin-bottom:10px}
+
+/* BUTTONS */
+.btn{width:100%;padding:11px 16px;border-radius:10px;border:none;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-bottom:7px;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;text-decoration:none}
+.btn i{font-size:15px}
+.btn:active{transform:scale(.97);opacity:.82}
+.btn-gold{background:var(--gold);color:#0a0a0a}
+.btn-outline{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}
+.btn-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.btn-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.btn-ig{background:var(--ig);color:#fff}
+.btn-muted{background:rgba(255,255,255,.03);color:var(--muted);border:1px solid var(--border2);font-size:10px}
+.btn-muted.notif-on{color:var(--gold);border-color:var(--gold-border);background:var(--gold-bg)}
+.btn-row{display:flex;gap:7px;margin-bottom:7px}
+.btn-row .btn{margin-bottom:0;flex:1}
+a.btn{box-sizing:border-box}
+
+/* POSTED + TIME */
+.posted-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.time-row{display:flex;align-items:center;gap:7px;margin-bottom:12px;flex-wrap:wrap}
+.time-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,169,110,.08);color:var(--gold);font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:.04em}
+.cd-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px}
+.cd-soon{background:var(--red-bg);color:var(--red)}
+.cd-ok{background:var(--green-bg);color:var(--green)}
+.cd-now{background:var(--gold-bg);color:var(--gold)}
+
+/* FILE LABEL */
+.file-label{font-size:11px;color:var(--muted2);font-family:monospace;margin-bottom:10px;letter-spacing:.02em}
+
+/* STORY ITEMS */
+.story-item{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.story-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.story-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.story-num{font-size:9px;color:var(--muted2);font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.copy-sm{background:none;border:1px solid var(--border2);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:.15s}
+.copy-sm:active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
+.open-link{display:block;text-align:center;font-size:10px;color:var(--blue);padding:5px 0;text-decoration:none}
+
+/* LOCK */
+.lock-banner{background:rgba(201,169,110,.05);border:1px solid var(--gold-border);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+.lock-banner i{font-size:18px;color:var(--gold);flex-shrink:0;margin-top:1px}
+.lock-banner-text{font-size:12px;color:var(--muted);line-height:1.5}
+.lock-banner-text b{color:var(--gold)}
+
+/* NEXT UP */
+.next-up{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:12px;transition:.15s}
+.next-up:active{background:var(--gold-bg);border-color:var(--gold-border)}
+.next-up-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--border2)}
+.next-up-tag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:2px}
+.next-up-name{font-size:13px;color:var(--text)}
+.next-up-time{font-size:11px;color:var(--gold);margin-top:2px}
+.next-up-arr{margin-left:auto;color:var(--muted2);font-size:18px;flex-shrink:0}
+
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-title{font-size:13px;font-weight:600;color:var(--text)}
+.cal-nav{background:none;border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.15s}
+.cal-nav:active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.cal-dow{font-size:9px;color:var(--muted2);text-align:center;font-weight:600;padding:3px 0}
+.cal-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:.15s;flex-direction:column;gap:2px}
+.cal-day.empty,.cal-day.grey{cursor:default;color:var(--muted2);opacity:.35}
+.cal-day.today{border-color:var(--gold);color:var(--gold);font-weight:600}
+.cal-day.posted{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.cal-day.scheduled{background:rgba(255,255,255,.025);color:var(--muted)}
+.cal-day.active-day{background:var(--gold);color:#0a0a0a;font-weight:700}
+.cal-dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.65}
+.cal-legend{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+.cal-legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
+.cal-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center}
+.stat-n{font-size:24px;font-weight:300;line-height:1}
+.stat-n.gold{color:var(--gold)}
+.stat-n.green{color:var(--green)}
+.stat-lbl{font-size:9px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;font-weight:600}
+
+/* PROGRESS BAR */
+.prog-bar{background:var(--border);border-radius:4px;height:5px;overflow:hidden;margin-bottom:14px}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--green),#6ddfaa);transition:.3s}
+
+/* BROWSE */
+.browse-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.browse-nav-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.15s;flex-shrink:0}
+.browse-nav-btn:disabled{opacity:.22;cursor:default}
+.browse-nav-btn:not(:disabled):active{background:var(--gold-bg);color:var(--gold)}
+.browse-mid{text-align:center}
+.browse-label{font-size:13px;color:var(--text);font-weight:500}
+.browse-sublabel{font-size:10px;color:var(--muted2);margin-top:1px}
+.week-tabs{display:flex;gap:6px;margin-bottom:14px}
+.week-tab{flex:1;padding:8px 6px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:.15s}
+.week-tab.active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
+
+/* REELS */
+.reel-search{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:10px;padding:11px 14px 11px 38px;font-size:13px;color:var(--text);margin-bottom:12px;outline:none;font-family:inherit;-webkit-appearance:none}
+.reel-search::placeholder{color:var(--muted2)}
+.reel-search:focus{border-color:var(--gold-border);background:rgba(201,169,110,.04)}
+.reel-search-wrap{position:relative;margin-bottom:12px}
+.reel-search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:16px;pointer-events:none}
+.reel-search-wrap .reel-search{margin-bottom:0}
+.reel-item{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;width:100%;text-align:left;transition:.15s}
+.reel-item:active{background:var(--green-bg);border-color:var(--green-border)}
+.reel-text{font-size:14px;font-style:italic;color:#ddd;flex:1}
+.reel-icon{color:var(--muted2);margin-left:12px;font-size:16px;flex-shrink:0}
+.reel-empty{text-align:center;padding:24px;color:var(--muted2);font-size:13px;font-style:italic}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1e1e1e;color:var(--text);border:1px solid var(--border2);padding:10px 20px;border-radius:20px;font-size:12px;font-weight:600;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap;display:flex;align-items:center;gap:8px;max-width:90vw}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.t-green{background:var(--green);color:#0a0a0a;border:none}
+.toast-icon{font-size:15px;flex-shrink:0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="header-date" id="hDate"></div>
+      <div class="header-title" id="hTitle">Daily Post</div>
+      <div class="header-sub" id="hSub"></div>
+    </div>
+    <div class="header-badges" id="hBadges"></div>
+  </div>
+  <div class="header-progress"><div class="header-progress-fill" id="hProgress" style="width:0%"></div></div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showPanel('today',this)"><i class="ti ti-sparkles"></i>Today</button>
+  <button class="nav-btn" onclick="showPanel('calendar',this)"><i class="ti ti-calendar"></i>Calendar</button>
+  <button class="nav-btn" onclick="showPanel('reels',this)"><i class="ti ti-brand-instagram"></i>Reels</button>
+  <button class="nav-btn" onclick="showPanel('browse',this)"><i class="ti ti-layout-list"></i>Browse</button>
+</div>
+
+<div class="panel active" id="panel-today"><div id="today-content"></div></div>
+
+<div class="panel" id="panel-calendar"><div id="cal-content"></div></div>
+
+<div class="panel" id="panel-reels">
+  <div class="reel-search-wrap">
+    <i class="ti ti-search"></i>
+    <input class="reel-search" id="reelSearch" placeholder="Search captions..." oninput="filterReels(this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
+  </div>
+  <div class="card">
+    <div class="card-label">Lifestyle reel</div>
+    <div id="lifestyle-list"></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Thirsttrap pool</div>
+    <div style="text-align:center;padding:20px;color:var(--muted2);font-size:13px;font-style:italic">Coming soon — generate first batch 🔒</div>
+  </div>
+</div>
+
+<div class="panel" id="panel-browse">
+  <div class="browse-top">
+    <button class="browse-nav-btn" id="prevBtn" onclick="changeDay(-1)"><i class="ti ti-chevron-left"></i></button>
+    <div class="browse-mid">
+      <div class="browse-label" id="dayLabel">Day 1 of 14</div>
+      <div class="browse-sublabel" id="dayWeekLabel"></div>
+    </div>
+    <button class="browse-nav-btn" id="nextBtn" onclick="changeDay(1)"><i class="ti ti-chevron-right"></i></button>
+  </div>
+  <div class="week-tabs">
+    <button class="week-tab active" id="wt1" onclick="jumpToWeek(1)">Week 1 — Home</button>
+    <button class="week-tab" id="wt2" onclick="jumpToWeek(2)">Week 2 — Trip</button>
+  </div>
+  <div id="browse-content"></div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-check toast-icon" id="toastIcon"></i><span id="toastMsg">Copied</span></div>
+
+<script>
+var DAYS=[
+null,
+{week:"Week 1 — Home & City",file:"livingroom_sofa01",feedId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx",time:"18:00",cap:"sundays should be illegal for being this good ☁️",tags:"#sundayvibes #softlife #cozyhome #quietluxury",stories:[{cap:"doing absolutely nothing and somehow it's the best day of the week",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"cozy sunday, no plans, no people",photoId:"1hQpB4YiNmH7tzV50SlYcLExNlA3qrvDP"},{cap:"the kind of day you don't want to end",photoId:"1-Qjf1_xLcdvjJRHYAQSVXRuYLJYuZFiX"}],reel:"soft hours only 🕯️"},
+{week:"Week 1 — Home & City",file:"bedroom_mirror01",feedId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT",time:"18:00",cap:"mirror check before I convince myself to go out 🪞",tags:"#mirrorselfie #ootd #casualstyle #everydayaesthetic",stories:[{cap:"staying in won. again.",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"talked myself out of going out in 0.3 seconds",photoId:"1sGVuwNyjazp7C36xwEH223n6a_bolIB7"},{cap:"the mirror always tells the truth",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"}],reel:"mornings hit different lately"},
+{week:"Week 1 — Home & City",file:"cafe_bench01",feedId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx",time:"12:00",cap:"same girl, different moods.\npick your favourite 👇",tags:"#carousel #moodboard #everydayaesthetic #softlife",stories:[{cap:"which one is you?",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"swipe and pick your mood",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"mood board, but make it me",photoId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn"}],reel:"no plans, just vibes"},
+{week:"Week 1 — Home & City",file:"cafe_terrace01",feedId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb",time:"12:00",cap:"iced coffee and nowhere to be.\nthis is the dream, right?",tags:"#cafestyle #parisianvibes #slowmorning #quietluxury",stories:[{cap:"third coffee today. no notes.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"slow morning, no alarm, no rush",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"the kind of tuesday that feels like a saturday",photoId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th"}],reel:"the camera found me first"},
+{week:"Week 1 — Home & City",file:"night_crouch01",feedId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H",time:"20:00",cap:"friday energy, finally 🖤",tags:"#nightout #streetstyle #fridayvibes #citynight",stories:[{cap:"leaving the house feels like a personality trait at this point",photoId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H"},{cap:"friday night and she's actually going out",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"city nights hit different",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"unbothered szn"},
+{week:"Week 1 — Home & City",file:"floor_selfie01",feedId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt",time:"11:00",cap:"sat on the floor and somehow ended up taking 47 photos",tags:"#mirrorselfie #saturdaymorning #casualfit #homestyle",stories:[{cap:"the lighting said yes",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"},{cap:"saturday morning and nowhere to be",photoId:"1-hFeUPUNO0szifF2aB1eeFT2o7gifSUG"},{cap:"home is the best studio",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"she woke up like this 🤍"},
+{week:"Week 1 — Home & City",file:"bedroom_glasses01",feedId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG",time:"16:00",cap:"glasses on, world off 📖",tags:"#sundayreset #homebody #softlife #quietafternoon",stories:[{cap:"currently: not available",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"},{cap:"sunday reset, do not disturb",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"},{cap:"glasses on means I'm serious about doing nothing",photoId:"1mMCA1GueQyCfuGBHuKn8Fvgve4gINbpz"}],reel:"staying in was the right call"},
+{week:"Week 2 — The Trip",file:"airport_coffee01",feedId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s",time:"18:00",cap:"airport coffee hits different when you don't know where you're going next ✈️",tags:"#airportstyle #travelaesthetic #jetset #wanderlust",stories:[{cap:"boarding soon. current mood: chaotic but cute",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"carry-on only, good vibes only",photoId:"1rU3H2JlLUPXd8Ngo-L-CoRdvMkKWUGUU"},{cap:"airport coffee is its own category",photoId:"1XVhOSrdJeGXJU59eLfSFgFmKZ-7HaBNi"}],reel:"quiet confidence is the loudest thing in the room"},
+{week:"Week 2 — The Trip",file:"airport_coffee02",feedId:"1rU3H2JlLUPXd8Ngo-L-CoRdvMkKWUGUU",time:"18:00",cap:"flight delayed. I ordered another one. no regrets.",tags:"#travelgirl #airportvibes #slowtravel #casualstyle",stories:[{cap:"gate C44. send help (or snacks)",photoId:"1rU3H2JlLUPXd8Ngo-L-CoRdvMkKWUGUU"},{cap:"flight delayed. she ordered another coffee.",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"traveling teaches you patience. or coffee.",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"}],reel:"not looking for attention, it just finds me"},
+{week:"Week 2 — The Trip",file:"paris_balcony01",feedId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO",time:"12:00",cap:"woke up and remembered I'm in Paris.\nnot bad. ☕",tags:"#paris #parisianlife #travelstyle #quietluxury",stories:[{cap:"the balcony. the coffee. the croissant. she's healing.",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris mornings are a different category",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"woke up in paris, going back to sleep in paris",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"}],reel:"she's in her soft era 🌙"},
+{week:"Week 2 — The Trip",file:"paris_crossing01",feedId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R",time:"12:00",cap:"Paris always has a way of making you feel like the main character 🥐",tags:"#paris #streetstyle #europeanvibes #travelaesthetic",stories:[{cap:"got lost for 2 hours. found the best boulangerie. worth it.",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"paris streets and no agenda",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"every corner in paris looks like a photoshoot",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"}],reel:"soft hours only 🕯️"},
+{week:"Week 2 — The Trip",file:"beach_coconut01",feedId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC",time:"18:00",cap:"from Paris to the beach in 48 hours.\nshe contains multitudes. 🥥",tags:"#beachvibes #islandgirl #summeraesthetic #slowlife",stories:[{cap:"current location: not coming back",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"croissants yesterday. coconuts today.",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"the plot twist nobody saw coming",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"}],reel:"mornings hit different lately"},
+{week:"Week 2 — The Trip",file:"beach_lounger01",feedId:"1CN4BwdZZ7spCD8PUoBYHpWwQeBhRYWW5",time:"12:00",cap:"do not disturb.\nI'm on island time now 🌊",tags:"#beachday #summervibes #islandlife #travelgirl",stories:[{cap:"phone on silent. sunscreen on. perfect.",photoId:"1CN4BwdZZ7spCD8PUoBYHpWwQeBhRYWW5"},{cap:"island time means: no time",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"},{cap:"she's fully offline and fully okay with it",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"}],reel:"no plans, just vibes"},
+{week:"Week 2 — The Trip",file:"beach_lounger02",feedId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs",time:"16:00",cap:"last day here and I already know I'm not ready to leave 🌅",tags:"#beachlife #sunsetvibes #travelstyle #goodbyeparadise",stories:[{cap:"packed my bag. unpacked it. packed it again.",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"},{cap:"last sunset here and I'm pretending it's not",photoId:"1CN4BwdZZ7spCD8PUoBYHpWwQeBhRYWW5"},{cap:"one more day. she said for the third time.",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"}],reel:"the camera found me first"}
+];
+
+var LIFESTYLE_REELS=["soft hours only 🕯️","mornings hit different lately","no plans, just vibes","the camera found me first","unbothered szn","quiet confidence is the loudest thing in the room","she woke up like this 🤍","staying in was the right call","not looking for attention, it just finds me","she's in her soft era 🌙"];
+
+var START=new Date('2026-06-09');
+var browseDayNum=1;
+var calYear=new Date().getFullYear();
+var calMonth=new Date().getMonth();
+
+// ── STORAGE ──────────────────────────────────────────────
+function getPosted(){try{return JSON.parse(localStorage.getItem('dp_posted')||'{}')}catch(e){return{}}}
+function savePosted(p){localStorage.setItem('dp_posted',JSON.stringify(p))}
+function dayKey(n){return'day_'+n}
+function isPosted(k){var p=getPosted()[k];return!!(p&&(p===true||p.v))}
+function getPostedAt(k){var p=getPosted()[k];return(p&&p.at)?new Date(p.at):null}
+
+// ── DAY LOGIC ────────────────────────────────────────────
+function getCurrentDay(){
+  var t=new Date();t.setHours(0,0,0,0);
+  var s=new Date(START);s.setHours(0,0,0,0);
+  var d=Math.floor((t-s)/86400000)+1;
+  if(d<1)return 1;
+  return((d-1)%14)+1;
+}
+function getActiveDay(){
+  var cur=getCurrentDay();
+  for(var i=1;i<=cur;i++){if(!isPosted(dayKey(i)))return i}
+  return cur;
+}
+function getTotalPosted(){
+  var p=getPosted(),n=0;
+  for(var k in p){if(isPosted(k))n++}
+  return n;
+}
+function getStreak(){
+  var active=getActiveDay(),streak=0;
+  for(var i=active-1;i>=1;i--){if(isPosted(dayKey(i)))streak++;else break}
+  return streak;
+}
+
+// ── CLIPBOARD + HAPTIC ───────────────────────────────────
+function vibrate(){try{navigator.vibrate&&navigator.vibrate(28)}catch(e){}}
+
+function copyText(text,label,green){
+  var ok=function(){showToast(label||'Copied',green);vibrate()};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(ok).catch(function(){fbCopy(text,ok)});
+  }else{fbCopy(text,ok)}
+}
+function fbCopy(text,cb){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.cssText='position:fixed;opacity:0;top:0;left:0;pointer-events:none';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');cb&&cb()}catch(e){showToast('Long-press to copy')}
+  document.body.removeChild(ta);
+}
+
+// Day copy actions — no escaping needed, uses DAYS[] directly
+function copyDay(n,what){
+  var d=DAYS[n];if(!d)return;
+  if(what==='all')copyText(d.cap+'\n\n'+d.tags,'Caption + hashtags copied ✓',true);
+  else if(what==='cap')copyText(d.cap,'Caption copied');
+  else if(what==='tags')copyText(d.tags,'Hashtags copied');
+  else if(what==='reel')copyText(d.reel,'Reel caption copied');
+}
+function copyStory(n,i){copyText(DAYS[n].stories[i].cap,'Story copied')}
+function openDrive(n){window.open('https://drive.google.com/file/d/'+DAYS[n].feedId+'/view','_blank')}
+function openStoryDrive(n,i){window.open('https://drive.google.com/file/d/'+DAYS[n].stories[i].photoId+'/view','_blank')}
+function shareToIG(n){
+  var d=DAYS[n];
+  copyText(d.cap+'\n\n'+d.tags,'Caption copied — save photo then post 📸');
+  setTimeout(function(){window.open('https://drive.google.com/file/d/'+d.feedId+'/view','_blank')},350);
+}
+function shareStoryToIG(n,i){
+  var s=DAYS[n].stories[i];
+  copyText(s.cap,'Story copied — open Drive to save',false);
+  setTimeout(function(){window.open('https://drive.google.com/file/d/'+s.photoId+'/view','_blank')},350);
+}
+function copyReel(i){copyText(LIFESTYLE_REELS[i],'Copied')}
+
+function thumb(id){return'https://drive.google.com/thumbnail?id='+id+'&sz=w600'}
+
+// ── COUNTDOWN ────────────────────────────────────────────
+function getCountdown(timeStr){
+  var p=timeStr.split(':');
+  var t=new Date();t.setHours(+p[0],+p[1],0,0);
+  var diff=t-new Date();
+  if(diff<0){var m2=Math.floor(-diff/60000);return{past:true,mins:m2}}
+  var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000);
+  return{past:false,h:h,m:m,mins:Math.floor(diff/60000)}
+}
+function cdHTML(timeStr,dayNum){
+  if(isPosted(dayKey(dayNum)))return'';
+  var c=getCountdown(timeStr);
+  if(c.past){
+    if(c.mins<180)return'<span class="cd-badge cd-now"><i class="ti ti-clock-hour-4" style="font-size:12px"></i>Post now</span>';
+    return'';
+  }
+  var label=c.h+'h '+c.m+'m';
+  if(c.mins<120)return'<span class="cd-badge cd-soon"><i class="ti ti-clock" style="font-size:12px"></i>'+label+'</span>';
+  return'<span class="cd-badge cd-ok"><i class="ti ti-clock" style="font-size:12px"></i>'+label+'</span>';
+}
+
+// ── NOTIFICATIONS ────────────────────────────────────────
+function notifKey(n){return'dp_notif_'+n}
+function hasNotif(n){return!!localStorage.getItem(notifKey(n))}
+function requestNotif(n){
+  if(!('Notification' in window)){showToast('Not supported');return}
+  Notification.requestPermission().then(function(p){
+    if(p==='granted'){
+      scheduleNotif(DAYS[n].time,n);
+      localStorage.setItem(notifKey(n),DAYS[n].time);
+      showToast('Reminder set for '+DAYS[n].time+' ✓');
+      document.getElementById('notifBtn'+n)&&renderToday();
+    }else{showToast('Enable notifications in Settings')}
+  });
+}
+function scheduleNotif(timeStr,n){
+  var p=timeStr.split(':'),target=new Date();
+  target.setHours(+p[0],+p[1],0,0);
+  if(target<=new Date())target.setDate(target.getDate()+1);
+  setTimeout(function(){
+    if(Notification.permission==='granted'&&!isPosted(dayKey(n))){
+      new Notification('Time to post 📸',{body:'Day '+n+' — open Daily Post'});
+    }
+  },target-new Date());
+}
+function reScheduleAll(){
+  if(Notification.permission!=='granted')return;
+  for(var n=1;n<=14;n++){
+    var t=localStorage.getItem(notifKey(n));
+    if(t&&!isPosted(dayKey(n)))scheduleNotif(t,n);
+  }
+}
+
+// ── MARK POSTED ──────────────────────────────────────────
+function markPosted(dayNum){
+  var p=getPosted();
+  p[dayKey(dayNum)]={v:true,at:Date.now()};
+  savePosted(p);
+  var next=getActiveDay();
+  updateHeader();
+  renderToday();
+  renderCalendar();
+  var msg=next>dayNum?'Day '+dayNum+' posted ✓  →  Day '+next+' is next':'Day '+dayNum+' posted ✓';
+  showToast(msg,true);
+}
+
+// ── TOAST ────────────────────────────────────────────────
+var _toastTimer=null;
+function showToast(msg,green){
+  var el=document.getElementById('toast');
+  var ico=document.getElementById('toastIcon');
+  document.getElementById('toastMsg').textContent=msg;
+  if(green){el.classList.add('t-green');ico.className='ti ti-check toast-icon'}
+  else{el.classList.remove('t-green');ico.className='ti ti-copy toast-icon'}
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(function(){el.classList.remove('show')},2600);
+}
+
+// ── BUILD DAY HTML ───────────────────────────────────────
+function buildDay(d,n,compact){
+  if(!d)return'<div style="text-align:center;padding:48px 20px;color:var(--muted2);font-style:italic">No content for this day</div>';
+  var posted=isPosted(dayKey(n));
+  var active=getActiveDay();
+  var locked=n>active&&!posted;
+  var at=getPostedAt(dayKey(n));
+  var H='';
+
+  if(locked){
+    H+='<div class="lock-banner"><i class="ti ti-lock"></i><div class="lock-banner-text"><b>Locked</b> — post Day '+(n-1)+' first.</div></div>';
+  }
+
+  if(posted){
+    var ts=at?' · '+at.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+at.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'';
+    H+='<div class="posted-badge"><i class="ti ti-check"></i>Posted'+ts+'</div>';
+  }
+
+  // FEED CARD
+  H+='<div class="card"><div class="card-label">Feed post</div>';
+  H+='<div class="photo-wrap feed"><img src="'+thumb(d.feedId)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Preview not available<br>Open in Drive</div>\'"></div>';
+  H+='<div class="file-label">'+d.file+'</div>';
+  H+='<div class="time-row"><div class="time-badge"><i class="ti ti-clock" style="font-size:12px"></i>'+d.time+'</div>';
+  H+=cdHTML(d.time,n);
+  H+='</div>';
+  H+='<div class="textbox">'+d.cap.replace(/\n/g,'<br>')+'</div>';
+  H+='<div class="char-count">'+d.cap.length+' / 2200</div>';
+  H+='<div class="tags">'+d.tags+'</div>';
+
+  H+='<button class="btn btn-gold" onclick="copyDay('+n+',\'all\')"><i class="ti ti-copy"></i>Copy for Instagram</button>';
+  H+='<div class="btn-row">';
+  H+='<button class="btn btn-outline" onclick="copyDay('+n+',\'cap\')"><i class="ti ti-text-size"></i>Caption</button>';
+  H+='<button class="btn btn-outline" onclick="copyDay('+n+',\'tags\')"><i class="ti ti-hash"></i>Hashtags</button>';
+  H+='</div>';
+  H+='<button class="btn btn-ig" onclick="shareToIG('+n+')"><i class="ti ti-brand-instagram"></i>Open photo in Drive</button>';
+  if(!posted&&!locked){
+    var nOn=hasNotif(n);
+    H+='<button class="btn btn-muted'+(nOn?' notif-on':'')+'" id="notifBtn'+n+'" onclick="requestNotif('+n+')"><i class="ti ti-bell"></i>'+(nOn?'Reminder set ✓':'Remind me at '+d.time)+'</button>';
+    H+='<button class="btn btn-green" onclick="markPosted('+n+')"><i class="ti ti-check"></i>Mark as posted</button>';
+  }
+  H+='</div>';
+
+  if(!compact){
+    // STORIES
+    H+='<div class="card"><div class="card-label">Stories ('+d.stories.length+')</div>';
+    d.stories.forEach(function(s,i){
+      H+='<div class="story-item">';
+      H+='<div class="story-header"><span class="story-num">Story 0'+(i+1)+'</span>';
+      H+='<button class="copy-sm" onclick="copyStory('+n+','+i+')">Copy</button></div>';
+      H+='<div class="photo-wrap story"><img src="'+thumb(s.photoId)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Open in Drive</div>\'"></div>';
+      H+='<div class="textbox story-cap">'+s.cap+'</div>';
+      H+='<button class="btn btn-ig" style="margin-bottom:4px" onclick="shareStoryToIG('+n+','+i+')"><i class="ti ti-brand-instagram"></i>Share story</button>';
+      H+='<a class="open-link" href="https://drive.google.com/file/d/'+s.photoId+'/view" target="_blank"><i class="ti ti-external-link" style="font-size:12px"></i> Open in Drive</a>';
+      H+='</div>';
+    });
+    H+='</div>';
+
+    // REEL
+    H+='<div class="card"><div class="card-label">Lifestyle reel</div>';
+    H+='<div class="textbox">'+d.reel+'</div>';
+    H+='<button class="btn btn-green" onclick="copyDay('+n+',\'reel\')"><i class="ti ti-copy"></i>Copy reel caption</button>';
+    H+='</div>';
+
+    // THIRSTTRAP placeholder
+    H+='<div class="card"><div class="card-label">Thirsttrap reels</div>';
+    H+='<div style="text-align:center;padding:16px;color:var(--muted2);font-size:13px;font-style:italic">Coming soon 🔒</div>';
+    H+='</div>';
+  }
+
+  return H;
+}
+
+// ── HEADER ───────────────────────────────────────────────
+function updateHeader(){
+  var dayNum=getActiveDay();
+  var d=DAYS[dayNum];
+  var today=new Date();
+  document.getElementById('hDate').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('hTitle').textContent='Day '+dayNum+' of 14';
+  document.getElementById('hSub').textContent=d?d.week:'';
+  var streak=getStreak();
+  var total=getTotalPosted();
+  var badges='';
+  if(streak>0)badges='<div class="streak-badge"><i class="ti ti-flame" style="font-size:13px"></i>'+streak+' day streak</div>';
+  badges+='<div class="progress-label">'+total+' / 14 posted</div>';
+  document.getElementById('hBadges').innerHTML=badges;
+  document.getElementById('hProgress').style.width=(total/14*100)+'%';
+}
+
+// ── TODAY ────────────────────────────────────────────────
+function renderToday(){
+  var dayNum=getActiveDay();
+  var d=DAYS[dayNum];
+  updateHeader();
+  var H=buildDay(d,dayNum,false);
+
+  // Next-up teaser
+  var nextNum=dayNum<14?dayNum+1:null;
+  if(nextNum&&DAYS[nextNum]&&!isPosted(dayKey(nextNum))){
+    var nd=DAYS[nextNum];
+    H+='<div class="next-up" onclick="goBrowse('+nextNum+')">';
+    H+='<img class="next-up-thumb" src="'+thumb(nd.feedId)+'" onerror="this.style.display=\'none\'">';
+    H+='<div><div class="next-up-tag">Next up</div>';
+    H+='<div class="next-up-name">Day '+(dayNum+1)+' — '+nd.file+'</div>';
+    H+='<div class="next-up-time">'+nd.time+'</div></div>';
+    H+='<i class="ti ti-chevron-right next-up-arr"></i></div>';
+  }
+
+  document.getElementById('today-content').innerHTML=H;
+}
+
+// live countdown refresh
+setInterval(function(){
+  var el=document.querySelector('#panel-today .time-row');
+  if(!el)return;
+  var n=getActiveDay();
+  var d=DAYS[n];if(!d)return;
+  var old=el.querySelector('.cd-badge');
+  if(old)old.remove();
+  var tmp=document.createElement('div');
+  tmp.innerHTML=cdHTML(d.time,n);
+  if(tmp.firstChild)el.appendChild(tmp.firstChild);
+},60000);
+
+// ── CALENDAR ────────────────────────────────────────────
+function changeCalMonth(dir){
+  calMonth+=dir;
+  if(calMonth>11){calMonth=0;calYear++}
+  if(calMonth<0){calMonth=11;calYear--}
+  renderCalendar();
+}
+
+function renderCalendar(){
+  var today=new Date();
+  var firstDow=new Date(calYear,calMonth,1).getDay();
+  var dim=new Date(calYear,calMonth+1,0).getDate();
+  var active=getActiveDay();
+  var sched=new Date(START);sched.setHours(0,0,0,0);
+  var monthLabel=new Date(calYear,calMonth,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+
+  var H='<div class="card">';
+  H+='<div class="cal-header"><button class="cal-nav" onclick="changeCalMonth(-1)"><i class="ti ti-chevron-left"></i></button>';
+  H+='<div class="cal-title">'+monthLabel+'</div>';
+  H+='<button class="cal-nav" onclick="changeCalMonth(1)"><i class="ti ti-chevron-right"></i></button></div>';
+  H+='<div class="cal-grid">';
+  ['Mo','Tu','We','Th','Fr','Sa','Su'].forEach(function(d){H+='<div class="cal-dow">'+d+'</div>'});
+
+  var off=(firstDow===0?6:firstDow-1);
+  for(var i=0;i<off;i++)H+='<div class="cal-day empty"></div>';
+
+  for(var day=1;day<=dim;day++){
+    var dt=new Date(calYear,calMonth,day);dt.setHours(0,0,0,0);
+    var diff=Math.floor((dt-sched)/86400000)+1;
+    var sd=diff>=1?((diff-1)%14)+1:0;
+    var isT=(calYear===today.getFullYear()&&calMonth===today.getMonth()&&day===today.getDate());
+    var ip=sd>0&&isPosted('day_'+sd);
+    var ia=sd===active&&diff>=1;
+    var is=diff>=1&&sd>0&&!ip&&!ia;
+    var pre=diff<1;
+    var cls='cal-day'+(pre?' grey':ia?' active-day':isT?' today':ip?' posted':is?' scheduled':'');
+    var click=sd>0&&!pre?' onclick="onCalDayClick('+sd+')"':'';
+    H+='<div class="'+cls+'"'+click+'>'+day+(ip?'<div class="cal-dot"></div>':'')+'</div>';
+  }
+  H+='</div>';
+  H+='<div class="cal-legend">';
+  H+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--gold)"></div>Active</div>';
+  H+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Posted</div>';
+  H+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:#2a2a2a"></div>Scheduled</div>';
+  H+='</div></div>';
+
+  var total=getTotalPosted();
+  var streak=getStreak();
+  H+='<div class="card"><div class="card-label">Stats</div>';
+  H+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
+  H+='<span style="font-size:12px;color:var(--muted)">Overall progress</span>';
+  H+='<span style="font-size:12px;font-weight:600">'+total+' / 14</span></div>';
+  H+='<div class="prog-bar"><div class="prog-fill" style="width:'+(total/14*100)+'%"></div></div>';
+  H+='<div class="stats-grid">';
+  H+='<div class="stat-box"><div class="stat-n green">'+total+'</div><div class="stat-lbl">Posted</div></div>';
+  H+='<div class="stat-box"><div class="stat-n gold">'+streak+'</div><div class="stat-lbl">Streak</div></div>';
+  H+='<div class="stat-box"><div class="stat-n">'+(14-total)+'</div><div class="stat-lbl">Left</div></div>';
+  H+='</div>';
+  H+='<div style="margin-top:10px;font-size:11px;color:var(--muted)">Active: Day '+active+(DAYS[active]?' — '+DAYS[active].week:'')+'</div>';
+  H+='</div>';
+
+  document.getElementById('cal-content').innerHTML=H;
+}
+
+function onCalDayClick(sd){goBrowse(sd)}
+
+// ── BROWSE ───────────────────────────────────────────────
+function goBrowse(n){
+  browseDayNum=n;
+  showPanel('browse',document.querySelectorAll('.nav-btn')[3]);
+  renderBrowse();
+}
+function changeDay(dir){
+  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),14);
+  renderBrowse();
+}
+function jumpToWeek(w){browseDayNum=(w===1)?1:8;renderBrowse()}
+
+function renderBrowse(){
+  var d=DAYS[browseDayNum];
+  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of 14';
+  document.getElementById('dayWeekLabel').textContent=d?d.week:'';
+  document.getElementById('prevBtn').disabled=browseDayNum<=1;
+  document.getElementById('nextBtn').disabled=browseDayNum>=14;
+  document.getElementById('wt1').classList.toggle('active',browseDayNum<=7);
+  document.getElementById('wt2').classList.toggle('active',browseDayNum>7);
+  document.getElementById('browse-content').innerHTML=buildDay(d,browseDayNum,false);
+  document.getElementById('panel-browse').scrollTo(0,0);
+}
+
+// Swipe in browse
+(function(){
+  var sx=0,sy=0;
+  var el=document.getElementById('panel-browse');
+  el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  el.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;
+    var dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4){
+      if(dx<0&&browseDayNum<14){changeDay(1);vibrate()}
+      else if(dx>0&&browseDayNum>1){changeDay(-1);vibrate()}
+    }
+  },{passive:true});
+})();
+
+// ── REELS ────────────────────────────────────────────────
+function filterReels(q){
+  q=(q||'').toLowerCase().trim();
+  var html=LIFESTYLE_REELS
+    .map(function(r,i){return{r:r,i:i}})
+    .filter(function(o){return!q||o.r.toLowerCase().includes(q)})
+    .map(function(o){
+      return'<button class="reel-item" onclick="copyReel('+o.i+')"><span class="reel-text">'+o.r+'</span><i class="ti ti-copy reel-icon"></i></button>';
+    }).join('');
+  document.getElementById('lifestyle-list').innerHTML=html||'<div class="reel-empty">No results</div>';
+}
+
+// ── PANEL SWITCH ─────────────────────────────────────────
+function showPanel(name,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('panel-'+name).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='calendar')renderCalendar();
+  if(name==='browse')renderBrowse();
+}
+
+// ── INIT ─────────────────────────────────────────────────
+function init(){
+  renderToday();
+  filterReels('');
+  browseDayNum=getActiveDay();
+  renderBrowse();
+  reScheduleAll();
+}
+init();
+</script>
+</body>
+</html>
