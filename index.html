@@ -215,14 +215,16 @@ a.btn{box-sizing:border-box}
   <div class="browse-top">
     <button class="browse-nav-btn" id="prevBtn" onclick="changeDay(-1)"><i class="ti ti-chevron-left"></i></button>
     <div class="browse-mid">
-      <div class="browse-label" id="dayLabel">Day 1 of 14</div>
+      <div class="browse-label" id="dayLabel">Day 1 of 28</div>
       <div class="browse-sublabel" id="dayWeekLabel"></div>
     </div>
     <button class="browse-nav-btn" id="nextBtn" onclick="changeDay(1)"><i class="ti ti-chevron-right"></i></button>
   </div>
   <div class="week-tabs">
-    <button class="week-tab active" id="wt1" onclick="jumpToWeek(1)">Week 1 — Home</button>
-    <button class="week-tab" id="wt2" onclick="jumpToWeek(2)">Week 2 — Trip</button>
+    <button class="week-tab active" id="wt1" onclick="jumpToWeek(1)">W1 Home</button>
+    <button class="week-tab" id="wt2" onclick="jumpToWeek(2)">W2 Paris</button>
+    <button class="week-tab" id="wt3" onclick="jumpToWeek(3)">W3 Beach</button>
+    <button class="week-tab" id="wt4" onclick="jumpToWeek(4)">W4 Nature</button>
   </div>
   <div id="browse-content"></div>
 </div>
@@ -232,23 +234,41 @@ a.btn{box-sizing:border-box}
 <script>
 var DAYS=[
 null,
-{week:"Week 1 — Home & City",file:"livingroom_sofa01",feedId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx",time:"18:00",cap:"sundays should be illegal for being this good ☁️",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"doing absolutely nothing and somehow it's the best day of the week",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"cozy sunday, no plans, no people",photoId:"1hQpB4YiNmH7tzV50SlYcLExNlA3qrvDP"},{cap:"the kind of day you don't want to end",photoId:"1-Qjf1_xLcdvjJRHYAQSVXRuYLJYuZFiX"}],reel:"soft hours only 🕯️"},
-{week:"Week 1 — Home & City",file:"bedroom_mirror01",feedId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT",time:"18:00",cap:"mirror check before I convince myself to go out 🪞",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"staying in won. again.",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"talked myself out of going out in 0.3 seconds",photoId:"1sGVuwNyjazp7C36xwEH223n6a_bolIB7"},{cap:"the mirror always tells the truth",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"}],reel:"mornings hit different lately"},
-{week:"Week 1 — Home & City",file:"cafe_bench01",feedId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx",time:"12:00",cap:"same girl, different moods.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"depends on the day.",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"same week, different light.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"every version, same person.",photoId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn"}],reel:"no plans, just vibes"},
-{week:"Week 1 — Home & City",file:"cafe_terrace01",feedId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb",time:"12:00",cap:"iced coffee and nowhere to be.",tags:"#quietluxury #softlife #slowmorning #35mm",stories:[{cap:"third coffee today. no notes.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"slow morning, no alarm, no rush",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"the kind of tuesday that feels like a saturday",photoId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th"}],reel:"the camera found me first"},
-{week:"Week 1 — Home & City",file:"night_crouch01",feedId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H",time:"20:00",cap:"friday energy, finally 🖤",tags:"#streetstyle #citynight #quietluxury #softlife",stories:[{cap:"leaving the house feels like a personality trait at this point",photoId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H"},{cap:"friday night and she's actually going out",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"city nights hit different",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"unbothered szn"},
-{week:"Week 1 — Home & City",file:"floor_selfie01",feedId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt",time:"11:00",cap:"the lighting said yes.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"the lighting said yes",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"},{cap:"saturday morning and nowhere to be",photoId:"1-hFeUPUNO0szifF2aB1eeFT2o7gifSUG"},{cap:"home is the best studio",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"she woke up like this 🤍"},
-{week:"Week 1 — Home & City",file:"bedroom_glasses01",feedId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG",time:"16:00",cap:"glasses on, world off 📖",tags:"#quietluxury #softlife #35mm #sundaymood",stories:[{cap:"currently: not available",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"},{cap:"sunday reset, do not disturb",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"},{cap:"glasses on means I'm serious about doing nothing",photoId:"1mMCA1GueQyCfuGBHuKn8Fvgve4gINbpz"}],reel:"staying in was the right call"},
-{week:"Week 2 — The Trip",file:"airport_coffee01",feedId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s",time:"18:00",cap:"airport coffee hits different. ✈️",tags:"#travelstyle #quietluxury #slowtravel #35mm",stories:[{cap:"boarding soon. current mood: chaotic but cute",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"carry-on only, good vibes only",photoId:"1rU3H2JlLUPXd8Ngo-L-CoRdvMkKWUGUU"},{cap:"airport coffee is its own category",photoId:"1XVhOSrdJeGXJU59eLfSFgFmKZ-7HaBNi"}],reel:"quiet confidence is the loudest thing in the room"},
-{week:"Week 2 — The Trip",file:"airport_coffee02",feedId:"1rU3H2JlLUPXd8Ngo-L-CoRdvMkKWUGUU",time:"18:00",cap:"flight delayed. I ordered another one. no regrets.",tags:"#slowtravel #quietluxury #travelstyle #softlife",stories:[{cap:"gate C44. send help (or snacks)",photoId:"1rU3H2JlLUPXd8Ngo-L-CoRdvMkKWUGUU"},{cap:"flight delayed. she ordered another coffee.",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"traveling teaches you patience. or coffee.",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"}],reel:"not looking for attention, it just finds me"},
-{week:"Week 2 — The Trip",file:"paris_balcony01",feedId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO",time:"12:00",cap:"woke up and remembered I'm in Paris.\nnot bad. ☕",tags:"#paris #parisianlife #travelstyle #quietluxury",stories:[{cap:"the balcony. the coffee. the croissant. she's healing.",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris mornings are a different category",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"woke up in paris, going back to sleep in paris",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"}],reel:"she's in her soft era 🌙"},
-{week:"Week 2 — The Trip",file:"paris_crossing01",feedId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R",time:"12:00",cap:"paris does something to the light. every time. 🥐",tags:"#paris #streetstyle #quietluxury #35mm",stories:[{cap:"got lost for 2 hours. found the best boulangerie. worth it.",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"paris streets and no agenda",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris light. different every time.",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"}],reel:"soft hours only 🕯️"},
-{week:"Week 2 — The Trip",file:"beach_coconut01",feedId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC",time:"18:00",cap:"croissants yesterday. coconuts today. 🥥",tags:"#slowlife #softlife #beachday #quietluxury",stories:[{cap:"current location: not coming back",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"croissants yesterday. coconuts today.",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"she doesn't plan ahead. it shows.",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"}],reel:"mornings hit different lately"},
-{week:"Week 2 — The Trip",file:"beach_lounger01",feedId:"1CN4BwdZZ7spCD8PUoBYHpWwQeBhRYWW5",time:"12:00",cap:"do not disturb. 🌊",tags:"#slowlife #quietluxury #softlife #beachday",stories:[{cap:"phone on silent. sunscreen on. perfect.",photoId:"1CN4BwdZZ7spCD8PUoBYHpWwQeBhRYWW5"},{cap:"island time means: no time",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"},{cap:"she's fully offline and fully okay with it",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"}],reel:"no plans, just vibes"},
-{week:"Week 2 — The Trip",file:"beach_lounger02",feedId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs",time:"16:00",cap:"last day. not ready. 🌅",tags:"#slowlife #quietluxury #travelstyle #softlife",stories:[{cap:"packed my bag. unpacked it. packed it again.",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"},{cap:"last sunset here and I'm pretending it's not",photoId:"1CN4BwdZZ7spCD8PUoBYHpWwQeBhRYWW5"},{cap:"one more day. she said for the third time.",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"}],reel:"the camera found me first"}
+// WEEK 1 — Home & City
+{week:"Week 1 — Home & City",file:"livingroom_sofa01",feedId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx",time:"18:00",cap:"sundays should be illegal for being this good ☁️",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"doing absolutely nothing and somehow it's the best day of the week",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"cozy sunday, no plans, no people",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"the kind of day you don't want to end",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"}],reel:"soft hours only 🕯️"},
+{week:"Week 1 — Home & City",file:"bedroom_kneeling03",feedId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT",time:"18:00",cap:"the camera found me first.",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"monday morning and nowhere to rush",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"the light was doing something",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"stayed in longer than planned. worth it.",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
+{week:"Week 1 — Home & City",file:"cafe_terrace01",feedId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb",time:"12:00",cap:"iced coffee and nowhere to be.",tags:"#quietluxury #softlife #slowmorning #35mm",stories:[{cap:"third coffee today. no notes.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"slow morning, no alarm, no rush",photoId:"1cSGVVlWw595hB2MprbePp-lTvVsuLYiB"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"}],reel:"the camera found me first"},
+{week:"Week 1 — Home & City",file:"street_sitting02",feedId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th",time:"12:00",cap:"the kind of afternoon that lasts too long.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"out here finding new spots",photoId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th"},{cap:"the afternoon had other plans",photoId:"1k2Shs_gIsjbVTz0EKEOV9X4nkfYxMs2r"},{cap:"she always finds somewhere to sit",photoId:"1sCeMvAwY2UIewhZitQvFYRqdhg5mgvwz"}],reel:"no plans, just vibes"},
+{week:"Week 1 — Home & City",file:"night_crouch01",feedId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H",time:"20:00",cap:"friday energy, finally 🖤",tags:"#streetstyle #citynight #quietluxury #softlife",stories:[{cap:"leaving the house feels like a personality trait",photoId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H"},{cap:"friday night and she's actually going out",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"},{cap:"city nights hit different",photoId:"1ZpyAcr1MYb0gfLYwa90DmEdVc7TM4o5r"}],reel:"unbothered szn"},
+{week:"Week 1 — Home & City",file:"garden_dress01",feedId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj",time:"12:00",cap:"she needed this.",tags:"#slowlife #quietluxury #softlife #35mm",stories:[{cap:"found a garden. stayed too long.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"},{cap:"the greenery, the light, the silence",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"the version of me I don't post everywhere 🔒",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"she needed this"},
+{week:"Week 1 — Home & City",file:"bedroom_glasses01",feedId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG",time:"16:00",cap:"glasses on, world off 📖",tags:"#quietluxury #softlife #35mm #sundaymood",stories:[{cap:"currently: not available",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"},{cap:"sunday reset, do not disturb",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"glasses on means I'm serious about doing nothing",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"}],reel:"staying in was the right call"},
+// WEEK 2 — City & Paris
+{week:"Week 2 — City & Paris",file:"bedroom_mirror01",feedId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT",time:"18:00",cap:"mirror check before I convince myself to go out 🪞",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"monday mirror check. she went.",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"talked herself into going out this time",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"the mirror always cooperates",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
+{week:"Week 2 — City & Paris",file:"floor_selfie01",feedId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt",time:"11:00",cap:"the lighting said yes.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"the lighting said yes",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"},{cap:"still tuesday. feels like saturday.",photoId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"}],reel:"she woke up like this 🤍"},
+{week:"Week 2 — City & Paris",file:"cafe_bench01",feedId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx",time:"12:00",cap:"same girl, different moods.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"found a new spot. staying here forever.",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"same café energy, different day",photoId:"1cSGVVlWw595hB2MprbePp-lTvVsuLYiB"},{cap:"depends on the day.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"}],reel:"the camera found me first"},
+{week:"Week 2 — City & Paris",file:"street_crouching01",feedId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73",time:"12:00",cap:"something about this corner.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"out here looking for good corners",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"the streets always deliver",photoId:"1sCeMvAwY2UIewhZitQvFYRqdhg5mgvwz"},{cap:"found it. didn't plan to.",photoId:"14-XfswfoEg5unEvEwEb1MY9YF1E6YBe0"}],reel:"no plans, just vibes"},
+{week:"Week 2 — City & Paris",file:"airport_coffee01",feedId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s",time:"18:00",cap:"airport coffee hits different. ✈️",tags:"#travelstyle #quietluxury #slowtravel #35mm",stories:[{cap:"boarding soon. current mood: chaotic but cute",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"carry-on only, good vibes only",photoId:"1_H9cmVnT9Yd8VEyZXfbBnR0mb4otv0yM"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1oIOQiVwVGs9bpyhWBYo7TfLUaHetuR8L"}],reel:"quiet confidence is the loudest thing in the room"},
+{week:"Week 2 — City & Paris",file:"paris_balcony01",feedId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO",time:"12:00",cap:"woke up and remembered I'm in Paris.\nnot bad. ☕",tags:"#paris #parisianlife #travelstyle #quietluxury",stories:[{cap:"the balcony. the coffee. the croissant. she's healing.",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris mornings are a different category",photoId:"14LXunvPLL1IwTwM92znV3AcoBZ2ES5kX"},{cap:"woke up in paris, going back to sleep in paris",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"}],reel:"she's in her soft era 🌙"},
+{week:"Week 2 — City & Paris",file:"paris_crossing01",feedId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R",time:"12:00",cap:"paris does something to the light. every time. 🥐",tags:"#paris #streetstyle #quietluxury #35mm",stories:[{cap:"got lost for 2 hours. found the best boulangerie. worth it.",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"paris streets and no agenda",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris light. different every time.",photoId:"11moj6kGOLQ9GiDyeXG5l975SOthUbskZ"}],reel:"soft hours only 🕯️"},
+// WEEK 3 — Paris → Beach
+{week:"Week 3 — Paris → Beach",file:"balcony_raised01",feedId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O",time:"10:00",cap:"last morning here.",tags:"#paris #quietluxury #travelstyle #slowlife",stories:[{cap:"last morning on this balcony",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"},{cap:"paris is different when you know you're leaving",photoId:"14ZW-Nkg8kWfZPURmmdEhjAC9aspeW-gR"},{cap:"the version of me I don't post everywhere 🔒",photoId:"14LXunvPLL1IwTwM92znV3AcoBZ2ES5kX"}],reel:"she's in her soft era 🌙"},
+{week:"Week 3 — Paris → Beach",file:"bedroom_lying01",feedId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE",time:"18:00",cap:"back. still thinking about paris.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"the jet lag is a lie. it's one time zone.",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"},{cap:"back home. still mentally in paris.",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"plants are alive. she's alive. victory.",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"}],reel:"staying in was the right call"},
+{week:"Week 3 — Paris → Beach",file:"street_doorstep01",feedId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g",time:"17:00",cap:"golden hour and no plans.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"back to the regular programme",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"},{cap:"the city missed her (she says)",photoId:"14-XfswfoEg5unEvEwEb1MY9YF1E6YBe0"},{cap:"golden hour every time she leaves the apartment",photoId:"1ZpyAcr1MYb0gfLYwa90DmEdVc7TM4o5r"}],reel:"no plans, just vibes"},
+{week:"Week 3 — Paris → Beach",file:"street_sitting03",feedId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn",time:"12:00",cap:"she always finds the good spot.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"found the best steps in the city",photoId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn"},{cap:"she does this every time",photoId:"1ZpyAcr1MYb0gfLYwa90DmEdVc7TM4o5r"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1578ScoC4ZinVA3puG42WIoUhZe5JEfM7"}],reel:"unbothered szn"},
+{week:"Week 3 — Paris → Beach",file:"beach_coconut01",feedId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC",time:"18:00",cap:"croissants yesterday. coconuts today. 🥥",tags:"#slowlife #softlife #beachday #quietluxury",stories:[{cap:"current location: not coming back",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"the flight was worth it for this",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"she doesn't plan ahead. it shows.",photoId:"1TNbLAgxxd52PW7nWb0c3YDquib76pl6W"}],reel:"mornings hit different lately"},
+{week:"Week 3 — Paris → Beach",file:"beach_lounger02",feedId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs",time:"12:00",cap:"do not disturb. 🌊",tags:"#slowlife #quietluxury #softlife #beachday",stories:[{cap:"phone on silent. sunscreen on. perfect.",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"},{cap:"island time means: no time",photoId:"1-QD1lWNyRl1IwE5WCPwlxZWY5inQBVCs"},{cap:"she's fully offline and fully okay with it",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"}],reel:"no plans, just vibes"},
+{week:"Week 3 — Paris → Beach",file:"beach_reading01",feedId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f",time:"16:00",cap:"last day. not ready. 🌅",tags:"#slowlife #quietluxury #travelstyle #softlife",stories:[{cap:"last beach morning. she's not handling it.",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"},{cap:"packed her bag. unpacked it. packed it again.",photoId:"1r_PzQLQn4LXtFMw0rHrSJ9EpnDrDPTPQ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"}],reel:"the camera found me first"},
+// WEEK 4 — Nature Reset
+{week:"Week 4 — Nature Reset",file:"bedroom_selfie01",feedId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu",time:"18:00",cap:"mornings hit different lately.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"back to reality. still unpacking.",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"},{cap:"monday mornings are gentler after a trip",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"she's home. she's okay.",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"}],reel:"mornings hit different lately"},
+{week:"Week 4 — Nature Reset",file:"bedroom_kneeling04",feedId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj",time:"18:00",cap:"soft light, no plans.",tags:"#quietluxury #softlife #35mm #candlelight",stories:[{cap:"candles on. world off.",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"soft light, slower pace",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"tuesday feels like sunday this week",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"soft hours only 🕯️"},
+{week:"Week 4 — Nature Reset",file:"street_sitting01",feedId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX",time:"12:00",cap:"the city always pulls her back.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"out here again",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"},{cap:"found a new favourite street",photoId:"1578ScoC4ZinVA3puG42WIoUhZe5JEfM7"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1k2Shs_gIsjbVTz0EKEOV9X4nkfYxMs2r"}],reel:"no plans, just vibes"},
+{week:"Week 4 — Nature Reset",file:"street_selfie01",feedId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt",time:"12:00",cap:"leaving the house was the right call.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"the afternoon cooperated",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"},{cap:"she gave the city one more chance",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"leaving the house was indeed the right call",photoId:"1ReAh4f07nZhqrc_gT6AJSw89sMbmKWHo"}],reel:"unbothered szn"},
+{week:"Week 4 — Nature Reset",file:"lake_mug01",feedId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX",time:"10:00",cap:"no signal. no problem.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"trading city noise for this",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"somewhere with no signal and one very good mug",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"she found the quiet again",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"}],reel:"she needed this"},
+{week:"Week 4 — Nature Reset",file:"lake_sup01",feedId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg",time:"09:00",cap:"the kind of quiet you can't find in the city.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"out on the water before anyone else woke up",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"the lake has a very strict no-phones policy",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"the version of me I don't post everywhere 🔒",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"she needed this"},
+{week:"Week 4 — Nature Reset",file:"mountain_walking01",feedId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx",time:"11:00",cap:"somewhere with no agenda.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"found the view. it found her first.",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"somewhere nobody knows her name",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"last walk of the trip. she took her time.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"no plans, just vibes"}
 ];
 
-var LIFESTYLE_REELS=["soft hours only 🕯️","mornings hit different lately","no plans, just vibes","the camera found me first","unbothered szn","quiet confidence is the loudest thing in the room","she woke up like this 🤍","staying in was the right call","not looking for attention, it just finds me","she's in her soft era 🌙"];
+var LIFESTYLE_REELS=["soft hours only 🕯️","mornings hit different lately","no plans, just vibes","the camera found me first","unbothered szn","quiet confidence is the loudest thing in the room","she woke up like this 🤍","staying in was the right call","not looking for attention, it just finds me","she's in her soft era 🌙","she needed this","somewhere with no signal","no agenda, just this","lake mornings hit different"];
 
 var START=new Date('2026-06-09');
 var browseDayNum=1;
@@ -268,7 +288,7 @@ function getCurrentDay(){
   var s=new Date(START);s.setHours(0,0,0,0);
   var d=Math.floor((t-s)/86400000)+1;
   if(d<1)return 1;
-  return((d-1)%14)+1;
+  return((d-1)%28)+1;
 }
 function getActiveDay(){
   var cur=getCurrentDay();
@@ -375,7 +395,7 @@ function scheduleNotif(timeStr,n){
 }
 function reScheduleAll(){
   if(Notification.permission!=='granted')return;
-  for(var n=1;n<=14;n++){
+  for(var n=1;n<=28;n++){
     var t=localStorage.getItem(notifKey(n));
     if(t&&!isPosted(dayKey(n)))scheduleNotif(t,n);
   }
@@ -485,15 +505,15 @@ function updateHeader(){
   var d=DAYS[dayNum];
   var today=new Date();
   document.getElementById('hDate').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  document.getElementById('hTitle').textContent='Day '+dayNum+' of 14';
+  document.getElementById('hTitle').textContent='Day '+dayNum+' of 28';
   document.getElementById('hSub').textContent=d?d.week:'';
   var streak=getStreak();
   var total=getTotalPosted();
   var badges='';
   if(streak>0)badges='<div class="streak-badge"><i class="ti ti-flame" style="font-size:13px"></i>'+streak+' day streak</div>';
-  badges+='<div class="progress-label">'+total+' / 14 posted</div>';
+  badges+='<div class="progress-label">'+total+' / 28 posted</div>';
   document.getElementById('hBadges').innerHTML=badges;
-  document.getElementById('hProgress').style.width=(total/14*100)+'%';
+  document.getElementById('hProgress').style.width=(total/28*100)+'%';
 }
 
 // ── TODAY ────────────────────────────────────────────────
@@ -504,7 +524,7 @@ function renderToday(){
   var H=buildDay(d,dayNum,false);
 
   // Next-up teaser
-  var nextNum=dayNum<14?dayNum+1:null;
+  var nextNum=dayNum<28?dayNum+1:null;
   if(nextNum&&DAYS[nextNum]&&!isPosted(dayKey(nextNum))){
     var nd=DAYS[nextNum];
     H+='<div class="next-up" onclick="goBrowse('+nextNum+')">';
@@ -582,12 +602,12 @@ function renderCalendar(){
   H+='<div class="card"><div class="card-label">Stats</div>';
   H+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
   H+='<span style="font-size:12px;color:var(--muted)">Overall progress</span>';
-  H+='<span style="font-size:12px;font-weight:600">'+total+' / 14</span></div>';
-  H+='<div class="prog-bar"><div class="prog-fill" style="width:'+(total/14*100)+'%"></div></div>';
+  H+='<span style="font-size:12px;font-weight:600">'+total+' / 28</span></div>';
+  H+='<div class="prog-bar"><div class="prog-fill" style="width:'+(total/28*100)+'%"></div></div>';
   H+='<div class="stats-grid">';
   H+='<div class="stat-box"><div class="stat-n green">'+total+'</div><div class="stat-lbl">Posted</div></div>';
   H+='<div class="stat-box"><div class="stat-n gold">'+streak+'</div><div class="stat-lbl">Streak</div></div>';
-  H+='<div class="stat-box"><div class="stat-n">'+(14-total)+'</div><div class="stat-lbl">Left</div></div>';
+  H+='<div class="stat-box"><div class="stat-n">'+(28-total)+'</div><div class="stat-lbl">Left</div></div>';
   H+='</div>';
   H+='<div style="margin-top:10px;font-size:11px;color:var(--muted)">Active: Day '+active+(DAYS[active]?' — '+DAYS[active].week:'')+'</div>';
   H+='</div>';
@@ -604,19 +624,21 @@ function goBrowse(n){
   renderBrowse();
 }
 function changeDay(dir){
-  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),14);
+  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),28);
   renderBrowse();
 }
-function jumpToWeek(w){browseDayNum=(w===1)?1:8;renderBrowse()}
+function jumpToWeek(w){browseDayNum=(w===1)?1:(w===2)?8:(w===3)?15:22;renderBrowse()}
 
 function renderBrowse(){
   var d=DAYS[browseDayNum];
-  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of 14';
+  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of 28';
   document.getElementById('dayWeekLabel').textContent=d?d.week:'';
   document.getElementById('prevBtn').disabled=browseDayNum<=1;
-  document.getElementById('nextBtn').disabled=browseDayNum>=14;
+  document.getElementById('nextBtn').disabled=browseDayNum>=28;
   document.getElementById('wt1').classList.toggle('active',browseDayNum<=7);
-  document.getElementById('wt2').classList.toggle('active',browseDayNum>7);
+  document.getElementById('wt2').classList.toggle('active',browseDayNum>=8&&browseDayNum<=14);
+  document.getElementById('wt3').classList.toggle('active',browseDayNum>=15&&browseDayNum<=21);
+  document.getElementById('wt4').classList.toggle('active',browseDayNum>=22);
   document.getElementById('browse-content').innerHTML=buildDay(d,browseDayNum,false);
   document.getElementById('panel-browse').scrollTo(0,0);
 }
@@ -630,7 +652,7 @@ function renderBrowse(){
     var dx=e.changedTouches[0].clientX-sx;
     var dy=e.changedTouches[0].clientY-sy;
     if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4){
-      if(dx<0&&browseDayNum<14){changeDay(1);vibrate()}
+      if(dx<0&&browseDayNum<28){changeDay(1);vibrate()}
       else if(dx>0&&browseDayNum>1){changeDay(-1);vibrate()}
     }
   },{passive:true});
