@@ -146,8 +146,8 @@ a.btn{box-sizing:border-box}
 .browse-mid{text-align:center}
 .browse-label{font-size:13px;color:var(--text);font-weight:500}
 .browse-sublabel{font-size:10px;color:var(--muted2);margin-top:1px}
-.week-tabs{display:flex;gap:6px;margin-bottom:14px}
-.week-tab{flex:1;padding:8px 6px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:.15s}
+.week-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.week-tab{flex-shrink:0;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:.15s}
 .week-tab.active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
 
 /* REELS */
@@ -215,7 +215,7 @@ a.btn{box-sizing:border-box}
   <div class="browse-top">
     <button class="browse-nav-btn" id="prevBtn" onclick="changeDay(-1)"><i class="ti ti-chevron-left"></i></button>
     <div class="browse-mid">
-      <div class="browse-label" id="dayLabel">Day 1 of 28</div>
+      <div class="browse-label" id="dayLabel">Day 1 of 47</div>
       <div class="browse-sublabel" id="dayWeekLabel"></div>
     </div>
     <button class="browse-nav-btn" id="nextBtn" onclick="changeDay(1)"><i class="ti ti-chevron-right"></i></button>
@@ -225,6 +225,9 @@ a.btn{box-sizing:border-box}
     <button class="week-tab" id="wt2" onclick="jumpToWeek(2)">W2 Paris</button>
     <button class="week-tab" id="wt3" onclick="jumpToWeek(3)">W3 Beach</button>
     <button class="week-tab" id="wt4" onclick="jumpToWeek(4)">W4 Nature</button>
+    <button class="week-tab" id="wt5" onclick="jumpToWeek(5)">W5 Home II</button>
+    <button class="week-tab" id="wt6" onclick="jumpToWeek(6)">W6 Tropical</button>
+    <button class="week-tab" id="wt7" onclick="jumpToWeek(7)">W7 Water</button>
   </div>
   <div id="browse-content"></div>
 </div>
@@ -265,7 +268,29 @@ null,
 {week:"Week 4 — Nature Reset",file:"street_selfie01",feedId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt",time:"12:00",cap:"leaving the house was the right call.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"the afternoon cooperated",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"},{cap:"she gave the city one more chance",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"leaving the house was indeed the right call",photoId:"1ReAh4f07nZhqrc_gT6AJSw89sMbmKWHo"}],reel:"unbothered szn"},
 {week:"Week 4 — Nature Reset",file:"lake_mug01",feedId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX",time:"10:00",cap:"no signal. no problem.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"trading city noise for this",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"somewhere with no signal and one very good mug",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"she found the quiet again",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"}],reel:"she needed this"},
 {week:"Week 4 — Nature Reset",file:"lake_sup01",feedId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg",time:"09:00",cap:"the kind of quiet you can't find in the city.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"out on the water before anyone else woke up",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"the lake has a very strict no-phones policy",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"the version of me I don't post everywhere 🔒",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"she needed this"},
-{week:"Week 4 — Nature Reset",file:"mountain_walking01",feedId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx",time:"11:00",cap:"somewhere with no agenda.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"found the view. it found her first.",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"somewhere nobody knows her name",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"last walk of the trip. she took her time.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"no plans, just vibes"}
+{week:"Week 4 — Nature Reset",file:"mountain_walking01",feedId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx",time:"11:00",cap:"somewhere with no agenda.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"found the view. it found her first.",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"somewhere nobody knows her name",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"last walk of the trip. she took her time.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"no plans, just vibes"},
+// WEEK 5 — Home Reset II
+{week:"Week 5 — Home Reset II",file:"livingroom_mirrorselfie01",feedId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG",time:"18:00",cap:"found the light again.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"home feels different after a trip",photoId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG"},{cap:"unpacked. mostly.",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"}],reel:"soft hours only 🕯️"},
+{week:"Week 5 — Home Reset II",file:"bedroom_floorselfie01",feedId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI",time:"18:00",cap:"floor is where she thinks best.",tags:"#quietluxury #softlife #35mm #candlelight",stories:[{cap:"sometimes the floor is the answer",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"},{cap:"candlelight and no plans",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"}],reel:"mornings hit different lately"},
+{week:"Week 5 — Home Reset II",file:"bedroom_selfie02",feedId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc",time:"16:00",cap:"she almost stayed in.",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"talked herself into it. again.",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"the mirror cooperated this time",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"going out as a protest against staying in",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"}],reel:"staying in was the right call"},
+{week:"Week 5 — Home Reset II",file:"bedroom_kneeling01",feedId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd",time:"18:00",cap:"slow tuesday.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"nothing happened. it was great.",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"soft light, no agenda",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
+{week:"Week 5 — Home Reset II",file:"street_shorts01",feedId:"1FaED0jljL8hw7sLH7jYEeIDbXHyAluh1",time:"12:00",cap:"the afternoon had plans she didn't.",tags:"#streetstyle #ootd #quietluxury #softlife",stories:[{cap:"the weather demanded shorts",photoId:"1FaED0jljL8hw7sLH7jYEeIDbXHyAluh1"},{cap:"ended up somewhere else entirely",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"no plans, just vibes"},
+{week:"Week 5 — Home Reset II",file:"balcony_leaning01",feedId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt",time:"17:00",cap:"just needed some air.",tags:"#quietluxury #slowlife #softlife #35mm",stories:[{cap:"balcony in the late afternoon",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"},{cap:"the city from up here",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"she needed this"},
+{week:"Week 5 — Home Reset II",file:"paris_balcony02",feedId:"1Os4TGQW3-GaxOELbhGjJXaEBdBAUxW3H",time:"11:00",cap:"paris again. obviously. ☕",tags:"#paris #quietluxury #travelstyle #slowlife",stories:[{cap:"the balcony, again. always the balcony.",photoId:"1Os4TGQW3-GaxOELbhGjJXaEBdBAUxW3H"},{cap:"paris mornings are a recurring theme",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"she came back. of course she did.",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"}],reel:"she's in her soft era 🌙"},
+// WEEK 6 — Tropical
+{week:"Week 6 — Tropical",file:"yacht_standing01",feedId:"1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF",time:"12:00",cap:"wind wins every time.",tags:"#slowtravel #quietluxury #softlife #beachday",stories:[{cap:"somewhere in the middle of nowhere",photoId:"1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF"},{cap:"the horizon does something to her",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"}],reel:"no plans, just vibes"},
+{week:"Week 6 — Tropical",file:"hotel_pergola01",feedId:"1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-",time:"12:00",cap:"somewhere warm, no agenda.",tags:"#slowtravel #quietluxury #softlife #travelstyle",stories:[{cap:"the kind of place you stop rushing",photoId:"1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-"},{cap:"white walls and no schedule",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF"}],reel:"she needed this"},
+{week:"Week 6 — Tropical",file:"beach_palms01",feedId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ",time:"18:00",cap:"she picked the tropical option.",tags:"#slowtravel #quietluxury #beachday #softlife",stories:[{cap:"palm trees and zero apologies",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"},{cap:"the upgrade was necessary",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-"}],reel:"mornings hit different lately"},
+{week:"Week 6 — Tropical",file:"beach_bar01",feedId:"1PgOWtAvn1cmvo1rXW109PqQoei4sf_W8",time:"18:00",cap:"third drink of the day.",tags:"#beachday #slowlife #quietluxury #softlife",stories:[{cap:"the beach bar found us",photoId:"1PgOWtAvn1cmvo1rXW109PqQoei4sf_W8"},{cap:"sunset in one hour. not moving.",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"}],reel:"no plans, just vibes"},
+{week:"Week 6 — Tropical",file:"beach_dress01",feedId:"1n-9iM3A25yHIpyF88B22HtiHwKOllJ8J",time:"12:00",cap:"the waves cooperated.",tags:"#beachday #quietluxury #softlife #travelstyle",stories:[{cap:"the water was warmer than expected",photoId:"1n-9iM3A25yHIpyF88B22HtiHwKOllJ8J"},{cap:"walked the whole shore. found everything.",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1PgOWtAvn1cmvo1rXW109PqQoei4sf_W8"}],reel:"the camera found me first"},
+{week:"Week 6 — Tropical",file:"beach_sunset01",feedId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ",time:"19:00",cap:"last light, no plans.",tags:"#slowlife #beachday #quietluxury #softlife",stories:[{cap:"the sky did that thing again",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"},{cap:"stayed until they kicked her off the beach",photoId:"1n-9iM3A25yHIpyF88B22HtiHwKOllJ8J"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1Xq2NT3yCXe1Dhvm0noTWNcIquqnQgQPD"}],reel:"she needed this"},
+{week:"Week 6 — Tropical",file:"beach_sitting01",feedId:"1Xq2NT3yCXe1Dhvm0noTWNcIquqnQgQPD",time:"12:00",cap:"sand still everywhere. worth it.",tags:"#beachday #quietluxury #softlife #slowtravel",stories:[{cap:"last beach morning. she's not handling it.",photoId:"1Xq2NT3yCXe1Dhvm0noTWNcIquqnQgQPD"},{cap:"the sun was early. she was earlier.",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"}],reel:"no plans, just vibes"},
+// WEEK 7 — Water & Nature II
+{week:"Week 7 — Water & Nature II",file:"beach_kneeling01",feedId:"1tlhAsab_i8DZrWWGLQPq_Ad2DwhXkvS-",time:"19:00",cap:"the sea at this hour. nothing else.",tags:"#slowlife #beachday #quietluxury #softlife",stories:[{cap:"the light does something right before dark",photoId:"1tlhAsab_i8DZrWWGLQPq_Ad2DwhXkvS-"},{cap:"roses on the shore. no reason.",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"}],reel:"she needed this"},
+{week:"Week 7 — Water & Nature II",file:"beach_lounger03",feedId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x",time:"15:00",cap:"not moving until sunset.",tags:"#beachday #quietluxury #softlife #slowtravel",stories:[{cap:"fully committed to this lounger",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"the book was an excuse to stay",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"}],reel:"no plans, just vibes"},
+{week:"Week 7 — Water & Nature II",file:"beach_sitting01",feedId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY",time:"17:00",cap:"the sand remembers everyone.",tags:"#beachday #slowlife #quietluxury #softlife",stories:[{cap:"late afternoon, nowhere else to be",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"found a good stretch of beach",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1tlhAsab_i8DZrWWGLQPq_Ad2DwhXkvS-"}],reel:"the camera found me first"},
+{week:"Week 7 — Water & Nature II",file:"lake_ladder01",feedId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx",time:"11:00",cap:"cold water, no regrets.",tags:"#slowlife #nature #quietluxury #softlife",stories:[{cap:"the lake was asking for it",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"still cold. still going.",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"}],reel:"she needed this"},
+{week:"Week 7 — Water & Nature II",file:"mountain_fence01",feedId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD",time:"11:00",cap:"somewhere above the noise.",tags:"#slowlife #nature #quietluxury #softlife",stories:[{cap:"the view was the only plan",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"walked until the city disappeared",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"she'll stay as long as it takes",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"no plans, just vibes"}
 ];
 
 var LIFESTYLE_REELS=["soft hours only 🕯️","mornings hit different lately","no plans, just vibes","the camera found me first","unbothered szn","quiet confidence is the loudest thing in the room","she woke up like this 🤍","staying in was the right call","not looking for attention, it just finds me","she's in her soft era 🌙","she needed this","somewhere with no signal","no agenda, just this","lake mornings hit different"];
@@ -288,7 +313,7 @@ function getCurrentDay(){
   var s=new Date(START);s.setHours(0,0,0,0);
   var d=Math.floor((t-s)/86400000)+1;
   if(d<1)return 1;
-  return((d-1)%28)+1;
+  return((d-1)%47)+1;
 }
 function getActiveDay(){
   var cur=getCurrentDay();
@@ -395,7 +420,7 @@ function scheduleNotif(timeStr,n){
 }
 function reScheduleAll(){
   if(Notification.permission!=='granted')return;
-  for(var n=1;n<=28;n++){
+  for(var n=1;n<=47;n++){
     var t=localStorage.getItem(notifKey(n));
     if(t&&!isPosted(dayKey(n)))scheduleNotif(t,n);
   }
@@ -505,15 +530,15 @@ function updateHeader(){
   var d=DAYS[dayNum];
   var today=new Date();
   document.getElementById('hDate').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  document.getElementById('hTitle').textContent='Day '+dayNum+' of 28';
+  document.getElementById('hTitle').textContent='Day '+dayNum+' of 47';
   document.getElementById('hSub').textContent=d?d.week:'';
   var streak=getStreak();
   var total=getTotalPosted();
   var badges='';
   if(streak>0)badges='<div class="streak-badge"><i class="ti ti-flame" style="font-size:13px"></i>'+streak+' day streak</div>';
-  badges+='<div class="progress-label">'+total+' / 28 posted</div>';
+  badges+='<div class="progress-label">'+total+' / 47 posted</div>';
   document.getElementById('hBadges').innerHTML=badges;
-  document.getElementById('hProgress').style.width=(total/28*100)+'%';
+  document.getElementById('hProgress').style.width=(total/47*100)+'%';
 }
 
 // ── TODAY ────────────────────────────────────────────────
@@ -524,7 +549,7 @@ function renderToday(){
   var H=buildDay(d,dayNum,false);
 
   // Next-up teaser
-  var nextNum=dayNum<28?dayNum+1:null;
+  var nextNum=dayNum<47?dayNum+1:null;
   if(nextNum&&DAYS[nextNum]&&!isPosted(dayKey(nextNum))){
     var nd=DAYS[nextNum];
     H+='<div class="next-up" onclick="goBrowse('+nextNum+')">';
@@ -602,12 +627,12 @@ function renderCalendar(){
   H+='<div class="card"><div class="card-label">Stats</div>';
   H+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
   H+='<span style="font-size:12px;color:var(--muted)">Overall progress</span>';
-  H+='<span style="font-size:12px;font-weight:600">'+total+' / 28</span></div>';
-  H+='<div class="prog-bar"><div class="prog-fill" style="width:'+(total/28*100)+'%"></div></div>';
+  H+='<span style="font-size:12px;font-weight:600">'+total+' / 47</span></div>';
+  H+='<div class="prog-bar"><div class="prog-fill" style="width:'+(total/47*100)+'%"></div></div>';
   H+='<div class="stats-grid">';
   H+='<div class="stat-box"><div class="stat-n green">'+total+'</div><div class="stat-lbl">Posted</div></div>';
   H+='<div class="stat-box"><div class="stat-n gold">'+streak+'</div><div class="stat-lbl">Streak</div></div>';
-  H+='<div class="stat-box"><div class="stat-n">'+(28-total)+'</div><div class="stat-lbl">Left</div></div>';
+  H+='<div class="stat-box"><div class="stat-n">'+(47-total)+'</div><div class="stat-lbl">Left</div></div>';
   H+='</div>';
   H+='<div style="margin-top:10px;font-size:11px;color:var(--muted)">Active: Day '+active+(DAYS[active]?' — '+DAYS[active].week:'')+'</div>';
   H+='</div>';
@@ -624,21 +649,24 @@ function goBrowse(n){
   renderBrowse();
 }
 function changeDay(dir){
-  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),28);
+  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),47);
   renderBrowse();
 }
-function jumpToWeek(w){browseDayNum=(w===1)?1:(w===2)?8:(w===3)?15:22;renderBrowse()}
+function jumpToWeek(w){browseDayNum=(w===1)?1:(w===2)?8:(w===3)?15:(w===4)?22:(w===5)?29:(w===6)?36:43;renderBrowse()}
 
 function renderBrowse(){
   var d=DAYS[browseDayNum];
-  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of 28';
+  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of 47';
   document.getElementById('dayWeekLabel').textContent=d?d.week:'';
   document.getElementById('prevBtn').disabled=browseDayNum<=1;
-  document.getElementById('nextBtn').disabled=browseDayNum>=28;
+  document.getElementById('nextBtn').disabled=browseDayNum>=47;
   document.getElementById('wt1').classList.toggle('active',browseDayNum<=7);
   document.getElementById('wt2').classList.toggle('active',browseDayNum>=8&&browseDayNum<=14);
   document.getElementById('wt3').classList.toggle('active',browseDayNum>=15&&browseDayNum<=21);
-  document.getElementById('wt4').classList.toggle('active',browseDayNum>=22);
+  document.getElementById('wt4').classList.toggle('active',browseDayNum>=22&&browseDayNum<=28);
+  document.getElementById('wt5').classList.toggle('active',browseDayNum>=29&&browseDayNum<=35);
+  document.getElementById('wt6').classList.toggle('active',browseDayNum>=36&&browseDayNum<=42);
+  document.getElementById('wt7').classList.toggle('active',browseDayNum>=43);
   document.getElementById('browse-content').innerHTML=buildDay(d,browseDayNum,false);
   document.getElementById('panel-browse').scrollTo(0,0);
 }
@@ -652,7 +680,7 @@ function renderBrowse(){
     var dx=e.changedTouches[0].clientX-sx;
     var dy=e.changedTouches[0].clientY-sy;
     if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4){
-      if(dx<0&&browseDayNum<28){changeDay(1);vibrate()}
+      if(dx<0&&browseDayNum<47){changeDay(1);vibrate()}
       else if(dx>0&&browseDayNum>1){changeDay(-1);vibrate()}
     }
   },{passive:true});
