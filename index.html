@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Daily Post</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='112' fill='%230a0a0a'/><circle cx='256' cy='228' r='94' fill='none' stroke='%23c9a96e' stroke-width='18'/><circle cx='256' cy='228' r='34' fill='%23c9a96e'/><rect x='152' y='160' width='208' height='152' rx='20' fill='none' stroke='%23c9a96e' stroke-width='14'/><path d='M152 182 L194 160 L318 160 L360 182' fill='none' stroke='%23c9a96e' stroke-width='14' stroke-linejoin='round'/><circle cx='316' cy='188' r='12' fill='%23c9a96e'/><rect x='176' y='340' width='160' height='12' rx='6' fill='%23c9a96e' opacity='.5'/></svg>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Daily Post">
+<meta name="theme-color" content="#0a0a0a">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
@@ -12,177 +16,87 @@
   --gold:#c9a96e;--gold-bg:rgba(201,169,110,0.1);--gold-border:rgba(201,169,110,0.2);
   --green:#4caf7d;--green-bg:rgba(76,175,125,0.1);--green-border:rgba(76,175,125,0.2);
   --blue:#6495ed;--blue-bg:rgba(100,149,237,0.1);--blue-border:rgba(100,149,237,0.2);
-  --red:#e05c5c;--red-bg:rgba(224,92,92,0.12);
   --ig:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
 }
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding-bottom:80px;overflow-x:hidden}
-
-/* NAV */
+body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif;min-height:100vh;padding-bottom:80px}
 .nav{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
 .nav-btn{flex:1;padding:12px 4px;border:none;background:none;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;transition:.15s}
 .nav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
 .nav-btn i{display:block;font-size:18px;margin-bottom:3px}
-
-/* PANELS */
 .panel{display:none;padding:16px}
 .panel.active{display:block}
-
-/* HEADER */
-.header{padding:14px 16px 0;background:var(--surface);border-bottom:1px solid var(--border)}
-.header-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-.header-date{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-.header-title{font-size:19px;font-weight:300;color:var(--text);margin-bottom:1px}
-.header-sub{font-size:10px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
-.header-badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;margin-left:10px}
-.streak-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(201,169,110,.12);color:var(--gold);font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;letter-spacing:.03em}
-.progress-label{font-size:10px;color:var(--muted2);text-align:right}
-.header-progress{height:3px;background:var(--border2)}
-.header-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e8c07e);transition:width .4s}
-
-/* CARDS */
+.header{padding:16px 16px 0}
+.header-date{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.header-title{font-size:20px;font-weight:300;color:var(--text);margin-bottom:2px}
+.header-sub{font-size:11px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
 .card-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .card-label::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* PHOTO */
-.photo-wrap{width:100%;border-radius:10px;overflow:hidden;background:#1a1a1a;margin-bottom:12px}
+.photo-wrap{width:100%;border-radius:10px;overflow:hidden;background:#1a1a1a;margin-bottom:12px;position:relative}
 .photo-wrap img{width:100%;display:block;object-fit:cover}
 .photo-wrap.feed{aspect-ratio:4/5}
 .photo-wrap.story{aspect-ratio:9/16}
-.photo-no-img{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:80px;font-size:12px;color:var(--muted2);font-style:italic;padding:20px;text-align:center}
-
-/* TEXT + CHAR COUNT */
-.textbox{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:14px;line-height:1.65;font-style:italic;color:#ddd;margin-bottom:4px}
-.textbox.story-cap{color:var(--muted);font-size:13px;border-style:dashed}
-.tags{font-size:11px;color:var(--gold);opacity:.55;margin-bottom:6px;line-height:1.9}
-.char-count{font-size:10px;color:var(--muted2);text-align:right;margin-bottom:10px}
-
-/* BUTTONS */
+.photo-no-img{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:80px;font-size:12px;color:var(--muted2);font-style:italic;padding:20px}
+.textbox{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:14px;line-height:1.65;font-style:italic;color:#ddd;margin-bottom:8px}
+.textbox.story-cap{color:var(--muted);font-size:13px;border-style:dashed;font-style:italic}
+.tags{font-size:11px;color:var(--gold);opacity:.6;margin-bottom:14px;line-height:1.9}
 .btn{width:100%;padding:11px 16px;border-radius:10px;border:none;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-bottom:7px;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;text-decoration:none}
 .btn i{font-size:15px}
-.btn:active{transform:scale(.97);opacity:.82}
+.btn:active{transform:scale(.97)}
 .btn-gold{background:var(--gold);color:#0a0a0a}
 .btn-outline{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}
 .btn-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
 .btn-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
 .btn-ig{background:var(--ig);color:#fff}
-.btn-muted{background:rgba(255,255,255,.03);color:var(--muted);border:1px solid var(--border2);font-size:10px}
-.btn-muted.notif-on{color:var(--gold);border-color:var(--gold-border);background:var(--gold-bg)}
-.btn-row{display:flex;gap:7px;margin-bottom:7px}
-.btn-row .btn{margin-bottom:0;flex:1}
-a.btn{box-sizing:border-box}
-
-/* POSTED + TIME */
-.posted-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
-.time-row{display:flex;align-items:center;gap:7px;margin-bottom:12px;flex-wrap:wrap}
-.time-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,169,110,.08);color:var(--gold);font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:.04em}
-.cd-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px}
-.cd-soon{background:var(--red-bg);color:var(--red)}
-.cd-ok{background:var(--green-bg);color:var(--green)}
-.cd-now{background:var(--gold-bg);color:var(--gold)}
-
-/* FILE LABEL */
-.file-label{font-size:11px;color:var(--muted2);font-family:monospace;margin-bottom:10px;letter-spacing:.02em}
-
-/* STORY ITEMS */
+.btn-notify{background:rgba(201,169,110,0.06);color:var(--muted);border:1px solid var(--border2);font-size:10px}
 .story-item{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .story-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .story-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .story-num{font-size:9px;color:var(--muted2);font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.copy-sm{background:none;border:1px solid var(--border2);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:.15s}
-.copy-sm:active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
-.open-link{display:block;text-align:center;font-size:10px;color:var(--blue);padding:5px 0;text-decoration:none}
-
-/* LOCK */
-.lock-banner{background:rgba(201,169,110,.05);border:1px solid var(--gold-border);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
-.lock-banner i{font-size:18px;color:var(--gold);flex-shrink:0;margin-top:1px}
-.lock-banner-text{font-size:12px;color:var(--muted);line-height:1.5}
-.lock-banner-text b{color:var(--gold)}
-
-/* NEXT UP */
-.next-up{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:12px;transition:.15s}
-.next-up:active{background:var(--gold-bg);border-color:var(--gold-border)}
-.next-up-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--border2)}
-.next-up-tag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:2px}
-.next-up-name{font-size:13px;color:var(--text)}
-.next-up-time{font-size:11px;color:var(--gold);margin-top:2px}
-.next-up-arr{margin-left:auto;color:var(--muted2);font-size:18px;flex-shrink:0}
-
-/* CALENDAR */
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.cal-title{font-size:13px;font-weight:600;color:var(--text)}
-.cal-nav{background:none;border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.15s}
-.cal-nav:active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
+.copy-sm{background:none;border:1px solid var(--border2);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer}
+.open-link{display:block;text-align:center;font-size:10px;color:var(--blue);padding:5px 0;text-decoration:none;letter-spacing:.04em}
+.posted-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.reel-item{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;width:100%;text-align:left;transition:.15s}
+.reel-item:active{background:var(--green-bg)}
+.reel-text{font-size:14px;font-style:italic;color:#ddd;flex:1}
+.reel-icon{color:var(--muted2);margin-left:12px;font-size:16px}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:.05em}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
-.cal-dow{font-size:9px;color:var(--muted2);text-align:center;font-weight:600;padding:3px 0}
-.cal-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:.15s;flex-direction:column;gap:2px}
-.cal-day.empty,.cal-day.grey{cursor:default;color:var(--muted2);opacity:.35}
+.cal-dow{font-size:9px;color:var(--muted2);text-align:center;font-weight:600;letter-spacing:.05em;padding:4px 0}
+.cal-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:.15s;position:relative;flex-direction:column;gap:2px}
+.cal-day.empty{cursor:default}
 .cal-day.today{border-color:var(--gold);color:var(--gold);font-weight:600}
 .cal-day.posted{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
-.cal-day.scheduled{background:rgba(255,255,255,.025);color:var(--muted)}
-.cal-day.active-day{background:var(--gold);color:#0a0a0a;font-weight:700}
-.cal-dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.65}
-.cal-legend{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+.cal-day.scheduled{background:rgba(201,169,110,.06);color:var(--muted)}
+.cal-day.active-day{background:var(--gold);color:#0a0a0a;font-weight:600}
+.cal-dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.6}
+.cal-legend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
 .cal-legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
-.cal-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-.stat-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center}
-.stat-n{font-size:24px;font-weight:300;line-height:1}
-.stat-n.gold{color:var(--gold)}
-.stat-n.green{color:var(--green)}
-.stat-lbl{font-size:9px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;font-weight:600}
-
-/* PROGRESS BAR */
-.prog-bar{background:var(--border);border-radius:4px;height:5px;overflow:hidden;margin-bottom:14px}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--green),#6ddfaa);transition:.3s}
-
-/* BROWSE */
-.browse-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.browse-nav-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.15s;flex-shrink:0}
-.browse-nav-btn:disabled{opacity:.22;cursor:default}
-.browse-nav-btn:not(:disabled):active{background:var(--gold-bg);color:var(--gold)}
-.browse-mid{text-align:center}
-.browse-label{font-size:13px;color:var(--text);font-weight:500}
-.browse-sublabel{font-size:10px;color:var(--muted2);margin-top:1px}
-.week-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
-.week-tab{flex-shrink:0;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:.15s}
-.week-tab.active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border)}
-
-/* REELS */
-.reel-search{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:10px;padding:11px 14px 11px 38px;font-size:13px;color:var(--text);margin-bottom:12px;outline:none;font-family:inherit;-webkit-appearance:none}
-.reel-search::placeholder{color:var(--muted2)}
-.reel-search:focus{border-color:var(--gold-border);background:rgba(201,169,110,.04)}
-.reel-search-wrap{position:relative;margin-bottom:12px}
-.reel-search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:16px;pointer-events:none}
-.reel-search-wrap .reel-search{margin-bottom:0}
-.reel-item{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;width:100%;text-align:left;transition:.15s}
-.reel-item:active{background:var(--green-bg);border-color:var(--green-border)}
-.reel-text{font-size:14px;font-style:italic;color:#ddd;flex:1}
-.reel-icon{color:var(--muted2);margin-left:12px;font-size:16px;flex-shrink:0}
-.reel-empty{text-align:center;padding:24px;color:var(--muted2);font-size:13px;font-style:italic}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1e1e1e;color:var(--text);border:1px solid var(--border2);padding:10px 20px;border-radius:20px;font-size:12px;font-weight:600;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap;display:flex;align-items:center;gap:8px;max-width:90vw}
+.cal-legend-dot{width:8px;height:8px;border-radius:50%}
+.browse-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.browse-nav-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px}
+.browse-nav-btn:disabled{opacity:.2}
+.browse-label{font-size:13px;color:var(--muted)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#0a0a0a;padding:10px 22px;border-radius:20px;font-size:12px;font-weight:600;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .toast.show{transform:translateX(-50%) translateY(0)}
-.toast.t-green{background:var(--green);color:#0a0a0a;border:none}
-.toast-icon{font-size:15px;flex-shrink:0}
+.toast.t-blue{background:var(--blue)}
+.lock-banner{background:rgba(201,169,110,.06);border:1px solid var(--gold-border);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+.lock-banner i{font-size:18px;color:var(--gold);flex-shrink:0;margin-top:1px}
+.lock-banner-text{font-size:12px;color:var(--muted);line-height:1.5}
+.lock-banner-text b{color:var(--gold);font-weight:600}
+.time-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,169,110,.08);color:var(--gold);font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:14px;letter-spacing:.05em}
+.week-pill{display:inline-flex;align-items:center;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted);font-size:10px;padding:4px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.05em}
+a.btn{box-sizing:border-box}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 </head>
 <body>
 
 <div class="header">
-  <div class="header-row">
-    <div>
-      <div class="header-date" id="hDate"></div>
-      <div class="header-title" id="hTitle">Daily Post</div>
-      <div class="header-sub" id="hSub"></div>
-    </div>
-    <div class="header-badges" id="hBadges"></div>
-  </div>
-  <div class="header-progress"><div class="header-progress-fill" id="hProgress" style="width:0%"></div></div>
+  <div class="header-date" id="headerDate"></div>
+  <div class="header-title" id="headerTitle">Daily Post</div>
+  <div class="header-sub" id="headerSub"></div>
 </div>
 
 <div class="nav">
@@ -193,528 +107,292 @@ a.btn{box-sizing:border-box}
 </div>
 
 <div class="panel active" id="panel-today"><div id="today-content"></div></div>
-
 <div class="panel" id="panel-calendar"><div id="cal-content"></div></div>
-
 <div class="panel" id="panel-reels">
-  <div class="reel-search-wrap">
-    <i class="ti ti-search"></i>
-    <input class="reel-search" id="reelSearch" placeholder="Search captions..." oninput="filterReels(this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
-  </div>
-  <div class="card">
-    <div class="card-label">Lifestyle reel</div>
-    <div id="lifestyle-list"></div>
-  </div>
-  <div class="card">
-    <div class="card-label">Thirsttrap pool</div>
-    <div style="text-align:center;padding:20px;color:var(--muted2);font-size:13px;font-style:italic">Coming soon — generate first batch 🔒</div>
-  </div>
+  <div class="card"><div class="card-label">Lifestyle reel</div><div id="lifestyle-list"></div></div>
+  <div class="card"><div class="card-label">Thirsttrap pool</div>
+  <div style="text-align:center;padding:20px;color:var(--muted2);font-size:13px;font-style:italic">Coming soon — generate first batch 🔒</div></div>
 </div>
-
 <div class="panel" id="panel-browse">
-  <div class="browse-top">
+  <div class="browse-nav">
     <button class="browse-nav-btn" id="prevBtn" onclick="changeDay(-1)"><i class="ti ti-chevron-left"></i></button>
-    <div class="browse-mid">
-      <div class="browse-label" id="dayLabel">Day 1 of 47</div>
-      <div class="browse-sublabel" id="dayWeekLabel"></div>
-    </div>
+    <span class="browse-label" id="dayLabel">Day 1 of 28</span>
     <button class="browse-nav-btn" id="nextBtn" onclick="changeDay(1)"><i class="ti ti-chevron-right"></i></button>
-  </div>
-  <div class="week-tabs">
-    <button class="week-tab active" id="wt1" onclick="jumpToWeek(1)">W1 Home</button>
-    <button class="week-tab" id="wt2" onclick="jumpToWeek(2)">W2 Paris</button>
-    <button class="week-tab" id="wt3" onclick="jumpToWeek(3)">W3 Beach</button>
-    <button class="week-tab" id="wt4" onclick="jumpToWeek(4)">W4 Nature</button>
-    <button class="week-tab" id="wt5" onclick="jumpToWeek(5)">W5 Home II</button>
-    <button class="week-tab" id="wt6" onclick="jumpToWeek(6)">W6 Tropical</button>
-    <button class="week-tab" id="wt7" onclick="jumpToWeek(7)">W7 Water</button>
   </div>
   <div id="browse-content"></div>
 </div>
 
-<div class="toast" id="toast"><i class="ti ti-check toast-icon" id="toastIcon"></i><span id="toastMsg">Copied</span></div>
+<div class="toast" id="toast"><i class="ti ti-check" id="toastIcon"></i><span id="toastMsg">Copied</span></div>
 
 <script>
+function thumb(id){return"https://drive.google.com/thumbnail?id="+id+"&sz=w600"}
+function driveUrl(id){return"https://drive.google.com/file/d/"+id+"/view"}
+
 var DAYS=[
 null,
-// WEEK 1 — Home & City
-{week:"Week 1 — Home & City",file:"livingroom_sofa01",feedId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx",time:"18:00",cap:"sundays should be illegal for being this good ☁️",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"doing absolutely nothing and somehow it's the best day of the week",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"cozy sunday, no plans, no people",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"the kind of day you don't want to end",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"}],reel:"soft hours only 🕯️"},
-{week:"Week 1 — Home & City",file:"bedroom_kneeling03",feedId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT",time:"18:00",cap:"the camera found me first.",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"monday morning and nowhere to rush",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"the light was doing something",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"stayed in longer than planned. worth it.",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
-{week:"Week 1 — Home & City",file:"cafe_terrace01",feedId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb",time:"12:00",cap:"iced coffee and nowhere to be.",tags:"#quietluxury #softlife #slowmorning #35mm",stories:[{cap:"third coffee today. no notes.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"slow morning, no alarm, no rush",photoId:"1cSGVVlWw595hB2MprbePp-lTvVsuLYiB"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"}],reel:"the camera found me first"},
-{week:"Week 1 — Home & City",file:"street_sitting02",feedId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th",time:"12:00",cap:"the kind of afternoon that lasts too long.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"out here finding new spots",photoId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th"},{cap:"the afternoon had other plans",photoId:"1k2Shs_gIsjbVTz0EKEOV9X4nkfYxMs2r"},{cap:"she always finds somewhere to sit",photoId:"1sCeMvAwY2UIewhZitQvFYRqdhg5mgvwz"}],reel:"no plans, just vibes"},
-{week:"Week 1 — Home & City",file:"night_crouch01",feedId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H",time:"20:00",cap:"friday energy, finally 🖤",tags:"#streetstyle #citynight #quietluxury #softlife",stories:[{cap:"leaving the house feels like a personality trait",photoId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H"},{cap:"friday night and she's actually going out",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"},{cap:"city nights hit different",photoId:"1ZpyAcr1MYb0gfLYwa90DmEdVc7TM4o5r"}],reel:"unbothered szn"},
-{week:"Week 1 — Home & City",file:"garden_dress01",feedId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj",time:"12:00",cap:"she needed this.",tags:"#slowlife #quietluxury #softlife #35mm",stories:[{cap:"found a garden. stayed too long.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"},{cap:"the greenery, the light, the silence",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"the version of me I don't post everywhere 🔒",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"she needed this"},
-{week:"Week 1 — Home & City",file:"bedroom_glasses01",feedId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG",time:"16:00",cap:"glasses on, world off 📖",tags:"#quietluxury #softlife #35mm #sundaymood",stories:[{cap:"currently: not available",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"},{cap:"sunday reset, do not disturb",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"glasses on means I'm serious about doing nothing",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"}],reel:"staying in was the right call"},
-// WEEK 2 — City & Paris
-{week:"Week 2 — City & Paris",file:"bedroom_mirror01",feedId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT",time:"18:00",cap:"mirror check before I convince myself to go out 🪞",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"monday mirror check. she went.",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"talked herself into going out this time",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"the mirror always cooperates",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
-{week:"Week 2 — City & Paris",file:"floor_selfie01",feedId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt",time:"11:00",cap:"the lighting said yes.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"the lighting said yes",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"},{cap:"still tuesday. feels like saturday.",photoId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"}],reel:"she woke up like this 🤍"},
-{week:"Week 2 — City & Paris",file:"cafe_bench01",feedId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx",time:"12:00",cap:"same girl, different moods.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"found a new spot. staying here forever.",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"same café energy, different day",photoId:"1cSGVVlWw595hB2MprbePp-lTvVsuLYiB"},{cap:"depends on the day.",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"}],reel:"the camera found me first"},
-{week:"Week 2 — City & Paris",file:"street_crouching01",feedId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73",time:"12:00",cap:"something about this corner.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"out here looking for good corners",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"the streets always deliver",photoId:"1sCeMvAwY2UIewhZitQvFYRqdhg5mgvwz"},{cap:"found it. didn't plan to.",photoId:"14-XfswfoEg5unEvEwEb1MY9YF1E6YBe0"}],reel:"no plans, just vibes"},
-{week:"Week 2 — City & Paris",file:"airport_coffee01",feedId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s",time:"18:00",cap:"airport coffee hits different. ✈️",tags:"#travelstyle #quietluxury #slowtravel #35mm",stories:[{cap:"boarding soon. current mood: chaotic but cute",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"carry-on only, good vibes only",photoId:"1_H9cmVnT9Yd8VEyZXfbBnR0mb4otv0yM"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1oIOQiVwVGs9bpyhWBYo7TfLUaHetuR8L"}],reel:"quiet confidence is the loudest thing in the room"},
-{week:"Week 2 — City & Paris",file:"paris_balcony01",feedId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO",time:"12:00",cap:"woke up and remembered I'm in Paris.\nnot bad. ☕",tags:"#paris #parisianlife #travelstyle #quietluxury",stories:[{cap:"the balcony. the coffee. the croissant. she's healing.",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris mornings are a different category",photoId:"14LXunvPLL1IwTwM92znV3AcoBZ2ES5kX"},{cap:"woke up in paris, going back to sleep in paris",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"}],reel:"she's in her soft era 🌙"},
-{week:"Week 2 — City & Paris",file:"paris_crossing01",feedId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R",time:"12:00",cap:"paris does something to the light. every time. 🥐",tags:"#paris #streetstyle #quietluxury #35mm",stories:[{cap:"got lost for 2 hours. found the best boulangerie. worth it.",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"paris streets and no agenda",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"paris light. different every time.",photoId:"11moj6kGOLQ9GiDyeXG5l975SOthUbskZ"}],reel:"soft hours only 🕯️"},
-// WEEK 3 — Paris → Beach
-{week:"Week 3 — Paris → Beach",file:"balcony_raised01",feedId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O",time:"10:00",cap:"last morning here.",tags:"#paris #quietluxury #travelstyle #slowlife",stories:[{cap:"last morning on this balcony",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"},{cap:"paris is different when you know you're leaving",photoId:"14ZW-Nkg8kWfZPURmmdEhjAC9aspeW-gR"},{cap:"the version of me I don't post everywhere 🔒",photoId:"14LXunvPLL1IwTwM92znV3AcoBZ2ES5kX"}],reel:"she's in her soft era 🌙"},
-{week:"Week 3 — Paris → Beach",file:"bedroom_lying01",feedId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE",time:"18:00",cap:"back. still thinking about paris.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"the jet lag is a lie. it's one time zone.",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"},{cap:"back home. still mentally in paris.",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"plants are alive. she's alive. victory.",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"}],reel:"staying in was the right call"},
-{week:"Week 3 — Paris → Beach",file:"street_doorstep01",feedId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g",time:"17:00",cap:"golden hour and no plans.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"back to the regular programme",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"},{cap:"the city missed her (she says)",photoId:"14-XfswfoEg5unEvEwEb1MY9YF1E6YBe0"},{cap:"golden hour every time she leaves the apartment",photoId:"1ZpyAcr1MYb0gfLYwa90DmEdVc7TM4o5r"}],reel:"no plans, just vibes"},
-{week:"Week 3 — Paris → Beach",file:"street_sitting03",feedId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn",time:"12:00",cap:"she always finds the good spot.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"found the best steps in the city",photoId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn"},{cap:"she does this every time",photoId:"1ZpyAcr1MYb0gfLYwa90DmEdVc7TM4o5r"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1578ScoC4ZinVA3puG42WIoUhZe5JEfM7"}],reel:"unbothered szn"},
-{week:"Week 3 — Paris → Beach",file:"beach_coconut01",feedId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC",time:"18:00",cap:"croissants yesterday. coconuts today. 🥥",tags:"#slowlife #softlife #beachday #quietluxury",stories:[{cap:"current location: not coming back",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"the flight was worth it for this",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"she doesn't plan ahead. it shows.",photoId:"1TNbLAgxxd52PW7nWb0c3YDquib76pl6W"}],reel:"mornings hit different lately"},
-{week:"Week 3 — Paris → Beach",file:"beach_lounger02",feedId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs",time:"12:00",cap:"do not disturb. 🌊",tags:"#slowlife #quietluxury #softlife #beachday",stories:[{cap:"phone on silent. sunscreen on. perfect.",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"},{cap:"island time means: no time",photoId:"1-QD1lWNyRl1IwE5WCPwlxZWY5inQBVCs"},{cap:"she's fully offline and fully okay with it",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"}],reel:"no plans, just vibes"},
-{week:"Week 3 — Paris → Beach",file:"beach_reading01",feedId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f",time:"16:00",cap:"last day. not ready. 🌅",tags:"#slowlife #quietluxury #travelstyle #softlife",stories:[{cap:"last beach morning. she's not handling it.",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"},{cap:"packed her bag. unpacked it. packed it again.",photoId:"1r_PzQLQn4LXtFMw0rHrSJ9EpnDrDPTPQ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"}],reel:"the camera found me first"},
-// WEEK 4 — Nature Reset
-{week:"Week 4 — Nature Reset",file:"bedroom_selfie01",feedId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu",time:"18:00",cap:"mornings hit different lately.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"back to reality. still unpacking.",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"},{cap:"monday mornings are gentler after a trip",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"she's home. she's okay.",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"}],reel:"mornings hit different lately"},
-{week:"Week 4 — Nature Reset",file:"bedroom_kneeling04",feedId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj",time:"18:00",cap:"soft light, no plans.",tags:"#quietluxury #softlife #35mm #candlelight",stories:[{cap:"candles on. world off.",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"soft light, slower pace",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"tuesday feels like sunday this week",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"soft hours only 🕯️"},
-{week:"Week 4 — Nature Reset",file:"street_sitting01",feedId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX",time:"12:00",cap:"the city always pulls her back.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"out here again",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"},{cap:"found a new favourite street",photoId:"1578ScoC4ZinVA3puG42WIoUhZe5JEfM7"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1k2Shs_gIsjbVTz0EKEOV9X4nkfYxMs2r"}],reel:"no plans, just vibes"},
-{week:"Week 4 — Nature Reset",file:"street_selfie01",feedId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt",time:"12:00",cap:"leaving the house was the right call.",tags:"#streetstyle #citylife #quietluxury #softlife",stories:[{cap:"the afternoon cooperated",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"},{cap:"she gave the city one more chance",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"leaving the house was indeed the right call",photoId:"1ReAh4f07nZhqrc_gT6AJSw89sMbmKWHo"}],reel:"unbothered szn"},
-{week:"Week 4 — Nature Reset",file:"lake_mug01",feedId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX",time:"10:00",cap:"no signal. no problem.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"trading city noise for this",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"somewhere with no signal and one very good mug",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"she found the quiet again",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"}],reel:"she needed this"},
-{week:"Week 4 — Nature Reset",file:"lake_sup01",feedId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg",time:"09:00",cap:"the kind of quiet you can't find in the city.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"out on the water before anyone else woke up",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"the lake has a very strict no-phones policy",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"the version of me I don't post everywhere 🔒",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"she needed this"},
-{week:"Week 4 — Nature Reset",file:"mountain_walking01",feedId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx",time:"11:00",cap:"somewhere with no agenda.",tags:"#slowlife #quietluxury #nature #softlife",stories:[{cap:"found the view. it found her first.",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"somewhere nobody knows her name",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"last walk of the trip. she took her time.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"no plans, just vibes"},
-// WEEK 5 — Home Reset II
-{week:"Week 5 — Home Reset II",file:"livingroom_mirrorselfie01",feedId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG",time:"18:00",cap:"found the light again.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"home feels different after a trip",photoId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG"},{cap:"unpacked. mostly.",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"}],reel:"soft hours only 🕯️"},
-{week:"Week 5 — Home Reset II",file:"bedroom_floorselfie01",feedId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI",time:"18:00",cap:"floor is where she thinks best.",tags:"#quietluxury #softlife #35mm #candlelight",stories:[{cap:"sometimes the floor is the answer",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"},{cap:"candlelight and no plans",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"}],reel:"mornings hit different lately"},
-{week:"Week 5 — Home Reset II",file:"bedroom_selfie02",feedId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc",time:"16:00",cap:"she almost stayed in.",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"talked herself into it. again.",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"the mirror cooperated this time",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"going out as a protest against staying in",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"}],reel:"staying in was the right call"},
-{week:"Week 5 — Home Reset II",file:"bedroom_kneeling01",feedId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd",time:"18:00",cap:"slow tuesday.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"nothing happened. it was great.",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"soft light, no agenda",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
-{week:"Week 5 — Home Reset II",file:"street_shorts01",feedId:"1FaED0jljL8hw7sLH7jYEeIDbXHyAluh1",time:"12:00",cap:"the afternoon had plans she didn't.",tags:"#streetstyle #ootd #quietluxury #softlife",stories:[{cap:"the weather demanded shorts",photoId:"1FaED0jljL8hw7sLH7jYEeIDbXHyAluh1"},{cap:"ended up somewhere else entirely",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"no plans, just vibes"},
-{week:"Week 5 — Home Reset II",file:"balcony_leaning01",feedId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt",time:"17:00",cap:"just needed some air.",tags:"#quietluxury #slowlife #softlife #35mm",stories:[{cap:"balcony in the late afternoon",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"},{cap:"the city from up here",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"she needed this"},
-{week:"Week 5 — Home Reset II",file:"paris_balcony02",feedId:"1Os4TGQW3-GaxOELbhGjJXaEBdBAUxW3H",time:"11:00",cap:"paris again. obviously. ☕",tags:"#paris #quietluxury #travelstyle #slowlife",stories:[{cap:"the balcony, again. always the balcony.",photoId:"1Os4TGQW3-GaxOELbhGjJXaEBdBAUxW3H"},{cap:"paris mornings are a recurring theme",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"she came back. of course she did.",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"}],reel:"she's in her soft era 🌙"},
-// WEEK 6 — Tropical
-{week:"Week 6 — Tropical",file:"yacht_standing01",feedId:"1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF",time:"12:00",cap:"wind wins every time.",tags:"#slowtravel #quietluxury #softlife #beachday",stories:[{cap:"somewhere in the middle of nowhere",photoId:"1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF"},{cap:"the horizon does something to her",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"}],reel:"no plans, just vibes"},
-{week:"Week 6 — Tropical",file:"hotel_pergola01",feedId:"1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-",time:"12:00",cap:"somewhere warm, no agenda.",tags:"#slowtravel #quietluxury #softlife #travelstyle",stories:[{cap:"the kind of place you stop rushing",photoId:"1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-"},{cap:"white walls and no schedule",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF"}],reel:"she needed this"},
-{week:"Week 6 — Tropical",file:"beach_palms01",feedId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ",time:"18:00",cap:"she picked the tropical option.",tags:"#slowtravel #quietluxury #beachday #softlife",stories:[{cap:"palm trees and zero apologies",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"},{cap:"the upgrade was necessary",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-"}],reel:"mornings hit different lately"},
-{week:"Week 6 — Tropical",file:"beach_bar01",feedId:"1PgOWtAvn1cmvo1rXW109PqQoei4sf_W8",time:"18:00",cap:"third drink of the day.",tags:"#beachday #slowlife #quietluxury #softlife",stories:[{cap:"the beach bar found us",photoId:"1PgOWtAvn1cmvo1rXW109PqQoei4sf_W8"},{cap:"sunset in one hour. not moving.",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"}],reel:"no plans, just vibes"},
-{week:"Week 6 — Tropical",file:"beach_dress01",feedId:"1n-9iM3A25yHIpyF88B22HtiHwKOllJ8J",time:"12:00",cap:"the waves cooperated.",tags:"#beachday #quietluxury #softlife #travelstyle",stories:[{cap:"the water was warmer than expected",photoId:"1n-9iM3A25yHIpyF88B22HtiHwKOllJ8J"},{cap:"walked the whole shore. found everything.",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1PgOWtAvn1cmvo1rXW109PqQoei4sf_W8"}],reel:"the camera found me first"},
-{week:"Week 6 — Tropical",file:"beach_sunset01",feedId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ",time:"19:00",cap:"last light, no plans.",tags:"#slowlife #beachday #quietluxury #softlife",stories:[{cap:"the sky did that thing again",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"},{cap:"stayed until they kicked her off the beach",photoId:"1n-9iM3A25yHIpyF88B22HtiHwKOllJ8J"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1Xq2NT3yCXe1Dhvm0noTWNcIquqnQgQPD"}],reel:"she needed this"},
-{week:"Week 6 — Tropical",file:"beach_sitting01",feedId:"1Xq2NT3yCXe1Dhvm0noTWNcIquqnQgQPD",time:"12:00",cap:"sand still everywhere. worth it.",tags:"#beachday #quietluxury #softlife #slowtravel",stories:[{cap:"last beach morning. she's not handling it.",photoId:"1Xq2NT3yCXe1Dhvm0noTWNcIquqnQgQPD"},{cap:"the sun was early. she was earlier.",photoId:"1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1qWPSOscsld8uK3dIxFwnjdzxPGTi3CAZ"}],reel:"no plans, just vibes"},
-// WEEK 7 — Water & Nature II
-{week:"Week 7 — Water & Nature II",file:"beach_kneeling01",feedId:"1tlhAsab_i8DZrWWGLQPq_Ad2DwhXkvS-",time:"19:00",cap:"the sea at this hour. nothing else.",tags:"#slowlife #beachday #quietluxury #softlife",stories:[{cap:"the light does something right before dark",photoId:"1tlhAsab_i8DZrWWGLQPq_Ad2DwhXkvS-"},{cap:"roses on the shore. no reason.",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"}],reel:"she needed this"},
-{week:"Week 7 — Water & Nature II",file:"beach_lounger03",feedId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x",time:"15:00",cap:"not moving until sunset.",tags:"#beachday #quietluxury #softlife #slowtravel",stories:[{cap:"fully committed to this lounger",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"the book was an excuse to stay",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"}],reel:"no plans, just vibes"},
-{week:"Week 7 — Water & Nature II",file:"beach_sitting01",feedId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY",time:"17:00",cap:"the sand remembers everyone.",tags:"#beachday #slowlife #quietluxury #softlife",stories:[{cap:"late afternoon, nowhere else to be",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"found a good stretch of beach",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1tlhAsab_i8DZrWWGLQPq_Ad2DwhXkvS-"}],reel:"the camera found me first"},
-{week:"Week 7 — Water & Nature II",file:"lake_ladder01",feedId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx",time:"11:00",cap:"cold water, no regrets.",tags:"#slowlife #nature #quietluxury #softlife",stories:[{cap:"the lake was asking for it",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"still cold. still going.",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"the version of me I don't post everywhere 🔒",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"}],reel:"she needed this"},
-{week:"Week 7 — Water & Nature II",file:"mountain_fence01",feedId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD",time:"11:00",cap:"somewhere above the noise.",tags:"#slowlife #nature #quietluxury #softlife",stories:[{cap:"the view was the only plan",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"walked until the city disappeared",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"she'll stay as long as it takes",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"no plans, just vibes"}
+{week:"Week 1 — Back Home",file:"livingroom_sofa01",feedId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx",time:"18:00",cap:"sundays should be illegal for being this good ☁️",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"new post — sunday, finally",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"the lighting before the photo",photoId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG"},{cap:"the floor had better light anyway",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"}],reel:"soft hours only 🕯️"},
+{week:"Week 1 — Back Home",file:"bedroom_mirror01",feedId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT",time:"18:00",cap:"mirror check before I convince myself to go out 🪞",tags:"#quietluxury #softlife #35mm #ootd",stories:[{cap:"new post",photoId:"1a_Y-O43Ny09IvZtioOvTV1Aom4Mi_RcT"},{cap:"still deciding",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"decision made. staying in.",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"mornings hit different lately"},
+{week:"Week 1 — Back Home",file:"bedroom_glasses01",feedId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG",time:"16:00",cap:"glasses on, world off 📖",tags:"#quietluxury #softlife #35mm #sundaymood",stories:[{cap:"new post",photoId:"15Y9gOFywL-Q2A_FpAjA9ePm2nAKD83hG"},{cap:"currently: doing nothing, professionally",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"},{cap:"the rest of the bed",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"}],reel:"staying in was the right call"},
+{week:"Week 1 — Back Home",file:"livingroom_mirrorselfie01",feedId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG",time:"12:00",cap:"the lighting said yes.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"new post",photoId:"1hqK-nG1DFE2St-6SHa5jgK8ditQGUqKG"},{cap:"same room, different day",photoId:"1e08mffbZioTpEY75d8YobYmkqJeDhvWx"},{cap:"the floor had better light anyway",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"}],reel:"she woke up like this 🤍"},
+{week:"Week 1 — Back Home",file:"cafe_terrace01",feedId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb",time:"12:00",cap:"iced coffee and nowhere to be.",tags:"#quietluxury #softlife #slowmorning #35mm",stories:[{cap:"new post",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"second one of the day",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"just walking",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"the camera found me first"},
+{week:"Week 1 — Back Home",file:"night_crouch01",feedId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H",time:"20:00",cap:"friday energy, finally 🖤",tags:"#streetstyle #citynight #quietluxury #softlife",stories:[{cap:"new post",photoId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H"},{cap:"the street found good light too",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"just walking, allegedly",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"unbothered szn"},
+{week:"Week 1 — Back Home",file:"cafe_bench01",feedId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx",time:"11:00",cap:"same girl, different moods.",tags:"#quietluxury #softlife #35mm #slowmorning",stories:[{cap:"new post",photoId:"1mMTHxHIsycGT05cXB09hC_xi64tjlOZx"},{cap:"two hours, one coffee",photoId:"1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb"},{cap:"the floor had better light anyway",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"}],reel:"no plans, just vibes"},
+{week:"Week 2 — Lake Escape",file:"lake_mug01",feedId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX",time:"10:00",cap:"somewhere with no agenda.",tags:"#slowlife #softlife #quietluxury #lakeside",stories:[{cap:"new post — lake house, day one",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"she tried the paddleboard. update soon.",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"view from the dock",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"she needed this"},
+{week:"Week 2 — Lake Escape",file:"lake_sup01",feedId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg",time:"14:00",cap:"she needed this.",tags:"#slowlife #quietluxury #softlife #lakeside",stories:[{cap:"new post",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"morning coffee, same view",photoId:"1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX"},{cap:"the dock has a ladder. she used it eventually.",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"}],reel:"no plans, just vibes"},
+{week:"Week 2 — Lake Escape",file:"lake_ladder01",feedId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx",time:"17:00",cap:"no signal. no problem.",tags:"#slowlife #quietluxury #softlife #lakeside",stories:[{cap:"new post",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"still on the dock",photoId:"1-aHhtJyUxGmcF2Jif5lQEequHG8GyxWg"},{cap:"the garden's calling tomorrow",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"she's in her soft era 🌙"},
+{week:"Week 2 — Lake Escape",file:"garden_dress01",feedId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj",time:"13:00",cap:"the kind of wednesday that feels like a saturday.",tags:"#slowlife #softlife #quietluxury #gardendays",stories:[{cap:"new post",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"},{cap:"the lake house has a garden too",photoId:"176jJXrMCMYJk-SFMtyRATmnM8JdHX9Gx"},{cap:"tomorrow: hills",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"}],reel:"soft hours only 🕯️"},
+{week:"Week 2 — Lake Escape",file:"mountain_walking01",feedId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx",time:"15:00",cap:"she doesn't make plans. she makes moves.",tags:"#slowlife #quietluxury #naturewalk #softlife",stories:[{cap:"new post — somewhere up here",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"kept walking",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"the dress was not made for hiking. worth it.",photoId:"1y-QrY84zbmRR3UetweEY4z6atC8gkcXj"}],reel:"quiet confidence is the loudest thing in the room"},
+{week:"Week 2 — Lake Escape",file:"mountain_fence01",feedId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD",time:"16:00",cap:"the view was worth the drive.",tags:"#slowlife #quietluxury #goldenhour #naturewalk",stories:[{cap:"new post",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"},{cap:"same hills, last light",photoId:"1qPBVlKidvGOxWSyvLTwx3IXJ4Ddz4Wrx"},{cap:"almost home",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"}],reel:"the camera found me first"},
+{week:"Week 2 — Lake Escape",file:"balcony_leaning01",feedId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt",time:"18:00",cap:"back. kind of.",tags:"#quietluxury #softlife #balconyview #slowlife",stories:[{cap:"new post",photoId:"1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt"},{cap:"the balcony missed her",photoId:"1HpZ4DfQdD0qP9Ef92TuHpu2j-q3tDw_O"},{cap:"the hills, one more time",photoId:"1NuBusZOMRc8P4BTlmb6m2IqZ8LWDszyD"}],reel:"staying in was the right call"},
+{week:"Week 3 — Work Begins",file:"bedroom_selfie01",feedId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu",time:"16:00",cap:"one more slow sunday.",tags:"#quietluxury #softlife #35mm #sundaymood",stories:[{cap:"new post",photoId:"1CUpB5h0Tm-iJP6vJa_1Ux_7BOdrm-nTu"},{cap:"last one of these for a while",photoId:"1bp11tesq1AOummJyQQA9JbRazl2vhIjc"},{cap:"the floor again. obviously.",photoId:"1R402fXsRt6IZna24Gw5nTYcVGZIEAkZI"}],reel:"she woke up like this 🤍"},
+{week:"Week 3 — Work Begins",file:"bedroom_lying01",feedId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE",time:"19:00",cap:"the week started.",tags:"#quietluxury #softlife #35mm #mondaymood",stories:[{cap:"new post",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"},{cap:"horizontal. no further comment.",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"this is also a valid position",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"}],reel:"soft hours only 🕯️"},
+{week:"Week 3 — Work Begins",file:"street_sitting01",feedId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX",time:"13:00",cap:"somewhere between here and there.",tags:"#streetstyle #quietluxury #citylife #onset",stories:[{cap:"new post",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"},{cap:"lunch break, technically",photoId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th"},{cap:"she was just walking",photoId:"1b1woZzFeetExsx0Z2jH-CfnDglaVRjkt"}],reel:"quiet confidence is the loudest thing in the room"},
+{week:"Week 3 — Work Begins",file:"street_sitting02",feedId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th",time:"12:00",cap:"city pace. she keeps up.",tags:"#streetstyle #quietluxury #citylife #35mm",stories:[{cap:"new post",photoId:"1y3POeGNqfGBsCC_usYCa_V-S6T6Gh4th"},{cap:"different street, same energy",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"},{cap:"found a doorstep she liked",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"}],reel:"the camera found me first"},
+{week:"Week 3 — Work Begins",file:"street_crouching01",feedId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73",time:"18:00",cap:"the camera found me first.",tags:"#streetstyle #quietluxury #citynight #35mm",stories:[{cap:"new post",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"},{cap:"the light was too good not to",photoId:"1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H"},{cap:"one more before the flight",photoId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn"}],reel:"unbothered szn"},
+{week:"Week 3 — Work Begins",file:"airport_coffee01",feedId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s",time:"18:00",cap:"airport coffee hits different. ✈️",tags:"#travelstyle #quietluxury #slowtravel #35mm",stories:[{cap:"new post",photoId:"1PGPaD6AOoZn2uiL6WONgdZ364kr3Ni9s"},{cap:"boarding soon. current mood: chaotic but cute",photoId:"1ReAh4f07nZhqrc_gT6AJSw89sMbmKWHo"},{cap:"one last shot of the city before leaving",photoId:"1D4gCX13DH9canUgIxMMog8aD0ge1RP73"}],reel:"quiet confidence is the loudest thing in the room"},
+{week:"Week 3 — Work Begins",file:"paris_balcony01",feedId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO",time:"10:00",cap:"woke up and remembered I'm in Paris. not bad. ☕",tags:"#paris #parisianlife #travelstyle #quietluxury",stories:[{cap:"new post",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"the balcony. the coffee. the croissant. she's healing.",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"today: walking, mostly",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"}],reel:"she's in her soft era 🌙"},
+{week:"Week 4 — Paris & Coast",file:"paris_crossing01",feedId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R",time:"12:00",cap:"paris does something to the light. every time.",tags:"#paris #streetstyle #quietluxury #35mm",stories:[{cap:"new post",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"got lost for 2 hours. found the best boulangerie. worth it.",photoId:"1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO"},{cap:"one more before the flight back",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"}],reel:"soft hours only 🕯️"},
+{week:"Week 4 — Paris & Coast",file:"street_doorstep01",feedId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g",time:"17:00",cap:"last day here.",tags:"#paris #streetstyle #quietluxury #travelstyle",stories:[{cap:"new post",photoId:"1Nkeyd5vuUxv3_nYBZugy4x8K_rYJ6K0g"},{cap:"paris streets, no agenda, last time this trip",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"},{cap:"the crossing, one more time",photoId:"1LRSDs7aNQK0VbAgX9gslvpxwGyZ0KT6R"}],reel:"the camera found me first"},
+{week:"Week 4 — Paris & Coast",file:"street_sitting03",feedId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn",time:"13:00",cap:"back to regular scheduled programming.",tags:"#streetstyle #quietluxury #citylife #35mm",stories:[{cap:"new post",photoId:"1NX6ecWiWsSptEN4mA775TBBoxh1zZlwn"},{cap:"home turf again",photoId:"1vdpnKTpEQnfV_FZKwAFtofV51IbN4yyX"},{cap:"the floor missed her too",photoId:"16jyQ7ncVM3ZTJU8MMVPzXRGlM7dlq2rt"}],reel:"no plans, just vibes"},
+{week:"Week 4 — Paris & Coast",file:"bedroom_kneeling01",feedId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd",time:"19:00",cap:"soft hours only 🕯️",tags:"#quietluxury #softlife #35mm #slowevening",stories:[{cap:"new post",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"low light, no plans",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"still horizontal, different day",photoId:"1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE"}],reel:"she's in her soft era 🌙"},
+{week:"Week 4 — Paris & Coast",file:"bedroom_kneeling03",feedId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT",time:"18:00",cap:"staying in was the right call.",tags:"#quietluxury #softlife #35mm #slowevening",stories:[{cap:"new post",photoId:"1VhYo3V3EIve1oWax7_yl0G1lqqVGRdlT"},{cap:"three days home straight. it's fine.",photoId:"1COEWekPFBXxP-pfgqlyUYW4yQeooLnJd"},{cap:"the week, summarized",photoId:"1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj"}],reel:"staying in was the right call"},
+{week:"Week 4 — Paris & Coast",file:"beach_coconut01",feedId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC",time:"18:00",cap:"croissants yesterday. coconuts today. 🥥",tags:"#beachday #slowlife #quietluxury #softlife",stories:[{cap:"new post",photoId:"12NywJK2zQpw0FErqTHB7QiU3S4wby4cC"},{cap:"current location: not coming back",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"},{cap:"halfway through the book already",photoId:"1ZNu4aUjP8960WPmy4qhW3Rp9HRR0FpTs"}],reel:"mornings hit different lately"},
+{week:"Week 4 — Paris & Coast",file:"beach_sitting01",feedId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY",time:"13:00",cap:"do not disturb. 🌊",tags:"#beachday #slowlife #quietluxury #softlife",stories:[{cap:"new post",photoId:"1bsL0THW1saTDyrt6KGN7ghns95UonSVY"},{cap:"phone on silent. sunscreen on. perfect.",photoId:"1__cDS9hApdkYkXb-jvyK5k75p9MLfO4x"},{cap:"one more before heading back",photoId:"1gGPTnOby6pBmRbTKFymHWNDLBpZC9X-f"}],reel:"the camera found me first"}
 ];
 
-var LIFESTYLE_REELS=["soft hours only 🕯️","mornings hit different lately","no plans, just vibes","the camera found me first","unbothered szn","quiet confidence is the loudest thing in the room","she woke up like this 🤍","staying in was the right call","not looking for attention, it just finds me","she's in her soft era 🌙","she needed this","somewhere with no signal","no agenda, just this","lake mornings hit different"];
+var TOTAL_DAYS=28;
+var LIFESTYLE_REELS=["soft hours only 🕯️","mornings hit different lately","no plans, just vibes","the camera found me first","unbothered szn","quiet confidence is the loudest thing in the room","she woke up like this 🤍","staying in was the right call","not looking for attention, it just finds me","she's in her soft era 🌙"];
 
 var START=new Date('2026-06-09');
 var browseDayNum=1;
-var calYear=new Date().getFullYear();
-var calMonth=new Date().getMonth();
 
-// ── STORAGE ──────────────────────────────────────────────
 function getPosted(){try{return JSON.parse(localStorage.getItem('dp_posted')||'{}')}catch(e){return{}}}
-function savePosted(p){localStorage.setItem('dp_posted',JSON.stringify(p))}
+function setPosted(k,v){var p=getPosted();p[k]=v;localStorage.setItem('dp_posted',JSON.stringify(p))}
+function isPosted(k){return!!getPosted()[k]}
 function dayKey(n){return'day_'+n}
-function isPosted(k){var p=getPosted()[k];return!!(p&&(p===true||p.v))}
-function getPostedAt(k){var p=getPosted()[k];return(p&&p.at)?new Date(p.at):null}
 
-// ── DAY LOGIC ────────────────────────────────────────────
 function getCurrentDay(){
   var t=new Date();t.setHours(0,0,0,0);
   var s=new Date(START);s.setHours(0,0,0,0);
   var d=Math.floor((t-s)/86400000)+1;
-  if(d<1)return 1;
-  return((d-1)%47)+1;
+  return Math.max(1,Math.min(((d-1)%TOTAL_DAYS)+1,TOTAL_DAYS));
 }
+
 function getActiveDay(){
   var cur=getCurrentDay();
   for(var i=1;i<=cur;i++){if(!isPosted(dayKey(i)))return i}
   return cur;
 }
-function getTotalPosted(){
-  var p=getPosted(),n=0;
-  for(var k in p){if(isPosted(k))n++}
-  return n;
-}
-function getStreak(){
-  var active=getActiveDay(),streak=0;
-  for(var i=active-1;i>=1;i--){if(isPosted(dayKey(i)))streak++;else break}
-  return streak;
-}
 
-// ── CLIPBOARD + HAPTIC ───────────────────────────────────
-function vibrate(){try{navigator.vibrate&&navigator.vibrate(28)}catch(e){}}
-
-function copyText(text,label,green){
-  var ok=function(){showToast(label||'Copied',green);vibrate()};
+function copy(text,label,blue){
+  var decoded=text.replace(/\\n/g,'\n');
   if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(ok).catch(function(){fbCopy(text,ok)});
-  }else{fbCopy(text,ok)}
+    navigator.clipboard.writeText(decoded).then(function(){showToast(label||'Copied',blue)}).catch(function(){fallbackCopy(decoded,label,blue)});
+  }else{fallbackCopy(decoded,label,blue)}
 }
-function fbCopy(text,cb){
+function fallbackCopy(text,label,blue){
   var ta=document.createElement('textarea');
-  ta.value=text;ta.style.cssText='position:fixed;opacity:0;top:0;left:0;pointer-events:none';
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
   document.body.appendChild(ta);ta.focus();ta.select();
-  try{document.execCommand('copy');cb&&cb()}catch(e){showToast('Long-press to copy')}
+  try{document.execCommand('copy');showToast(label||'Copied',blue)}catch(e){showToast('Long-press to copy')}
   document.body.removeChild(ta);
 }
-
-// Day copy actions — no escaping needed, uses DAYS[] directly
-function copyDay(n,what){
-  var d=DAYS[n];if(!d)return;
-  if(what==='all')copyText(d.cap+'\n\n'+d.tags,'Caption + hashtags copied ✓',true);
-  else if(what==='cap')copyText(d.cap,'Caption copied');
-  else if(what==='tags')copyText(d.tags,'Hashtags copied');
-  else if(what==='reel')copyText(d.reel,'Reel caption copied');
+function shareToIG(photoId,caption){
+  copy(caption,'Caption copied — save photo then post',true);
+  setTimeout(function(){window.open(driveUrl(photoId),'_blank')},300);
 }
-function copyStory(n,i){copyText(DAYS[n].stories[i].cap,'Story copied')}
-function openDrive(n){window.open('https://drive.google.com/file/d/'+DAYS[n].feedId+'/view','_blank')}
-function openStoryDrive(n,i){window.open('https://drive.google.com/file/d/'+DAYS[n].stories[i].photoId+'/view','_blank')}
-function shareToIG(n){
-  var d=DAYS[n];
-  copyText(d.cap+'\n\n'+d.tags,'Caption copied — save photo then post 📸');
-  setTimeout(function(){window.open('https://drive.google.com/file/d/'+d.feedId+'/view','_blank')},350);
+function showToast(msg,blue){
+  var t=document.getElementById('toast');
+  var icon=document.getElementById('toastIcon');
+  document.getElementById('toastMsg').textContent=msg;
+  if(blue){t.classList.add('t-blue');icon.className='ti ti-brand-instagram'}
+  else{t.classList.remove('t-blue');icon.className='ti ti-check'}
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2500);
 }
-function shareStoryToIG(n,i){
-  var s=DAYS[n].stories[i];
-  copyText(s.cap,'Story copied — open Drive to save',false);
-  setTimeout(function(){window.open('https://drive.google.com/file/d/'+s.photoId+'/view','_blank')},350);
-}
-function copyReel(i){copyText(LIFESTYLE_REELS[i],'Copied')}
-
-function thumb(id){return'https://drive.google.com/thumbnail?id='+id+'&sz=w600'}
-
-// ── COUNTDOWN ────────────────────────────────────────────
-function getCountdown(timeStr){
-  var p=timeStr.split(':');
-  var t=new Date();t.setHours(+p[0],+p[1],0,0);
-  var diff=t-new Date();
-  if(diff<0){var m2=Math.floor(-diff/60000);return{past:true,mins:m2}}
-  var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000);
-  return{past:false,h:h,m:m,mins:Math.floor(diff/60000)}
-}
-function cdHTML(timeStr,dayNum){
-  if(isPosted(dayKey(dayNum)))return'';
-  var c=getCountdown(timeStr);
-  if(c.past){
-    if(c.mins<180)return'<span class="cd-badge cd-now"><i class="ti ti-clock-hour-4" style="font-size:12px"></i>Post now</span>';
-    return'';
-  }
-  var label=c.h+'h '+c.m+'m';
-  if(c.mins<120)return'<span class="cd-badge cd-soon"><i class="ti ti-clock" style="font-size:12px"></i>'+label+'</span>';
-  return'<span class="cd-badge cd-ok"><i class="ti ti-clock" style="font-size:12px"></i>'+label+'</span>';
-}
-
-// ── NOTIFICATIONS ────────────────────────────────────────
-function notifKey(n){return'dp_notif_'+n}
-function hasNotif(n){return!!localStorage.getItem(notifKey(n))}
-function requestNotif(n){
-  if(!('Notification' in window)){showToast('Not supported');return}
+function requestNotif(time,dayNum){
+  if(!('Notification' in window)){showToast('Notifications not supported');return}
   Notification.requestPermission().then(function(p){
-    if(p==='granted'){
-      scheduleNotif(DAYS[n].time,n);
-      localStorage.setItem(notifKey(n),DAYS[n].time);
-      showToast('Reminder set for '+DAYS[n].time+' ✓');
-      document.getElementById('notifBtn'+n)&&renderToday();
-    }else{showToast('Enable notifications in Settings')}
+    if(p==='granted'){scheduleNotif(time,dayNum);showToast('Reminder set for '+time+' ✓')}
+    else{showToast('Allow notifications in Settings')}
   });
 }
-function scheduleNotif(timeStr,n){
-  var p=timeStr.split(':'),target=new Date();
-  target.setHours(+p[0],+p[1],0,0);
+function scheduleNotif(time,dayNum){
+  var parts=time.split(':');
+  var target=new Date();
+  target.setHours(parseInt(parts[0]),parseInt(parts[1]),0,0);
   if(target<=new Date())target.setDate(target.getDate()+1);
   setTimeout(function(){
-    if(Notification.permission==='granted'&&!isPosted(dayKey(n))){
-      new Notification('Time to post 📸',{body:'Day '+n+' — open Daily Post'});
+    if(Notification.permission==='granted'&&!isPosted(dayKey(dayNum))){
+      new Notification('Time to post 📸',{body:'Day '+dayNum+': open Daily Post'});
     }
   },target-new Date());
 }
-function reScheduleAll(){
-  if(Notification.permission!=='granted')return;
-  for(var n=1;n<=47;n++){
-    var t=localStorage.getItem(notifKey(n));
-    if(t&&!isPosted(dayKey(n)))scheduleNotif(t,n);
-  }
-}
-
-// ── MARK POSTED ──────────────────────────────────────────
 function markPosted(dayNum){
-  var p=getPosted();
-  p[dayKey(dayNum)]={v:true,at:Date.now()};
-  savePosted(p);
-  var next=getActiveDay();
-  updateHeader();
-  renderToday();
-  renderCalendar();
-  var msg=next>dayNum?'Day '+dayNum+' posted ✓  →  Day '+next+' is next':'Day '+dayNum+' posted ✓';
-  showToast(msg,true);
+  setPosted(dayKey(dayNum),true);
+  renderToday();renderCalendar();
+  showToast('Day '+dayNum+' posted ✓');
 }
+function escQ(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n')}
 
-// ── TOAST ────────────────────────────────────────────────
-var _toastTimer=null;
-function showToast(msg,green){
-  var el=document.getElementById('toast');
-  var ico=document.getElementById('toastIcon');
-  document.getElementById('toastMsg').textContent=msg;
-  if(green){el.classList.add('t-green');ico.className='ti ti-check toast-icon'}
-  else{el.classList.remove('t-green');ico.className='ti ti-copy toast-icon'}
-  el.classList.add('show');
-  clearTimeout(_toastTimer);
-  _toastTimer=setTimeout(function(){el.classList.remove('show')},2600);
-}
-
-// ── BUILD DAY HTML ───────────────────────────────────────
-function buildDay(d,n,compact){
-  if(!d)return'<div style="text-align:center;padding:48px 20px;color:var(--muted2);font-style:italic">No content for this day</div>';
-  var posted=isPosted(dayKey(n));
+function buildDay(d,dayNum,compact){
+  if(!d)return'<div style="text-align:center;padding:40px;color:var(--muted2);font-style:italic">No post for this day</div>';
+  var posted=isPosted(dayKey(dayNum));
   var active=getActiveDay();
-  var locked=n>active&&!posted;
-  var at=getPostedAt(dayKey(n));
-  var H='';
+  var locked=dayNum>active&&!posted;
+  var html='';
+
+  html+='<div class="week-pill"><i class="ti ti-map-pin" style="font-size:12px;margin-right:4px"></i>'+d.week+'</div>';
 
   if(locked){
-    H+='<div class="lock-banner"><i class="ti ti-lock"></i><div class="lock-banner-text"><b>Locked</b> — post Day '+(n-1)+' first.</div></div>';
+    html+='<div class="lock-banner"><i class="ti ti-lock"></i><div class="lock-banner-text"><b>Locked</b> — complete Day '+(dayNum-1)+' first to unlock this day.</div></div>';
   }
+  if(posted)html+='<div class="posted-badge"><i class="ti ti-check"></i> Posted</div>';
 
-  if(posted){
-    var ts=at?' · '+at.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+at.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'';
-    H+='<div class="posted-badge"><i class="ti ti-check"></i>Posted'+ts+'</div>';
-  }
-
-  // FEED CARD
-  H+='<div class="card"><div class="card-label">Feed post</div>';
-  H+='<div class="photo-wrap feed"><img src="'+thumb(d.feedId)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Preview not available<br>Open in Drive</div>\'"></div>';
-  H+='<div class="file-label">'+d.file+'</div>';
-  H+='<div class="time-row"><div class="time-badge"><i class="ti ti-clock" style="font-size:12px"></i>'+d.time+'</div>';
-  H+=cdHTML(d.time,n);
-  H+='</div>';
-  H+='<div class="textbox">'+d.cap.replace(/\n/g,'<br>')+'</div>';
-  H+='<div class="char-count">'+d.cap.length+' / 2200</div>';
-  H+='<div class="tags">'+d.tags+'</div>';
-
-  H+='<button class="btn btn-gold" onclick="copyDay('+n+',\'all\')"><i class="ti ti-copy"></i>Copy for Instagram</button>';
-  H+='<div class="btn-row">';
-  H+='<button class="btn btn-outline" onclick="copyDay('+n+',\'cap\')"><i class="ti ti-text-size"></i>Caption</button>';
-  H+='<button class="btn btn-outline" onclick="copyDay('+n+',\'tags\')"><i class="ti ti-hash"></i>Hashtags</button>';
-  H+='</div>';
-  H+='<button class="btn btn-ig" onclick="shareToIG('+n+')"><i class="ti ti-brand-instagram"></i>Open photo in Drive</button>';
+  html+='<div class="card"><div class="card-label">Feed post</div>';
+  html+='<div class="photo-wrap feed"><img src="'+thumb(d.feedId)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Open in Drive to view</div>\'"></div>';
+  html+='<div style="font-size:15px;color:var(--text);margin-bottom:4px">'+d.file+'</div>';
+  html+='<div class="time-badge"><i class="ti ti-clock" style="font-size:13px"></i>Post at '+d.time+'</div>';
+  html+='<div class="textbox">'+d.cap.replace(/\n/g,'<br>')+'</div>';
+  html+='<div class="tags">'+d.tags+'</div>';
+  html+='<button class="btn btn-gold" onclick="copy(\''+escQ(d.cap)+'\',\'Caption copied\')"><i class="ti ti-copy"></i>Copy caption</button>';
+  html+='<button class="btn btn-outline" onclick="copy(\''+escQ(d.tags)+'\',\'Hashtags copied\')"><i class="ti ti-hash"></i>Copy hashtags</button>';
+  html+='<button class="btn btn-ig" onclick="shareToIG(\''+d.feedId+'\',\''+escQ(d.cap)+'\')"><i class="ti ti-brand-instagram"></i>Share to Instagram</button>';
+  html+='<a class="btn btn-blue" href="'+driveUrl(d.feedId)+'" target="_blank"><i class="ti ti-external-link"></i>Open in Drive</a>';
   if(!posted&&!locked){
-    var nOn=hasNotif(n);
-    H+='<button class="btn btn-muted'+(nOn?' notif-on':'')+'" id="notifBtn'+n+'" onclick="requestNotif('+n+')"><i class="ti ti-bell"></i>'+(nOn?'Reminder set ✓':'Remind me at '+d.time)+'</button>';
-    H+='<button class="btn btn-green" onclick="markPosted('+n+')"><i class="ti ti-check"></i>Mark as posted</button>';
+    html+='<button class="btn btn-notify" onclick="requestNotif(\''+d.time+'\','+dayNum+')"><i class="ti ti-bell"></i>Remind me at '+d.time+'</button>';
+    html+='<button class="btn btn-green" onclick="markPosted('+dayNum+')"><i class="ti ti-check"></i>Mark as posted</button>';
   }
-  H+='</div>';
+  html+='</div>';
 
   if(!compact){
-    // STORIES
-    H+='<div class="card"><div class="card-label">Stories ('+d.stories.length+')</div>';
+    html+='<div class="card"><div class="card-label">Stories (3)</div>';
     d.stories.forEach(function(s,i){
-      H+='<div class="story-item">';
-      H+='<div class="story-header"><span class="story-num">Story 0'+(i+1)+'</span>';
-      H+='<button class="copy-sm" onclick="copyStory('+n+','+i+')">Copy</button></div>';
-      H+='<div class="photo-wrap story"><img src="'+thumb(s.photoId)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Open in Drive</div>\'"></div>';
-      H+='<div class="textbox story-cap">'+s.cap+'</div>';
-      H+='<button class="btn btn-ig" style="margin-bottom:4px" onclick="shareStoryToIG('+n+','+i+')"><i class="ti ti-brand-instagram"></i>Share story</button>';
-      H+='<a class="open-link" href="https://drive.google.com/file/d/'+s.photoId+'/view" target="_blank"><i class="ti ti-external-link" style="font-size:12px"></i> Open in Drive</a>';
-      H+='</div>';
+      html+='<div class="story-item">';
+      html+='<div class="story-header"><span class="story-num">Story 0'+(i+1)+'</span><button class="copy-sm" onclick="copy(\''+escQ(s.cap)+'\',\'Story copied\')">Copy</button></div>';
+      html+='<div class="photo-wrap story"><img src="'+thumb(s.photoId)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Open in Drive</div>\'"></div>';
+      html+='<div class="textbox story-cap">'+s.cap+'</div>';
+      html+='<button class="btn btn-ig" style="margin-bottom:4px" onclick="shareToIG(\''+s.photoId+'\',\''+escQ(s.cap)+'\')"><i class="ti ti-brand-instagram"></i>Share story</button>';
+      html+='<a class="open-link" href="'+driveUrl(s.photoId)+'" target="_blank"><i class="ti ti-external-link" style="font-size:12px"></i> Open in Drive</a>';
+      html+='</div>';
     });
-    H+='</div>';
+    html+='</div>';
 
-    // REEL
-    H+='<div class="card"><div class="card-label">Lifestyle reel</div>';
-    H+='<div class="textbox">'+d.reel+'</div>';
-    H+='<button class="btn btn-green" onclick="copyDay('+n+',\'reel\')"><i class="ti ti-copy"></i>Copy reel caption</button>';
-    H+='</div>';
+    html+='<div class="card"><div class="card-label">Lifestyle reel</div>';
+    html+='<div class="textbox">'+d.reel+'</div>';
+    html+='<button class="btn btn-green" onclick="copy(\''+escQ(d.reel)+'\',\'Reel caption copied\')"><i class="ti ti-copy"></i>Copy reel caption</button>';
+    html+='</div>';
 
-    // THIRSTTRAP placeholder
-    H+='<div class="card"><div class="card-label">Thirsttrap reels</div>';
-    H+='<div style="text-align:center;padding:16px;color:var(--muted2);font-size:13px;font-style:italic">Coming soon 🔒</div>';
-    H+='</div>';
+    html+='<div class="card"><div class="card-label">Thirsttrap reels (4)</div>';
+    html+='<div style="text-align:center;padding:16px;color:var(--muted2);font-size:13px;font-style:italic">Coming soon — generate first batch 🔒</div>';
+    html+='</div>';
   }
-
-  return H;
+  return html;
 }
 
-// ── HEADER ───────────────────────────────────────────────
-function updateHeader(){
-  var dayNum=getActiveDay();
-  var d=DAYS[dayNum];
-  var today=new Date();
-  document.getElementById('hDate').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  document.getElementById('hTitle').textContent='Day '+dayNum+' of 47';
-  document.getElementById('hSub').textContent=d?d.week:'';
-  var streak=getStreak();
-  var total=getTotalPosted();
-  var badges='';
-  if(streak>0)badges='<div class="streak-badge"><i class="ti ti-flame" style="font-size:13px"></i>'+streak+' day streak</div>';
-  badges+='<div class="progress-label">'+total+' / 47 posted</div>';
-  document.getElementById('hBadges').innerHTML=badges;
-  document.getElementById('hProgress').style.width=(total/47*100)+'%';
-}
-
-// ── TODAY ────────────────────────────────────────────────
 function renderToday(){
   var dayNum=getActiveDay();
   var d=DAYS[dayNum];
-  updateHeader();
-  var H=buildDay(d,dayNum,false);
-
-  // Next-up teaser
-  var nextNum=dayNum<47?dayNum+1:null;
-  if(nextNum&&DAYS[nextNum]&&!isPosted(dayKey(nextNum))){
-    var nd=DAYS[nextNum];
-    H+='<div class="next-up" onclick="goBrowse('+nextNum+')">';
-    H+='<img class="next-up-thumb" src="'+thumb(nd.feedId)+'" onerror="this.style.display=\'none\'">';
-    H+='<div><div class="next-up-tag">Next up</div>';
-    H+='<div class="next-up-name">Day '+(dayNum+1)+' — '+nd.file+'</div>';
-    H+='<div class="next-up-time">'+nd.time+'</div></div>';
-    H+='<i class="ti ti-chevron-right next-up-arr"></i></div>';
-  }
-
-  document.getElementById('today-content').innerHTML=H;
-}
-
-// live countdown refresh
-setInterval(function(){
-  var el=document.querySelector('#panel-today .time-row');
-  if(!el)return;
-  var n=getActiveDay();
-  var d=DAYS[n];if(!d)return;
-  var old=el.querySelector('.cd-badge');
-  if(old)old.remove();
-  var tmp=document.createElement('div');
-  tmp.innerHTML=cdHTML(d.time,n);
-  if(tmp.firstChild)el.appendChild(tmp.firstChild);
-},60000);
-
-// ── CALENDAR ────────────────────────────────────────────
-function changeCalMonth(dir){
-  calMonth+=dir;
-  if(calMonth>11){calMonth=0;calYear++}
-  if(calMonth<0){calMonth=11;calYear--}
-  renderCalendar();
+  var today=new Date();
+  document.getElementById('headerDate').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('headerTitle').textContent='Day '+dayNum+' of '+TOTAL_DAYS;
+  document.getElementById('headerSub').textContent=d?d.week:'';
+  document.getElementById('today-content').innerHTML=buildDay(d,dayNum,false);
 }
 
 function renderCalendar(){
   var today=new Date();
-  var firstDow=new Date(calYear,calMonth,1).getDay();
-  var dim=new Date(calYear,calMonth+1,0).getDate();
+  var month=today.getMonth();
+  var year=today.getFullYear();
+  var firstDay=new Date(year,month,1).getDay();
+  var daysInMonth=new Date(year,month+1,0).getDate();
   var active=getActiveDay();
-  var sched=new Date(START);sched.setHours(0,0,0,0);
-  var monthLabel=new Date(calYear,calMonth,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  var posted=getPosted();
 
-  var H='<div class="card">';
-  H+='<div class="cal-header"><button class="cal-nav" onclick="changeCalMonth(-1)"><i class="ti ti-chevron-left"></i></button>';
-  H+='<div class="cal-title">'+monthLabel+'</div>';
-  H+='<button class="cal-nav" onclick="changeCalMonth(1)"><i class="ti ti-chevron-right"></i></button></div>';
-  H+='<div class="cal-grid">';
-  ['Mo','Tu','We','Th','Fr','Sa','Su'].forEach(function(d){H+='<div class="cal-dow">'+d+'</div>'});
+  var html='<div class="card"><div class="cal-header"><div class="cal-title">'+today.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</div></div>';
+  html+='<div class="cal-grid">';
+  ['Mo','Tu','We','Th','Fr','Sa','Su'].forEach(function(d){html+='<div class="cal-dow">'+d+'</div>'});
+  var startOffset=(firstDay===0?6:firstDay-1);
+  for(var i=0;i<startOffset;i++)html+='<div class="cal-day empty"></div>';
 
-  var off=(firstDow===0?6:firstDow-1);
-  for(var i=0;i<off;i++)H+='<div class="cal-day empty"></div>';
+  var scheduleStart=new Date(START);scheduleStart.setHours(0,0,0,0);
 
-  for(var day=1;day<=dim;day++){
-    var dt=new Date(calYear,calMonth,day);dt.setHours(0,0,0,0);
-    var diff=Math.floor((dt-sched)/86400000)+1;
-    var sd=diff>=1?((diff-1)%14)+1:0;
-    var isT=(calYear===today.getFullYear()&&calMonth===today.getMonth()&&day===today.getDate());
-    var ip=sd>0&&isPosted('day_'+sd);
-    var ia=sd===active&&diff>=1;
-    var is=diff>=1&&sd>0&&!ip&&!ia;
-    var pre=diff<1;
-    var cls='cal-day'+(pre?' grey':ia?' active-day':isT?' today':ip?' posted':is?' scheduled':'');
-    var click=sd>0&&!pre?' onclick="onCalDayClick('+sd+')"':'';
-    H+='<div class="'+cls+'"'+click+'>'+day+(ip?'<div class="cal-dot"></div>':'')+'</div>';
+  for(var day=1;day<=daysInMonth;day++){
+    var thisDate=new Date(year,month,day);thisDate.setHours(0,0,0,0);
+    var diff=Math.floor((thisDate-scheduleStart)/86400000)+1;
+    var schedDay=((diff-1)%TOTAL_DAYS)+1;
+    var isToday=(day===today.getDate());
+    var isPostedDay=posted['day_'+schedDay]&&diff>=1&&diff<=TOTAL_DAYS;
+    var isActive=schedDay===active&&diff>=1&&diff<=TOTAL_DAYS;
+    var isScheduled=diff>=1&&diff<=TOTAL_DAYS&&!isPostedDay&&!isActive;
+
+    var cls='cal-day';
+    if(isActive)cls+=' active-day';
+    else if(isToday)cls+=' today';
+    else if(isPostedDay)cls+=' posted';
+    else if(isScheduled)cls+=' scheduled';
+
+    html+='<div class="'+cls+'" onclick="onCalDayClick('+schedDay+','+diff+')">'+day;
+    if(isPostedDay)html+='<div class="cal-dot"></div>';
+    html+='</div>';
   }
-  H+='</div>';
-  H+='<div class="cal-legend">';
-  H+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--gold)"></div>Active</div>';
-  H+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Posted</div>';
-  H+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:#2a2a2a"></div>Scheduled</div>';
-  H+='</div></div>';
+  html+='</div>';
+  html+='<div class="cal-legend">';
+  html+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--gold)"></div>Today</div>';
+  html+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Posted</div>';
+  html+='<div class="cal-legend-item"><div class="cal-legend-dot" style="background:#333"></div>Scheduled</div>';
+  html+='</div></div>';
 
-  var total=getTotalPosted();
-  var streak=getStreak();
-  H+='<div class="card"><div class="card-label">Stats</div>';
-  H+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
-  H+='<span style="font-size:12px;color:var(--muted)">Overall progress</span>';
-  H+='<span style="font-size:12px;font-weight:600">'+total+' / 47</span></div>';
-  H+='<div class="prog-bar"><div class="prog-fill" style="width:'+(total/47*100)+'%"></div></div>';
-  H+='<div class="stats-grid">';
-  H+='<div class="stat-box"><div class="stat-n green">'+total+'</div><div class="stat-lbl">Posted</div></div>';
-  H+='<div class="stat-box"><div class="stat-n gold">'+streak+'</div><div class="stat-lbl">Streak</div></div>';
-  H+='<div class="stat-box"><div class="stat-n">'+(47-total)+'</div><div class="stat-lbl">Left</div></div>';
-  H+='</div>';
-  H+='<div style="margin-top:10px;font-size:11px;color:var(--muted)">Active: Day '+active+(DAYS[active]?' — '+DAYS[active].week:'')+'</div>';
-  H+='</div>';
+  var progressPosted=0;
+  for(var k in posted){if(isPosted(k))progressPosted++}
 
-  document.getElementById('cal-content').innerHTML=H;
+  html+='<div class="card"><div class="card-label">Progress</div>';
+  html+='<div style="display:flex;justify-content:space-between;margin-bottom:8px">';
+  html+='<span style="font-size:13px;color:var(--muted)">Days posted</span>';
+  html+='<span style="font-size:13px;font-weight:600;color:var(--text)">'+progressPosted+' / '+TOTAL_DAYS+'</span></div>';
+  html+='<div style="background:var(--border);border-radius:4px;height:4px;overflow:hidden">';
+  html+='<div style="background:var(--green);height:100%;width:'+(progressPosted/TOTAL_DAYS*100)+'%;transition:.3s"></div></div>';
+  html+='<div style="margin-top:12px;font-size:12px;color:var(--muted)">Current: Day '+active+' — '+(DAYS[active]?DAYS[active].week:'')+'</div>';
+  html+='</div>';
+
+  document.getElementById('cal-content').innerHTML=html;
 }
 
-function onCalDayClick(sd){goBrowse(sd)}
-
-// ── BROWSE ───────────────────────────────────────────────
-function goBrowse(n){
-  browseDayNum=n;
+function onCalDayClick(schedDay,diff){
+  if(diff<1||diff>TOTAL_DAYS)return;
+  browseDayNum=schedDay;
   showPanel('browse',document.querySelectorAll('.nav-btn')[3]);
   renderBrowse();
 }
-function changeDay(dir){
-  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),47);
-  renderBrowse();
-}
-function jumpToWeek(w){browseDayNum=(w===1)?1:(w===2)?8:(w===3)?15:(w===4)?22:(w===5)?29:(w===6)?36:43;renderBrowse()}
 
-function renderBrowse(){
-  var d=DAYS[browseDayNum];
-  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of 47';
-  document.getElementById('dayWeekLabel').textContent=d?d.week:'';
-  document.getElementById('prevBtn').disabled=browseDayNum<=1;
-  document.getElementById('nextBtn').disabled=browseDayNum>=47;
-  document.getElementById('wt1').classList.toggle('active',browseDayNum<=7);
-  document.getElementById('wt2').classList.toggle('active',browseDayNum>=8&&browseDayNum<=14);
-  document.getElementById('wt3').classList.toggle('active',browseDayNum>=15&&browseDayNum<=21);
-  document.getElementById('wt4').classList.toggle('active',browseDayNum>=22&&browseDayNum<=28);
-  document.getElementById('wt5').classList.toggle('active',browseDayNum>=29&&browseDayNum<=35);
-  document.getElementById('wt6').classList.toggle('active',browseDayNum>=36&&browseDayNum<=42);
-  document.getElementById('wt7').classList.toggle('active',browseDayNum>=43);
-  document.getElementById('browse-content').innerHTML=buildDay(d,browseDayNum,false);
-  document.getElementById('panel-browse').scrollTo(0,0);
-}
-
-// Swipe in browse
-(function(){
-  var sx=0,sy=0;
-  var el=document.getElementById('panel-browse');
-  el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
-  el.addEventListener('touchend',function(e){
-    var dx=e.changedTouches[0].clientX-sx;
-    var dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4){
-      if(dx<0&&browseDayNum<47){changeDay(1);vibrate()}
-      else if(dx>0&&browseDayNum>1){changeDay(-1);vibrate()}
-    }
-  },{passive:true});
-})();
-
-// ── REELS ────────────────────────────────────────────────
-function filterReels(q){
-  q=(q||'').toLowerCase().trim();
-  var html=LIFESTYLE_REELS
-    .map(function(r,i){return{r:r,i:i}})
-    .filter(function(o){return!q||o.r.toLowerCase().includes(q)})
-    .map(function(o){
-      return'<button class="reel-item" onclick="copyReel('+o.i+')"><span class="reel-text">'+o.r+'</span><i class="ti ti-copy reel-icon"></i></button>';
-    }).join('');
-  document.getElementById('lifestyle-list').innerHTML=html||'<div class="reel-empty">No results</div>';
-}
-
-// ── PANEL SWITCH ─────────────────────────────────────────
 function showPanel(name,btn){
   document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('panel-'+name).classList.add('active');
   if(btn)btn.classList.add('active');
   if(name==='calendar')renderCalendar();
-  if(name==='browse')renderBrowse();
 }
 
-// ── INIT ─────────────────────────────────────────────────
+function changeDay(dir){
+  browseDayNum=Math.min(Math.max(browseDayNum+dir,1),TOTAL_DAYS);
+  renderBrowse();
+}
+function renderBrowse(){
+  document.getElementById('dayLabel').textContent='Day '+browseDayNum+' of '+TOTAL_DAYS;
+  document.getElementById('prevBtn').disabled=browseDayNum<=1;
+  document.getElementById('nextBtn').disabled=browseDayNum>=TOTAL_DAYS;
+  document.getElementById('browse-content').innerHTML=buildDay(DAYS[browseDayNum],browseDayNum,false);
+}
+function renderReels(){
+  document.getElementById('lifestyle-list').innerHTML=LIFESTYLE_REELS.map(function(r){
+    return'<button class="reel-item" onclick="copy(\''+escQ(r)+'\',\'Copied\')"><span class="reel-text">'+r+'</span><i class="ti ti-copy reel-icon"></i></button>';
+  }).join('');
+}
 function init(){
   renderToday();
-  filterReels('');
+  renderReels();
   browseDayNum=getActiveDay();
   renderBrowse();
-  reScheduleAll();
 }
 init();
 </script>
