@@ -32,7 +32,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif
 .section-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(120,90,50,.06)}
-.photo-wrap{width:100%;border-radius:12px;overflow:hidden;background:#f0ebe3;margin-bottom:12px;position:relative}
+.photo-wrap{width:100%;border-radius:12px;overflow:hidden;background:#f0ebe3;margin-bottom:12px}
 .photo-wrap img{width:100%;display:block;object-fit:cover}
 .photo-wrap.feed{aspect-ratio:4/5}.photo-wrap.story{aspect-ratio:9/16}
 .photo-no-img{display:flex;align-items:center;justify-content:center;min-height:80px;font-size:12px;color:var(--muted2);font-style:italic;padding:20px}
@@ -47,14 +47,13 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif
 .btn-green{background:var(--green-light);color:var(--green);border:1px solid var(--green-border)}
 .btn-blue{background:var(--blue-light);color:var(--blue);border:1px solid var(--blue-border)}
 .btn-ig{background:var(--ig);color:#fff}
-.btn-muted{background:rgba(140,125,110,.08);color:var(--muted);border:1px solid var(--border2);font-size:10px}
-.posted-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-light);border:1px solid var(--green-border);color:var(--green);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
-.time-badge{display:inline-flex;align-items:center;gap:5px;background:var(--gold-light);color:var(--gold);font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:12px}
+.posted-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-light);border:1px solid var(--green-border);color:var(--green);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;margin-bottom:12px}
 .week-pill{display:inline-flex;background:rgba(0,0,0,.04);border:1px solid var(--border);color:var(--muted);font-size:10px;padding:3px 10px;border-radius:20px;margin-bottom:12px}
 .lock-box{background:var(--gold-light);border:1px solid var(--gold-border);border-radius:12px;padding:13px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
 .lock-box b{color:var(--gold)}
+.loc-badge{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);color:var(--muted);font-size:10px;padding:3px 8px;border-radius:20px;margin-bottom:12px;margin-left:6px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:8px}
-.cal-dow{font-size:9px;color:var(--muted2);text-align:center;font-weight:600;padding:3px 0;letter-spacing:.05em}
+.cal-dow{font-size:9px;color:var(--muted2);text-align:center;font-weight:600;padding:3px 0}
 .cal-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:.12s;position:relative;flex-direction:column}
 .cal-day.empty{cursor:default}
 .cal-day.today{border-color:var(--gold);color:var(--gold);font-weight:600}
@@ -74,13 +73,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif
 .reel-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
 .reel-num{width:32px;height:32px;border-radius:8px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted2);flex-shrink:0}
 .reel-content{flex:1;min-width:0}
-.reel-title{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
-.reel-overlay{font-size:11px;font-style:italic;color:var(--muted);margin-bottom:6px;line-height:1.4}
+.reel-title{font-size:11px;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.reel-overlay{font-size:12px;font-style:italic;color:var(--text);margin-bottom:6px;line-height:1.4}
 .reel-copy{background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-border);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer}
-.week-header{display:flex;align-items:center;gap:10px;margin:16px 0 10px;padding:0 2px}
-.week-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
-.week-line{flex:1;height:1px;background:var(--border)}
-.open-link{display:block;text-align:center;font-size:10px;color:var(--blue);padding:4px 0;text-decoration:none;letter-spacing:.03em}
+.open-link{display:block;text-align:center;font-size:10px;color:var(--blue);padding:4px 0;text-decoration:none}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:20px;font-size:12px;font-weight:600;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.t-green{background:var(--green)}.toast.t-blue{background:var(--blue)}
@@ -116,184 +112,157 @@ a.btn{box-sizing:border-box}
 function thumb(id){return'https://drive.google.com/thumbnail?id='+id+'&sz=w600'}
 function driveUrl(id){return'https://drive.google.com/file/d/'+id+'/view?usp=sharing'}
 var START=new Date('2026-06-16');
-var TOTAL=21;
+var TOTAL=14;
 var browseDayNum=1;
 
-// ============================================================
-// ALL DRIVE IDs — VERIFIED FROM DRIVE (June 15 2026)
-// Videos without audio (folder: 1vMDVUZGgaeQB7-35ydk_68ztQx7Newo8)
-// Videos with audio   (folder: 1D3o6DrEWL3rcYKLsjd-EqgqRW6Ejy0rJ)
-// Start images        (folder: 14Klm6BLPYLx1w7P7USSj9V896ZQiOcvZ)
-// ============================================================
-var ID = {
-  // VIDEOS WITH AUDIO (use these for reels)
-  beach_bikini_palms_01_a:      '1Xnc2mpNF_7ChVGtoeNx5wa5andwOv7VD',
-  beach_dress_twirl_02_a:       '1Yxqq8F1758hKy2JDJhpREi9036rfKr4H',
-  beach_yellowtop_12_a:         '1A0wr_oNJ7zpNGeCLki9xdd0er-maF5eh',
-  jungle_redbikini_13_a:        '1ZRa0KFr0Lrc0PQag34ISOwhfQx4ssLTs',
-  hotel_blackbralette_17_a:     '1Vl7CV6VHJutZUx-kpqt0wzTGdMRuhiGV',
-  gamerroom_cami_11_a:          '1tDZ5ozabVVp0ozXF0PmkrfT9U1GUCspi',
-  elevator_golddress_16_a:      '1KKFIctg8In_bF5J0bCKk21Zei9vsU9Uv',
-  cabin_greytank_14_a:          '1OndXObbtylrbjr_q96unw3h7kzAucbDS',
-  bedroom_hairflip_10_a:        '1f9RqeG_SksbKtCP8L9opDKQ-WXlcfYwL',
-  bedroom_whitelace_08_a:       '1bJg2N9K9J4QzmPS_olREGm_A_qfSI7Ta',
-  apt_hairlean_06_a:            '1e3oUi-WZ3e4wZ5L5siv0aHFo6knkOfop',
-  apt_doorway_05_a:             '1vRrIndPmllkXerPHUu6Gefmdec1Ybbaq',
-  livingroom_leopard_07_a:      '1p_BECBlHhTurO7yi3396SNGju5Ict6ZN',
-  livingroom_dress_03_a:        '1G28T_bqZV5xSEl70hfectnr9OyaSr4yQ',
-  livingroom_handsup_04_a:      '11P4GRUMPUSkaKskeyJl-8SSjRZCqi9LX',
-  kitchen_whitebandeau_15_a:    '1ToEDmCFWcYKcGQruAN1bGIsAQ2NKDdEd',
-  kitchen_bluesweater_18_a:     '1lYs1Zcdz9QwYQTLkxAlzkT_Qr36YwUsh',
-  pool_waterslide_09_a:         '1Y4EoeAXR1Zo2Q7qPwzW24Ch7cGNTN9uF',
-  // VIDEOS WITHOUT AUDIO (use as thumbnails/previews)
-  beach_bikini_palms_01:        '1Wv9BZH5HSNyeIE11W8zRcJVvI3SNvcMM',
-  beach_dress_twirl_02:         '1NZg78UABTiMhZESfCiPK3CflQCEaX0_6',
-  beach_yellowtop_12:           '1UVopqTc_o_Jt_1OgI1OaBWyG2DHBRKsH',
-  jungle_redbikini_13:          '1p7MLG1IJxFIe30ff7qEk3lGKDfntpRK_',
-  hotel_blackbralette_17:       '13KJc4ERyHtzWnW7M7Ap22WQjBCIFELFb',
-  gamerroom_cami_11:            '1lacYJpG09NfLv4C6djbQdloLOyO0LAKW',
-  elevator_golddress_16:        '1LbeU0HoRKFnzdkPCbY23H93FhDFxJHBy',
-  cabin_greytank_14:            '11WJeG8s6oa69jGDniCLl1UeOwveJkZKI',
-  bedroom_hairflip_10:          '1UzRxZoczDI8iFDqc6LQ5wsJl7P_2V-7-',
-  bedroom_whitelace_08:         '1aQbYfhKgTYfYI1l80dr2GP_LroMREZ8Q',
-  apt_hairlean_06:              '1uZEb_-lObmORzJHHXM8sjRzOjGWyReZT',
-  apt_doorway_05:               '1pXgdmxOu33uJJvFYuW9mKkGpmZTzuEPx',
-  livingroom_leopard_07:        '1sY9bnxbbXzwjW749XcWMmLvJUlp_SAij',
-  livingroom_dress_03:          '1etuKlGGsMVsKT0wo3-0JpM-mHQ6a6Wha',
-  livingroom_handsup_04:        '1H-0oVGCIe-efy0y5zZushfEB0QSCaS_d',
-  kitchen_whitebandeau_15:      '1ztrhunJu30b00cUvghuz4j_0c3HjaTAk',
-  kitchen_bluesweater_18:       '1AO4xMSomkM3paDxEMIMUPlbeizzuw-9-',
-  pool_waterslide_09:           '1Ei98sWE_jLNTTjKqdNCQl09nyYHJxkzr',
-  // START IMAGES (use as feed photos)
-  beach_yellowtop_12_s:         '1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B',
-  jungle_redbikini_13_s:        '1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa',
-  hotel_blackbralette_17_s:     '1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti',
-  gamerroom_cami_11_s:          '1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49',
-  elevator_golddress_16_s:      '1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ',
-  cabin_greytank_14_s:          '1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2',
-  bedroom_hairflip_10_s:        '1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj',
-  bedroom_whitelace_08_s:       '1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl',
-  apt_hairlean_06_s:            '1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA',
-  apt_doorway_05_s:             '1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes',
-  kitchen_whitebandeau_15_s:    '1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL',
-  kitchen_bluesweater_18_s:     '1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE',
-  pool_waterslide_09_s:         '1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl',
-  livingroom_leopard_07_s:      '10RXW7OcyS8eBGC6jpGQg5nneto2PFrpi',
-};
-
-// 21-day plan using verified IDs
+// VERIFIED DRIVE IDs — June 15 2026
+// Rule: feed photo = start image, story1 = same start image, reel = matching audio video
 var DAYS=[null,
-// WEEK 1 — Beach & Outdoor
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.beach_bikini_palms_01,file:'beach_bikini_palms_01',time:'18:00',cap:'somewhere warm and completely off the grid. 🌿',tags:'#softlife #beachday #quietluxury #slowtravel'},
- stories:[{cap:'new post ↑',id:ID.beach_bikini_palms_01},{cap:'the morning before this 🌅',id:ID.beach_yellowtop_12_s},{cap:'nothing planned. still the best day.',id:ID.jungle_redbikini_13_s}],
- reel:{id:ID.beach_bikini_palms_01_a,name:'beach_bikini_palms_01_audio',overlay:'the algorithm knew what it was doing'}},
 
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.beach_dress_twirl_02,file:'beach_dress_twirl_02',time:'12:00',cap:'spun once. stayed twice. 🤍',tags:'#beachday #softlife #quietluxury #35mm'},
- stories:[{cap:'new post ↑',id:ID.beach_dress_twirl_02},{cap:'before the spin',id:ID.beach_yellowtop_12_s},{cap:'the whole afternoon looked like this',id:ID.beach_bikini_palms_01}],
- reel:{id:ID.beach_dress_twirl_02_a,name:'beach_dress_twirl_02_audio',overlay:"she doesn't try. that's the problem."}},
+// DAY 1 — Apartment doorway
+// feed=start, story1=same, story2=hairlean start, story3=gamerroom start, reel=doorway audio
+{loc:'🏠 apartment',
+ feed:{id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes',time:'18:00',
+   cap:'back. finally. 🕯️',tags:'#softlife #quietluxury #homesweethome #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'},
+   {cap:'the light in here at this hour 🕯️',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'},
+   {cap:'not going anywhere tonight',id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49'}],
+ reel:{id:'1vRrIndPmllkXerPHUu6Gefmdec1Ybbaq',name:'apt_doorway_05_audio',overlay:'soft hours only 🕯️'}},
 
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.beach_yellowtop_12_s,file:'beach_yellowtop_12_start',time:'17:00',cap:'sun + salt + absolutely no plans. 🌊',tags:'#beachday #slowlife #quietluxury #softlife'},
- stories:[{cap:'new post ↑',id:ID.beach_yellowtop_12_s},{cap:'earlier today',id:ID.beach_bikini_palms_01},{cap:'golden hour',id:ID.jungle_redbikini_13_s}],
- reel:{id:ID.beach_yellowtop_12_a,name:'beach_yellowtop_12_audio',overlay:'scrolled past. came back. twice.'}},
+// DAY 2 — Beach yellow top
+{loc:'🏖️ beach',
+ feed:{id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B',time:'17:00',
+   cap:'sun + salt + absolutely no plans. 🌊',tags:'#beachday #slowlife #quietluxury #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B'},
+   {cap:'the whole afternoon looked like this',id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa'},
+   {cap:'golden hour 🌅',id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl'}],
+ reel:{id:'1A0wr_oNJ7zpNGeCLki9xdd0er-maF5eh',name:'beach_yellowtop_12_audio',overlay:'scrolled past. came back. twice.'}},
 
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.jungle_redbikini_13_s,file:'jungle_redbikini_13_start',time:'16:00',cap:'lost. in a good way.',tags:'#outdoor #softlife #quietluxury #naturewalk'},
- stories:[{cap:'new post ↑',id:ID.jungle_redbikini_13_s},{cap:'the walk before',id:ID.beach_yellowtop_12_s},{cap:'found this spot',id:ID.beach_bikini_palms_01}],
- reel:{id:ID.jungle_redbikini_13_a,name:'jungle_redbikini_13_audio',overlay:'the camera found me first'}},
+// DAY 3 — Bedroom white lace selfie
+{loc:'🛏️ bedroom',
+ feed:{id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl',time:'21:00',
+   cap:'not sorry about this post.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
+ stories:[
+   {cap:'new post ↑',id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl'},
+   {cap:'the light at this hour',id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj'},
+   {cap:'staying in was the only option',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'}],
+ reel:{id:'1bJg2N9K9J4QzmPS_olREGm_A_qfSI7Ta',name:'bedroom_whitelace_08_audio',overlay:"that look i'm giving through the camera? yeah, it's intentional. 🫦"}},
 
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.cabin_greytank_14_s,file:'cabin_greytank_14_start',time:'15:00',cap:'drove 3 hours. worth every second. 🏔️',tags:'#naturewalk #quietluxury #slowtravel #softlife'},
- stories:[{cap:'new post ↑',id:ID.cabin_greytank_14_s},{cap:'the view that made me pull over',id:ID.jungle_redbikini_13_s},{cap:'on the way back',id:ID.beach_yellowtop_12_s}],
- reel:{id:ID.cabin_greytank_14_a,name:'cabin_greytank_14_audio',overlay:'some people just move different'}},
+// DAY 4 — Jungle red bikini
+{loc:'🌿 outdoor',
+ feed:{id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa',time:'16:00',
+   cap:'lost. in a good way.',tags:'#outdoor #softlife #quietluxury #naturewalk'},
+ stories:[
+   {cap:'new post ↑',id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa'},
+   {cap:'the walk that led here',id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B'},
+   {cap:'found this spot',id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl'}],
+ reel:{id:'1ZRa0KFr0Lrc0PQag34ISOwhfQx4ssLTs',name:'jungle_redbikini_13_audio',overlay:'the camera found me first'}},
 
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.pool_waterslide_09_s,file:'pool_waterslide_09_start',time:'10:00',cap:'morning coffee. pool. silence. 🫖',tags:'#poolday #slowlife #quietluxury #softmorning'},
- stories:[{cap:'new post ↑',id:ID.pool_waterslide_09_s},{cap:'the early hours',id:ID.beach_bikini_palms_01},{cap:'second cup',id:ID.cabin_greytank_14_s}],
- reel:{id:ID.pool_waterslide_09_a,name:'pool_waterslide_09_audio',overlay:"she's somewhere beautiful and completely unbothered about it"}},
+// DAY 5 — Kitchen white bandeau
+{loc:'🍳 kitchen',
+ feed:{id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL',time:'10:00',
+   cap:'mornings in the kitchen. always. ☕',tags:'#morningvibes #quietluxury #softlife #home'},
+ stories:[
+   {cap:'new post ↑',id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL'},
+   {cap:'second coffee. obviously.',id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE'},
+   {cap:'the apartment at 9am is something else',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'}],
+ reel:{id:'1ToEDmCFWcYKcGQruAN1bGIsAQ2NKDdEd',name:'kitchen_whitebandeau_15_audio',overlay:'she walked in and the vibe changed'}},
 
-{week:'Week 1 — Beach & Outdoor',
- feed:{id:ID.beach_dress_twirl_02,file:'beach_dress_twirl_02',time:'19:00',cap:'the kind of friday that fixes everything.',tags:'#travel #slowtravel #quietluxury #softlife'},
- stories:[{cap:'new post ↑',id:ID.beach_dress_twirl_02},{cap:'how we got here',id:ID.cabin_greytank_14_s},{cap:'sunset from the same spot',id:ID.jungle_redbikini_13_s}],
- reel:{id:ID.beach_bikini_palms_01_a,name:'beach_bikini_palms_01_audio',overlay:'some people vacation. she just exists in new locations.'}},
+// DAY 6 — Pool waterslide
+{loc:'🏊 pool',
+ feed:{id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl',time:'15:00',
+   cap:'afternoon off. obviously the pool.',tags:'#poolday #quietluxury #softlife #summer'},
+ stories:[
+   {cap:'new post ↑',id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl'},
+   {cap:'the vibe today',id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B'},
+   {cap:'before this i was working. allegedly.',id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL'}],
+ reel:{id:'1Y4EoeAXR1Zo2Q7qPwzW24Ch7cGNTN9uF',name:'pool_waterslide_09_audio',overlay:"she's somewhere beautiful and completely unbothered about it"}},
 
-// WEEK 2 — City & Travel
-{week:'Week 2 — City & Travel',
- feed:{id:ID.elevator_golddress_16_s,file:'elevator_golddress_16_start',time:'20:00',cap:'dressed up for no one in particular. 🖤',tags:'#ootd #quietluxury #nightout #editorial'},
- stories:[{cap:'new post ↑',id:ID.elevator_golddress_16_s},{cap:'getting ready',id:ID.hotel_blackbralette_17_s},{cap:'the shoes that made it',id:ID.bedroom_whitelace_08_s}],
- reel:{id:ID.elevator_golddress_16_a,name:'elevator_golddress_16_audio',overlay:"not sure what's more dangerous — the outfit or the confidence"}},
+// DAY 7 — Elevator gold dress
+{loc:'✨ glam',
+ feed:{id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ',time:'20:00',
+   cap:'dressed up for no one in particular. 🖤',tags:'#ootd #quietluxury #nightout #editorial'},
+ stories:[
+   {cap:'new post ↑',id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ'},
+   {cap:'getting ready took too long. worth it.',id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti'},
+   {cap:'the mirror said yes',id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl'}],
+ reel:{id:'1KKFIctg8In_bF5J0bCKk21Zei9vsU9Uv',name:'elevator_golddress_16_audio',overlay:"not sure what's more dangerous — the outfit or the confidence"}},
 
-{week:'Week 2 — City & Travel',
- feed:{id:ID.hotel_blackbralette_17_s,file:'hotel_blackbralette_17_start',time:'22:00',cap:'hotel rooms hit different after midnight. 🖤',tags:'#hotel #quietluxury #nightvibes #softlife'},
- stories:[{cap:'new post ↑',id:ID.hotel_blackbralette_17_s},{cap:'earlier tonight',id:ID.elevator_golddress_16_s},{cap:'room service incoming',id:ID.cabin_greytank_14_s}],
- reel:{id:ID.hotel_blackbralette_17_a,name:'hotel_blackbralette_17_audio',overlay:'that energy in the reel... curious where else it goes 🔥'}},
+// DAY 8 — Apartment hairlean
+{loc:'🏠 apartment',
+ feed:{id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA',time:'14:00',
+   cap:'sundays should be protected by law.',tags:'#softlife #quietluxury #sundaymood #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'},
+   {cap:'the light at 2pm in this apartment',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'},
+   {cap:'still in pajamas. no plans.',id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49'}],
+ reel:{id:'1e3oUi-WZ3e4wZ5L5siv0aHFo6knkOfop',name:'apt_hairlean_06_audio',overlay:'staying in was the right call'}},
 
-{week:'Week 2 — City & Travel',
- feed:{id:ID.kitchen_whitebandeau_15_s,file:'kitchen_whitebandeau_15_start',time:'11:00',cap:'mornings in the kitchen. always. ☕',tags:'#morningvibes #quietluxury #softlife #home'},
- stories:[{cap:'new post ↑',id:ID.kitchen_whitebandeau_15_s},{cap:'the order',id:ID.kitchen_bluesweater_18_s},{cap:'second coffee',id:ID.apt_hairlean_06_s}],
- reel:{id:ID.kitchen_whitebandeau_15_a,name:'kitchen_whitebandeau_15_audio',overlay:'she walked in and the vibe changed'}},
+// DAY 9 — Cabin grey tank
+{loc:'🏔️ nature',
+ feed:{id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2',time:'15:00',
+   cap:'drove 3 hours. worth every second.',tags:'#nature #quietluxury #slowtravel #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2'},
+   {cap:'the view that made me pull over',id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa'},
+   {cap:'on the way back 🌲',id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B'}],
+ reel:{id:'1OndXObbtylrbjr_q96unw3h7kzAucbDS',name:'cabin_greytank_14_audio',overlay:'some people just move different'}},
 
-{week:'Week 2 — City & Travel',
- feed:{id:ID.kitchen_bluesweater_18_s,file:'kitchen_bluesweater_18_start',time:'17:00',cap:'sunday blues. the good kind.',tags:'#softlife #quietluxury #cozy #35mm'},
- stories:[{cap:'new post ↑',id:ID.kitchen_bluesweater_18_s},{cap:'the light in the kitchen rn',id:ID.kitchen_whitebandeau_15_s},{cap:'not moving',id:ID.apt_hairlean_06_s}],
- reel:{id:ID.kitchen_bluesweater_18_a,name:'kitchen_bluesweater_18_audio',overlay:'the way she just exists 😮‍💨'}},
+// DAY 10 — Bedroom hairflip
+{loc:'🛏️ bedroom',
+ feed:{id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj',time:'17:00',
+   cap:'hair flip for absolutely no reason. 💁‍♀️',tags:'#softlife #quietluxury #bedroom #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj'},
+   {cap:'the before',id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl'},
+   {cap:'afternoon light in the bedroom is unreal',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'}],
+ reel:{id:'1f9RqeG_SksbKtCP8L9opDKQ-WXlcfYwL',name:'bedroom_hairflip_10_audio',overlay:'this is either a warning or an invitation. unclear.'}},
 
-{week:'Week 2 — City & Travel',
- feed:{id:ID.livingroom_leopard_07_s,file:'livingroom_leopard_07_start',time:'14:00',cap:'reading. rereading. not reading. 📖',tags:'#softlife #quietluxury #homesweethome #35mm'},
- stories:[{cap:'new post ↑',id:ID.livingroom_leopard_07_s},{cap:'the afternoon light',id:ID.apt_hairlean_06_s},{cap:'page 47. still.',id:ID.apt_doorway_05_s}],
- reel:{id:ID.livingroom_leopard_07_a,name:'livingroom_leopard_07_audio',overlay:'effortless is a skill and she has it'}},
+// DAY 11 — Hotel black bralette
+{loc:'🏨 hotel',
+ feed:{id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti',time:'22:00',
+   cap:'hotel rooms hit different after midnight. 🖤',tags:'#hotel #quietluxury #nightvibes #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti'},
+   {cap:'earlier tonight',id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ'},
+   {cap:'the view from this room 🌆',id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2'}],
+ reel:{id:'1Vl7CV6VHJutZUx-kpqt0wzTGdMRuhiGV',name:'hotel_blackbralette_17_audio',overlay:'that energy in the reel... curious where else it goes 🔥'}},
 
-{week:'Week 2 — City & Travel',
- feed:{id:ID.livingroom_dress_03,file:'livingroom_dress_03',time:'18:00',cap:'overdressed for staying in. no regrets.',tags:'#ootd #quietluxury #softlife #35mm'},
- stories:[{cap:'new post ↑',id:ID.livingroom_dress_03},{cap:'before',id:ID.livingroom_leopard_07_s},{cap:'after',id:ID.apt_doorway_05_s}],
- reel:{id:ID.livingroom_dress_03_a,name:'livingroom_dress_03_audio',overlay:'this is either a warning or an invitation. unclear.'}},
+// DAY 12 — Kitchen blue sweater
+{loc:'🍳 kitchen',
+ feed:{id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE',time:'11:00',
+   cap:'sunday blues. the good kind.',tags:'#softlife #quietluxury #cozy #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE'},
+   {cap:'the light in the kitchen rn',id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL'},
+   {cap:'not moving from this spot',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'}],
+ reel:{id:'1lYs1Zcdz9QwYQTLkxAlzkT_Qr36YwUsh',name:'kitchen_bluesweater_18_audio',overlay:'the way she just exists 😮‍💨'}},
 
-{week:'Week 2 — City & Travel',
- feed:{id:ID.livingroom_handsup_04,file:'livingroom_handsup_04',time:'16:00',cap:'hands up if you have absolutely no plans. 🙌',tags:'#softlife #quietluxury #weekend #35mm'},
- stories:[{cap:'new post ↑',id:ID.livingroom_handsup_04},{cap:'the vibe today',id:ID.livingroom_leopard_07_s},{cap:'goals',id:ID.apt_hairlean_06_s}],
- reel:{id:ID.livingroom_handsup_04_a,name:'livingroom_handsup_04_audio',overlay:'that look i\'m giving through the camera? yeah, it\'s intentional. 🫦'}},
+// DAY 13 — Livingroom leopard reading
+{loc:'🛋️ livingroom',
+ feed:{id:'10RXW7OcyS8eBGC6jpGQg5nneto2PFrpi',time:'14:00',
+   cap:'reading. rereading. not reading. 📖',tags:'#softlife #quietluxury #homesweethome #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'10RXW7OcyS8eBGC6jpGQg5nneto2PFrpi'},
+   {cap:'the afternoon light',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'},
+   {cap:'page 47. still.',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'}],
+ reel:{id:'1p_BECBlHhTurO7yi3396SNGju5Ict6ZN',name:'livingroom_leopard_07_audio',overlay:'effortless is a skill and she has it'}},
 
-// WEEK 3 — Home & Cozy
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.apt_doorway_05_s,file:'apt_doorway_05_start',time:'18:00',cap:'back. finally. 🕯️',tags:'#softlife #quietluxury #homesweethome #35mm'},
- stories:[{cap:'new post — home ↑',id:ID.apt_doorway_05_s},{cap:'the couch missed me',id:ID.apt_hairlean_06_s},{cap:'unpacked. eventually.',id:ID.gamerroom_cami_11_s}],
- reel:{id:ID.apt_doorway_05_a,name:'apt_doorway_05_audio',overlay:'soft hours only 🕯️'}},
-
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.apt_hairlean_06_s,file:'apt_hairlean_06_start',time:'14:00',cap:'sundays should be protected by law.',tags:'#softlife #quietluxury #sundaymood #35mm'},
- stories:[{cap:'new post ↑',id:ID.apt_hairlean_06_s},{cap:'the light at 2pm in this apartment',id:ID.apt_doorway_05_s},{cap:'still in pajamas. no plans.',id:ID.gamerroom_cami_11_s}],
- reel:{id:ID.apt_hairlean_06_a,name:'apt_hairlean_06_audio',overlay:'staying in was the right call'}},
-
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.gamerroom_cami_11_s,file:'gamerroom_cami_11_start',time:'20:00',cap:'send help. or don\'t. i\'m fine here. 🎮',tags:'#softlife #quietluxury #cozy #homesweethome'},
- stories:[{cap:'new post ↑',id:ID.gamerroom_cami_11_s},{cap:'current status',id:ID.apt_hairlean_06_s},{cap:'not moving',id:ID.apt_doorway_05_s}],
- reel:{id:ID.gamerroom_cami_11_a,name:'gamerroom_cami_11_audio',overlay:"not hard to find. just hard to forget. 🤍"}},
-
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.bedroom_whitelace_08_s,file:'bedroom_whitelace_08_start',time:'21:00',cap:'not sorry about this post.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
- stories:[{cap:'new post ↑',id:ID.bedroom_whitelace_08_s},{cap:'the light at this hour',id:ID.bedroom_hairflip_10_s},{cap:'staying in was the only option',id:ID.apt_hairlean_06_s}],
- reel:{id:ID.bedroom_whitelace_08_a,name:'bedroom_whitelace_08_audio',overlay:"that look i'm giving through the camera? yeah, it's intentional. 🫦"}},
-
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.bedroom_hairflip_10_s,file:'bedroom_hairflip_10_start',time:'17:00',cap:'hair flip for absolutely no reason. 💁‍♀️',tags:'#softlife #quietluxury #bedroom #35mm'},
- stories:[{cap:'new post ↑',id:ID.bedroom_hairflip_10_s},{cap:'the before',id:ID.bedroom_whitelace_08_s},{cap:'after',id:ID.apt_hairlean_06_s}],
- reel:{id:ID.bedroom_hairflip_10_a,name:'bedroom_hairflip_10_audio',overlay:'this is either a warning or an invitation. unclear.'}},
-
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.pool_waterslide_09_s,file:'pool_waterslide_09_start',time:'15:00',cap:'last swim of the season. 🌊',tags:'#poolday #quietluxury #softlife #summer'},
- stories:[{cap:'new post ↑',id:ID.pool_waterslide_09_s},{cap:'before',id:ID.beach_bikini_palms_01},{cap:'the afternoon',id:ID.beach_yellowtop_12_s}],
- reel:{id:ID.pool_waterslide_09_a,name:'pool_waterslide_09_audio',overlay:'camera likes her a little too much'}},
-
-{week:'Week 3 — Home & Cozy',
- feed:{id:ID.bedroom_whitelace_08_s,file:'bedroom_whitelace_08_start',time:'20:00',cap:'quiet evenings. these are the ones. 🕯️',tags:'#softlife #quietluxury #bedroom #cozy'},
- stories:[{cap:'new post ↑',id:ID.bedroom_whitelace_08_s},{cap:'the setup',id:ID.bedroom_hairflip_10_s},{cap:'candle number three',id:ID.apt_hairlean_06_s}],
- reel:{id:ID.bedroom_hairflip_10_a,name:'bedroom_hairflip_10_audio',overlay:"not hard to find. just hard to forget. 🤍"}},
+// DAY 14 — Gamerroom white cami cozy
+{loc:'🎮 cozy',
+ feed:{id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49',time:'20:00',
+   cap:'send help. or don\'t. i\'m fine here. 🎮',tags:'#softlife #quietluxury #cozy #homesweethome'},
+ stories:[
+   {cap:'new post ↑',id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49'},
+   {cap:'current status',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'},
+   {cap:'not going anywhere 🤍',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'}],
+ reel:{id:'1tDZ5ozabVVp0ozXF0PmkrfT9U1GUCspi',name:'gamerroom_cami_11_audio',overlay:"not hard to find. just hard to forget. 🤍"}},
 ];
 
-function getPosted(){try{return JSON.parse(localStorage.getItem('dp3_posted')||'{}')}catch(e){return{}}}
-function setPosted(k,v){var p=getPosted();p[k]=v;localStorage.setItem('dp3_posted',JSON.stringify(p))}
+function getPosted(){try{return JSON.parse(localStorage.getItem('dp4_posted')||'{}')}catch(e){return{}}}
+function setPosted(k,v){var p=getPosted();p[k]=v;localStorage.setItem('dp4_posted',JSON.stringify(p))}
 function isPosted(k){return!!getPosted()[k]}
 function dayKey(n){return'day_'+n}
 function getCurrentDay(){
@@ -308,9 +277,8 @@ function getActiveDay(){
   return cur;
 }
 function copy(text,label,cls){
-  var decoded=text.replace(/\\n/g,'\n');
   if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(decoded).then(function(){showToast(label||'Copied',cls)}).catch(function(){showToast('Copied',cls)});
+    navigator.clipboard.writeText(text).then(function(){showToast(label||'Copied',cls)}).catch(function(){showToast('Copied',cls)});
   }else{showToast('Copied',cls)}
 }
 function shareToIG(photoId,caption){
@@ -334,12 +302,14 @@ function buildDay(d,dayNum,compact){
   var active=getActiveDay();
   var locked=dayNum>active&&!posted;
   var html='';
-  html+='<div class="week-pill">'+d.week+'</div>';
-  if(locked){html+='<div class="lock-box">🔒 <span><b>Locked</b> — complete Day '+(dayNum-1)+' first</span></div>';}
-  if(posted){html+='<div class="posted-badge">✓ Posted</div>';}
+  html+='<div class="week-pill">Day '+dayNum+' of '+TOTAL+'</div>';
+  html+='<span class="loc-badge">'+d.loc+'</span>';
+  if(locked){html+='<div style="clear:both;margin-top:8px"></div><div class="lock-box">🔒 <span><b>Locked</b> — complete Day '+(dayNum-1)+' first</span></div>';}
+  if(posted){html+='<div style="clear:both;margin-top:8px"></div><div class="posted-badge">✓ Posted</div>';}
+
   // FEED
-  html+='<div class="card"><div class="section-label">Feed post · '+d.feed.time+'</div>';
-  html+='<div class="photo-wrap feed"><img src="'+thumb(d.feed.id)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>No preview — open Drive</div>\'"></div>';
+  html+='<div class="card"><div class="section-label">Feed photo · '+d.feed.time+'</div>';
+  html+='<div class="photo-wrap feed"><img src="'+thumb(d.feed.id)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Open in Drive</div>\'"></div>';
   html+='<div class="caption-box">'+d.feed.cap+'</div>';
   html+='<div class="tags">'+d.feed.tags+'</div>';
   html+='<button class="btn btn-gold" onclick="copy(\''+escQ(d.feed.cap)+'\',\'Caption copied\')">Copy caption</button>';
@@ -350,12 +320,13 @@ function buildDay(d,dayNum,compact){
     html+='<button class="btn btn-green" onclick="markPosted('+dayNum+')">✓ Mark as posted</button>';
   }
   html+='</div>';
+
   if(!compact){
     // STORIES
     html+='<div class="card"><div class="section-label">Stories (3)</div>';
     d.stories.forEach(function(s,i){
       html+='<div class="story-item">';
-      html+='<div class="story-num">Story 0'+(i+1)+'<button class="copy-sm" onclick="copy(\''+escQ(s.cap)+'\',\'Story copied\')">Copy</button></div>';
+      html+='<div class="story-num">Story 0'+(i+1)+(i===0?' — same photo as feed':'')+'<button class="copy-sm" onclick="copy(\''+escQ(s.cap)+'\',\'Story copied\')">Copy</button></div>';
       html+='<div class="photo-wrap story"><img src="'+thumb(s.id)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=photo-no-img>Open Drive</div>\'"></div>';
       html+='<div class="story-cap-box">'+s.cap+'</div>';
       html+='<button class="btn btn-ig" style="margin-bottom:4px" onclick="shareToIG(\''+s.id+'\',\''+escQ(s.cap)+'\')">Share story</button>';
@@ -363,9 +334,10 @@ function buildDay(d,dayNum,compact){
       html+='</div>';
     });
     html+='</div>';
+
     // REEL
-    html+='<div class="card"><div class="section-label">Lifestyle reel</div>';
-    html+='<div style="font-size:11px;color:var(--muted2);margin-bottom:6px">'+d.reel.name+'</div>';
+    html+='<div class="card"><div class="section-label">Reel — same location as feed</div>';
+    html+='<div style="font-size:10px;color:var(--muted2);margin-bottom:8px">'+d.reel.name+'</div>';
     html+='<div class="overlay-text">"'+d.reel.overlay+'"</div>';
     html+='<button class="btn btn-outline" onclick="copy(\''+escQ(d.reel.overlay)+'\',\'Overlay copied\')">Copy overlay text</button>';
     html+='<a class="btn btn-blue" href="'+driveUrl(d.reel.id)+'" target="_blank">Open reel in Drive ↗</a>';
@@ -378,7 +350,7 @@ function renderToday(){
   var dayNum=getActiveDay();var d=DAYS[dayNum];
   var today=new Date();
   document.getElementById('headerTitle').textContent='Day '+dayNum+' of '+TOTAL;
-  document.getElementById('headerMeta').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+(d?' — '+d.week:'');
+  document.getElementById('headerMeta').textContent=today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+(d?' — '+d.loc:'');
   document.getElementById('today-content').innerHTML=buildDay(d,dayNum,false);
 }
 
@@ -415,26 +387,20 @@ function renderCalendar(){
 
 function onCalClick(schedDay,diff){
   if(diff<1||diff>TOTAL)return;
-  browseDayNum=schedDay;
-  showPanel('browse',document.querySelectorAll('.nav-btn')[3]);
-  renderBrowse();
+  browseDayNum=schedDay;showPanel('browse',document.querySelectorAll('.nav-btn')[3]);renderBrowse();
 }
 
 function renderReels(){
-  var lastWeek='';var html='';
+  var html='';
   DAYS.slice(1).forEach(function(d,i){
     var dayNum=i+1;
-    if(d.week!==lastWeek){
-      html+='<div class="week-header"><div class="week-label">'+d.week+'</div><div class="week-line"></div></div>';
-      lastWeek=d.week;
-    }
     html+='<div class="reel-card">';
     html+='<div class="reel-num">'+dayNum+'</div>';
     html+='<div class="reel-content">';
-    html+='<div class="reel-title">'+d.reel.name+'</div>';
+    html+='<div class="reel-title">'+d.loc+' · '+d.reel.name+'</div>';
     html+='<div class="reel-overlay">"'+d.reel.overlay+'"</div>';
     html+='<div style="display:flex;gap:6px">';
-    html+='<button class="reel-copy" onclick="copy(\''+escQ(d.reel.overlay)+'\',\'Copied\')">Copy text</button>';
+    html+='<button class="reel-copy" onclick="copy(\''+escQ(d.reel.overlay)+'\',\'Copied\')">Copy</button>';
     html+='<a href="'+driveUrl(d.reel.id)+'" target="_blank" style="background:var(--blue-light);color:var(--blue);border:1px solid var(--blue-border);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;text-decoration:none">Drive ↗</a>';
     html+='</div></div></div>';
   });
@@ -443,7 +409,7 @@ function renderReels(){
 
 function changeDay(dir){browseDayNum=Math.min(Math.max(browseDayNum+dir,1),TOTAL);renderBrowse();}
 function renderBrowse(){
-  document.getElementById('browseLabel').textContent='Day '+browseDayNum+' of '+TOTAL;
+  document.getElementById('browseLabel').textContent='Day '+browseDayNum+' — '+(DAYS[browseDayNum]?DAYS[browseDayNum].loc:'');
   document.getElementById('prevBtn').disabled=browseDayNum<=1;
   document.getElementById('nextBtn').disabled=browseDayNum>=TOTAL;
   document.getElementById('browse-content').innerHTML=buildDay(DAYS[browseDayNum],browseDayNum,false);
