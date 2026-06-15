@@ -1,8 +1,13 @@
-# credentials
+# credentials & secrets (never push these)
 credentials.json
 token.json
 instagram_cookies.txt
+cookies.txt
+*cookies*.txt
+*.token
 *.env
+.processed.json
+hf
 
 # output (large files, not needed on GitHub)
 output/
