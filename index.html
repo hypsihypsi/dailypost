@@ -41,6 +41,11 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif
 .tags{font-size:11px;color:var(--gold);opacity:.7;margin-bottom:12px;line-height:1.9}
 .overlay-text{background:rgba(28,24,20,.06);border-radius:8px;padding:10px 12px;font-size:13px;font-style:italic;color:var(--muted);margin-bottom:12px;border-left:2px solid var(--gold)}
 .song-info{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--gold);background:var(--gold-light);border:1px solid var(--gold-border);border-radius:8px;padding:8px 11px;margin-bottom:8px}
+.social-platform{font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.social-note{font-size:10px;font-weight:500;color:var(--muted2);text-transform:none;letter-spacing:0}
+.social-divider{height:1px;background:var(--border);margin:14px 0}
+.char-counter{font-size:11px;color:var(--muted2);text-align:right;margin-bottom:8px}
+.char-counter.over{color:#c0392b;font-weight:700}
 .btn{width:100%;padding:11px 16px;border-radius:10px;border:none;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;margin-bottom:7px;display:flex;align-items:center;justify-content:center;gap:7px;transition:.15s;text-decoration:none}
 .btn:active{transform:scale(.97)}
 .btn-gold{background:var(--gold);color:#fff}
@@ -96,6 +101,7 @@ a.btn{box-sizing:border-box}
   <button class="nav-btn" onclick="showPanel('calendar',this)"><span class="nav-icon ti ti-calendar"></span>Cal</button>
   <button class="nav-btn" onclick="showPanel('reels',this)"><span class="nav-icon ti ti-brand-instagram"></span>Reels</button>
   <button class="nav-btn" onclick="showPanel('browse',this)"><span class="nav-icon ti ti-layout-list"></span>Browse</button>
+  <button class="nav-btn" onclick="showPanel('social',this)"><span class="nav-icon ti ti-share-3"></span>Social</button>
 </div>
 <div class="panel active" id="panel-today"><div id="today-content"></div></div>
 <div class="panel" id="panel-calendar"><div id="cal-content"></div></div>
@@ -108,6 +114,7 @@ a.btn{box-sizing:border-box}
   </div>
   <div id="browse-content"></div>
 </div>
+<div class="panel" id="panel-social"><div id="social-content"></div></div>
 <div class="toast" id="toast"></div>
 <script>
 function thumb(id){return'https://drive.google.com/thumbnail?id='+id+'&sz=w600'}
@@ -120,349 +127,349 @@ var browseDayNum=1;
 // Rule: feed photo = start image, story1 = same start image, reel = matching audio video
 var DAYS=[null,
 
-{loc:'🏔️ nature',
- feed:{id:'1nMwCondMu8uh5DrCi5t9hkcWlJekS68j',time:'16:00',
-   cap:'mountains over everything.',tags:'#nature #quietluxury #slowtravel #softlife'},
+{loc:'✨ glam',threads_cap:'you got the entrance, not the after-party.',x_cap:'all dressed up with a quieter place to be. you know the one.',
+ feed:{id:'1SlDSseH0LkR-4Ua0rvncvdF96hRa-gPW',time:'21:00',
+   cap:'the mirror said yes.',tags:'#ootd #quietluxury #nightout #editorial'},
  stories:[
-   {cap:'new post ↑',id:'1nMwCondMu8uh5DrCi5t9hkcWlJekS68j'},
-   {cap:'random but here',id:'1h5et7FIXUcnOH-sKt2auL8mlqE9M1nXJ'},
-   {cap:'saving this one 🤍',id:'12CcOK2uQ1E5Rra0nzlnz7-fluEghE_3n'}]},
+   {cap:'new post ↑',id:'1SlDSseH0LkR-4Ua0rvncvdF96hRa-gPW'},
+   {cap:'saving this one 🤍',id:'1BYZRrxZbvAdtli1kVgS1PMWFx53gki4c'},
+   {cap:'later 🤍',id:'1liDTWju-i1n6IsPdu2mMY6kYzqSd1fPI'}]},
 
-{loc:'✨ glam',
- feed:{id:'1-1LvChru-qkZmXewLbV3o96NrlsRWFbP',time:'12:00',
-   cap:'dressed up for no one in particular. 🖤',tags:'#ootd #quietluxury #nightout #editorial'},
- stories:[
-   {cap:'new post ↑',id:'1-1LvChru-qkZmXewLbV3o96NrlsRWFbP'},
-   {cap:'no reason, just this',id:'1e6Lv3lHCryEi9dqIeYjLHxs9MzJl2F3u'},
-   {cap:'later 🤍',id:'16XhWg-X6rlVemV73EFl80ocLle8oOhfZ'}],
- reel:{id:'1LxMdg9vWiZQR3ztQ2qUt6G8SX-aUWidt',name:'zara_redcarpet_blackgown_glam_28_audio',overlay:'she walked in and the vibe changed',src:'https://www.instagram.com/reel/DZARRBeifPA/'}},
-
-{loc:'✨ glam',
- feed:{id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ',time:'12:00',
-   cap:'the mirror said yes.',tags:'#glam #fashion #nightout #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ'},
-   {cap:'the vibe rn',id:'1ZpT8B1D4XFRXF9aq4Ehk8geJXRRrcKTZ'},
-   {cap:'felt like it',id:'1RIBtCm1buD69gvQ5dK8f6ehP6zT7y0qS'}],
- reel:{id:'1KKFIctg8In_bF5J0bCKk21Zei9vsU9Uv',name:'zara_elevator_golddress_glam_16_audio',overlay:'bet you replayed that. bet you won\'t admit it. 😏',src:'https://www.instagram.com/reel/DZgA5zkDcB1/'}},
-
-{loc:'🛏️ bedroom',
- feed:{id:'1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj',time:'15:00',
-   cap:'not sorry about this post.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
- stories:[
-   {cap:'new post ↑',id:'1CQKUEUKhLT-uHUjBLL8gjgj3AVkeT6Wj'},
-   {cap:'saving this one 🤍',id:'1TwfImlEPPo-gQseXCNgI6AuKeK6F_yjf'},
-   {cap:'no reason, just this',id:'1v05X9TV023RzTs534oahT8zxKHhem3uq'}]},
-
-{loc:'✨ zara',
- feed:{id:'1Z60J3s65Gl8_WOxUkosC5cmxMxD-Kv-6',time:'10:00',
-   cap:'posting and logging off.',tags:'#softlife #quietluxury #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1Z60J3s65Gl8_WOxUkosC5cmxMxD-Kv-6'},
-   {cap:'couldn\'t not share this',id:'1T9BmS_TtphAWct1DD2jbQMv1cOU-g-T0'},
-   {cap:'the light right now',id:'1hDInjYKtLjIREkJJPAhqPra6J6dmzMu9'}]},
-
-{loc:'🏖️ beach',
- feed:{id:'1UXhOeOTU_IoER2CcCPQEcLLBJym89x6m',time:'20:00',
-   cap:'sun, salt, no plans. 🌊',tags:'#saltwater #summer #beachvibes #softlife'},
- stories:[
-   {cap:'new post ↑',id:'1UXhOeOTU_IoER2CcCPQEcLLBJym89x6m'},
-   {cap:'random but here',id:'1woFxz0QLkQ8FLIa5MLAvkYDaZmXPCHcU'},
-   {cap:'couldn\'t not share this',id:'1vaHoKX_wlJhozyG0DVet5rK-gHY1urw7'}]},
-
-{loc:'🛋️ livingroom',
- feed:{id:'1xIAAj1YGV-9NQwX9AorM8bF_PklBRQu6',time:'20:00',
-   cap:'the afternoon light again.',tags:'#cozyvibes #slowliving #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1xIAAj1YGV-9NQwX9AorM8bF_PklBRQu6'},
-   {cap:'the light right now',id:'1nruqpJzcmCdD-BliWY9jul4iVym0eKow'},
-   {cap:'saving this one 🤍',id:'1-2syz9r6YqI5DAnkGZ3MlzjGc3mUWW21'}]},
-
-{loc:'🏠 apartment',
- feed:{id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA',time:'18:00',
-   cap:'the light in here at this hour 🕯️',tags:'#softlife #quietluxury #homesweethome #35mm'},
- stories:[
-   {cap:'new post ↑',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'},
-   {cap:'the light right now',id:'1TNbLAgxxd52PW7nWb0c3YDquib76pl6W'},
-   {cap:'felt like it',id:'1s6BdfjEp-pWcfmUsWVDW4YuuViWkAfEC'}],
- reel:{id:'1e3oUi-WZ3e4wZ5L5siv0aHFo6knkOfop',name:'zara_apartment_pinkset_hairlean_06_audio',overlay:'still waiting for someone to prove that chivalry isn\'t actually dead. 🕯️',src:'https://www.instagram.com/reel/DZlUqm9DsFt/'}},
-
-{loc:'🚶 street',
- feed:{id:'1FaED0jljL8hw7sLH7jYEeIDbXHyAluh1',time:'18:00',
+{loc:'🚶 street',threads_cap:'this is the part of the day i let you see.',x_cap:'the walk home isn\'t on the feed. link in bio.',
+ feed:{id:'1Djs_bOXS-9FTQ4ECCfQ5vbvVIaMr9BE6',time:'12:00',
    cap:'wandered, no destination. 🚶',tags:'#citywalk #ootd #slowliving #soft'},
  stories:[
-   {cap:'new post ↑',id:'1FaED0jljL8hw7sLH7jYEeIDbXHyAluh1'},
-   {cap:'quick one',id:'1sS_WS1vZQEUfD8xjryG6ISCeXpOEnzvX'},
-   {cap:'this hour hits different',id:'1pyxAcPykf_SslcyK5CjZ119fteVsqNjS'}]},
+   {cap:'new post ↑',id:'1Djs_bOXS-9FTQ4ECCfQ5vbvVIaMr9BE6'},
+   {cap:'the vibe rn',id:'1-1LvChru-qkZmXewLbV3o96NrlsRWFbP'},
+   {cap:'random but here',id:'1GcNV0ERqSiLtRq-xB2B7khF_tX0l_NFX'}],
+ reel:{id:'1bGA0FmqylhYO-YbLp_go8swu2Cz8-GyR',name:'zara_street_blackset_walk_19_audio',overlay:'just keep scrolling. or don\'t. 😏',src:'https://www.instagram.com/reel/DVB3XdCEfDu/'}},
 
-{loc:'🏔️ nature',
- feed:{id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2',time:'15:00',
-   cap:'the view that made me pull over 🌲',tags:'#nature #quietluxury #slowtravel #softlife'},
- stories:[
-   {cap:'new post ↑',id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2'},
-   {cap:'the light right now',id:'11nr9JbsIgOOK1Adte4vEgXy6t8h-vWK-'},
-   {cap:'quick one',id:'13Uiackn9yuSIiiRDrNSMRnF4n_NNaIQj'}],
- reel:{id:'1OndXObbtylrbjr_q96unw3h7kzAucbDS',name:'zara_cabin_greytank_drink_14_audio',overlay:'she\'s somewhere beautiful and completely unbothered about it',src:'https://www.instagram.com/reel/DZiUd3RAP_4/'}},
-
-{loc:'✨ zara',
- feed:{id:'1pyxAcPykf_SslcyK5CjZ119fteVsqNjS',time:'12:00',
-   cap:'no caption could do it justice.',tags:'#softlife #quietluxury #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1pyxAcPykf_SslcyK5CjZ119fteVsqNjS'},
-   {cap:'random but here',id:'1mYQ_pj1-_eMIE4Zba0gienQ3_cYEwpPV'},
-   {cap:'this hour hits different',id:'1nGJ-LOUnHbTjef04AwtdTZazvhVeU8JS'}]},
-
-{loc:'🛏️ bedroom',
- feed:{id:'1aysRpsfHG-aQp1yhiwiicvGrtVj2Ymr0',time:'14:00',
+{loc:'🛏️ bedroom',threads_cap:'mornings like this have a longer version.',x_cap:'this is the safe-for-here edit. the other one needs a subscription.',
+ feed:{id:'1BYZRrxZbvAdtli1kVgS1PMWFx53gki4c',time:'12:00',
    cap:'the light at this hour.',tags:'#slowmornings #softlife #cozy #35mm'},
  stories:[
-   {cap:'new post ↑',id:'1aysRpsfHG-aQp1yhiwiicvGrtVj2Ymr0'},
-   {cap:'the light right now',id:'11vF9O_FHiXNePVNLK2gkVxzA_kDP8Pca'},
-   {cap:'felt like it',id:'1tP4iVqZsrCpAE-WNcYvgNfW2yP4TdG7b'}],
- reel:{id:'1JmQXw36jKj4R_N2-uTYkbTzmBniAgn1_',name:'zara_patio_corset_hairflip_20_audio',overlay:'sunday morning energy that should be illegal',src:'https://www.instagram.com/reel/DVnwtVKjpOO/'}},
+   {cap:'new post ↑',id:'1BYZRrxZbvAdtli1kVgS1PMWFx53gki4c'},
+   {cap:'the light right now',id:'1sdDsTBd1bT_6ZTXOkOCVaM488hlF9RcP'},
+   {cap:'felt like it',id:'1y1RNDbbqPZQ8FaGhk3IGl5ngDNxl4MuT'}]},
 
-{loc:'🏊 pool',
- feed:{id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl',time:'11:00',
+{loc:'🏠 apartment',threads_cap:'some sundays don\'t get posted. you can guess why.',x_cap:'home content has a version this app won\'t show you.',
+ feed:{id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA',time:'15:00',
+   cap:'the light in here at this hour 🕯️',tags:'#cozyhome #slowliving #softlife #aesthetic'},
+ stories:[
+   {cap:'new post ↑',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'},
+   {cap:'the light right now',id:'1ru-DNSIxomygeOPVJLzUQqJROpUg6VRg'},
+   {cap:'couldn\'t not share this',id:'1R4Ci03gWwlY-N26Xx3BxQqG2-gQBIa_x'}],
+ reel:{id:'1e3oUi-WZ3e4wZ5L5siv0aHFo6knkOfop',name:'zara_apartment_pinkset_hairlean_06_audio',overlay:'rare energy. not for everyone. that\'s fine. 🤍',src:'https://www.instagram.com/reel/DZlUqm9DsFt/'}},
+
+{loc:'✨ glam',threads_cap:'the night had a second act you won\'t find here.',x_cap:'you got the entrance. the after-party\'s on fanvue. 🔒',
+ feed:{id:'1ASLj9L2l_CMH1uX2YfJMDTWkpwK_5nXT',time:'15:00',
+   cap:'gold hour, literally.',tags:'#ootd #quietluxury #nightout #editorial'},
+ stories:[
+   {cap:'new post ↑',id:'1ASLj9L2l_CMH1uX2YfJMDTWkpwK_5nXT'},
+   {cap:'felt like it',id:'13yT_KXJVn7nxY_dZSVKFrxbIVx-9u5MF'},
+   {cap:'quick one',id:'1hjCweaVBj6PQEKWJjQHz_fsSczCFYeGn'}],
+ reel:{id:'1cpfjM2muTBgt_tzlMbDq4oTlJ1Y9ZgSc',name:'zara_nightclub_slipdress_turn_22_audio',overlay:'something about the way she moves 👀',src:'https://www.instagram.com/reel/DZg2_eHN8PK/'}},
+
+{loc:'✨ zara',threads_cap:'the things i don\'t post here go somewhere else.',x_cap:'link in bio. you\'ll understand when you get there.',
+ feed:{id:'1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H',time:'22:00',
+   cap:'this one felt right. 🤍',tags:'#softlife #quietluxury #aesthetic #soft'},
+ stories:[
+   {cap:'new post ↑',id:'1eU-cxJ2gMhSnhL-pwc-1koosSsVICp1H'},
+   {cap:'quick one',id:'1VUKBe_crYQBAw28lEThZgUqBQNV5UCqY'},
+   {cap:'random but here',id:'1FQj0xJdO1frhfFJzPzjIECJUueDUL6Dx'}]},
+
+{loc:'🏔️ nature',threads_cap:'what i do with a weekend and no agenda stays mine.',x_cap:'weekend with no agenda has a version you won\'t find here. 🔒',
+ feed:{id:'1p2RIqszdeqfzAg8u5mB94QZCHvvTCyIt',time:'14:00',
+   cap:'the view that made me pull over 🌲',tags:'#mountains #slowliving #escape #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1p2RIqszdeqfzAg8u5mB94QZCHvvTCyIt'},
+   {cap:'couldn\'t not share this',id:'1sYT-civzLdCb62g48opurweMJ9W-bf-H'},
+   {cap:'later 🤍',id:'1zsHpllrFTMd283BpuhpOuR6VUiB1-D4I'}]},
+
+{loc:'🛋️ livingroom',threads_cap:'soft hours have a director\'s cut.',x_cap:'soft hours have a director\'s cut. you know where. 🔒',
+ feed:{id:'1OnL4fjICja07yL8yAJUwVOO7QLcl46Qf',time:'10:00',
+   cap:'this couch and i have history.',tags:'#softlife #quietluxury #homesweethome #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1OnL4fjICja07yL8yAJUwVOO7QLcl46Qf'},
+   {cap:'this hour hits different',id:'1Vwp1WxKsTrzkRWiRoTbN8OJbOgcvjCYm'},
+   {cap:'the light right now',id:'1ZpT8B1D4XFRXF9aq4Ehk8geJXRRrcKTZ'}]},
+
+{loc:'🏔️ nature',threads_cap:'quiet places, quieter content.',x_cap:'no signal, fewer rules. the rest is off this app. link in bio.',
+ feed:{id:'1UXqGDd6Ex8yAG2ZZNKoBnM_jJBrPt5r_',time:'18:00',
+   cap:'no signal, no problem.',tags:'#mountains #slowliving #escape #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1UXqGDd6Ex8yAG2ZZNKoBnM_jJBrPt5r_'},
+   {cap:'quick one',id:'1vr98cNGc2j9B4HcCj9L4NPKLVpCorwlW'},
+   {cap:'random but here',id:'10J2_lAf3tyBUjwOahkTm9jrpDmxW9f3J'}]},
+
+{loc:'✨ zara',threads_cap:'the things i don\'t post here go somewhere else.',x_cap:'daily content. some of it goes places instagram doesn\'t allow.',
+ feed:{id:'1zOSlvTasrjCf-4zuv8SpF6gpoFMydgbr',time:'21:00',
+   cap:'you had to be there 🤍',tags:'#softlife #quietluxury #aesthetic #soft'},
+ stories:[
+   {cap:'new post ↑',id:'1zOSlvTasrjCf-4zuv8SpF6gpoFMydgbr'},
+   {cap:'random but here',id:'1kqjpZsH8ELkx6CUdww_aRhCmpL0ECceu'},
+   {cap:'this hour hits different',id:'17f8XbanVj8JRtPfEloBhiSDfF54MU6kk'}],
+ reel:{id:'1VethzrmkBaQoTad2ulSa3JAGzXsgp3zt',name:'zara_stadium_cardigan_sunglasses_27_audio',overlay:'the way she just exists 😮‍💨',src:'https://www.instagram.com/reel/DYUi_rNClXw/'}},
+
+{loc:'🏖️ beach',threads_cap:'you saw the postcard, not the rest of the day.',x_cap:'you saw the swim. the rest needs a subscription. 🔒',
+ feed:{id:'1e6Lv3lHCryEi9dqIeYjLHxs9MzJl2F3u',time:'16:00',
+   cap:'came for the water, stayed for the quiet.',tags:'#saltwater #summer #beachvibes #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1e6Lv3lHCryEi9dqIeYjLHxs9MzJl2F3u'},
+   {cap:'felt like it',id:'1H0wRCesq0Y20jayzWA9P_uwBqY0OzZ72'},
+   {cap:'saving this one 🤍',id:'1MaweSnUpmMyUb7WL-1qdfKxzao6Fu74X'}]},
+
+{loc:'🛏️ bedroom',threads_cap:'mornings like this have a longer version.',x_cap:'there\'s a version of these mornings instagram won\'t allow. link in bio.',
+ feed:{id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj',time:'14:00',
+   cap:'not sorry about this post.',tags:'#slowmornings #softlife #cozy #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj'},
+   {cap:'the vibe rn',id:'11nr9JbsIgOOK1Adte4vEgXy6t8h-vWK-'},
+   {cap:'this hour hits different',id:'1_BNZIxNA6hr3v1D9DpM3D90uBtC995nb'}],
+ reel:{id:'1f9RqeG_SksbKtCP8L9opDKQ-WXlcfYwL',name:'zara_bedroom_whitetank_hairflip_10_audio',overlay:'this is the kind of reel you save and don\'t tell anyone why',src:'https://www.instagram.com/reel/DZizT_PiZTO/'}},
+
+{loc:'🏨 hotel',threads_cap:'checked in. the feed only gets the lobby version.',x_cap:'checked in. instagram only gets the lobby.',
+ feed:{id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti',time:'22:00',
+   cap:'hotel rooms hit different after midnight. 🖤',tags:'#hotel #quietluxury #nightvibes #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti'},
+   {cap:'saving this one 🤍',id:'1rdkc2QrDdg7r4ggIRfo4NkWJ8yuVRTQR'},
+   {cap:'the vibe rn',id:'1J8MkmrI9AkOobAFqe5v8QtYcJI-1MEvy'}],
+ reel:{id:'1Vl7CV6VHJutZUx-kpqt0wzTGdMRuhiGV',name:'zara_hotel_blackbralette_dance_17_audio',overlay:'that balcony, that light, that 😮‍💨',src:'https://www.instagram.com/reel/DZf_Pm1jm01/'}},
+
+{loc:'✨ glam',threads_cap:'the night had a second act you won\'t find here.',x_cap:'all dressed up with a quieter place to be. you know the one.',
+ feed:{id:'1sSMHZ0716vENer9l31xv0lcri3psTIQS',time:'16:00',
+   cap:'getting ready took too long, worth it.',tags:'#ootd #quietluxury #nightout #editorial'},
+ stories:[
+   {cap:'new post ↑',id:'1sSMHZ0716vENer9l31xv0lcri3psTIQS'},
+   {cap:'felt like it',id:'1Ar6SNuLT8gVgVFR-B8I5FkHWymPdp8PJ'},
+   {cap:'later 🤍',id:'1LDXoqyvrJ63kBr48Wg33TYlpku7zKp_B'}],
+ reel:{id:'15EFhTkHcq8-iVSKNIk6Xz-RLKIpq3L-5',name:'zara_street_floraldress_walk_21_audio',overlay:'the kind of person you don\'t forget after one look',src:'https://www.instagram.com/reel/DW2IhOVkaWL/'}},
+
+{loc:'🏖️ beach',threads_cap:'what happened after this photo isn\'t on the feed. 🔒',x_cap:'what happened after this photo isn\'t allowed here. link in bio.',
+ feed:{id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B',time:'22:00',
+   cap:'came for the water, stayed for the quiet.',tags:'#beachday #slowlife #quietluxury #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B'},
+   {cap:'this hour hits different',id:'1hmw2xEK-J14dyvg1WFXADnQ5_Mokt6g8'},
+   {cap:'couldn\'t not share this',id:'1lbrPgNELGh0hJwKJ-WMYeVVeHcj9hwxi'}],
+ reel:{id:'1A0wr_oNJ7zpNGeCLki9xdd0er-maF5eh',name:'zara_beach_yellowtop_greenbikini_12_audio',overlay:'i don\'t always post. when i do — you feel it. 😌',src:'https://www.instagram.com/reel/DZifaVCgSec/'}},
+
+{loc:'🏖️ beach',threads_cap:'what happened after this photo isn\'t on the feed. 🔒',x_cap:'what happened after this photo isn\'t allowed here. link in bio.',
+ feed:{id:'1TnqdwOqtTyEMn-epqVWicStVb3yUIMWj',time:'11:00',
+   cap:'came for the water, stayed for the quiet.',tags:'#saltwater #summer #beachvibes #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1TnqdwOqtTyEMn-epqVWicStVb3yUIMWj'},
+   {cap:'quick one',id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL'},
+   {cap:'the light right now',id:'1mVpDXEUq0GhM1vWo2RiwPebCLCxp4u6c'}]},
+
+{loc:'✨ glam',threads_cap:'the dress came off camera eventually. 🔒',x_cap:'the dress came off camera eventually. link in bio.',
+ feed:{id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ',time:'16:00',
+   cap:'gold hour, literally.',tags:'#glam #fashion #nightout #aesthetic'},
+ stories:[
+   {cap:'new post ↑',id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ'},
+   {cap:'the vibe rn',id:'1E979sF67xqDzvuZfZwWIXDv-grGcmPqO'},
+   {cap:'felt like it',id:'17dYcE4KLTip6roBxKGKzZp64q3K5njAR'}],
+ reel:{id:'1KKFIctg8In_bF5J0bCKk21Zei9vsU9Uv',name:'zara_elevator_golddress_glam_16_audio',overlay:'your face said everything your mouth didn\'t. 🙃',src:'https://www.instagram.com/reel/DZgA5zkDcB1/'}},
+
+{loc:'🏔️ nature',threads_cap:'the escape had an off-camera half.',x_cap:'the view\'s public. the rest isn\'t.',
+ feed:{id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2',time:'16:00',
+   cap:'this is my reset button.',tags:'#nature #quietluxury #slowtravel #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1hL9Rdbyd0ONc4TxyVRbiSIoiapJMrNE2'},
+   {cap:'couldn\'t not share this',id:'1PtkXtR_NShnX-TmA9-FwQOf2J-D6aTX4'},
+   {cap:'the light right now',id:'1YNHZ81RYVso82xx0tQeSNVXL5i9imd9A'}],
+ reel:{id:'1OndXObbtylrbjr_q96unw3h7kzAucbDS',name:'zara_cabin_greytank_drink_14_audio',overlay:'the view is nice. she\'s better.',src:'https://www.instagram.com/reel/DZiUd3RAP_4/'}},
+
+{loc:'🏊 pool',threads_cap:'what comes after the dip stays off here.',x_cap:'the pool was the warm-up. the rest lives on fanvue. 🔒',
+ feed:{id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl',time:'10:00',
    cap:'this is what balance looks like.',tags:'#poolday #quietluxury #softlife #summer'},
  stories:[
    {cap:'new post ↑',id:'1wN7iEzPPQZ2cD2_v3z55sHUxNI0Oe2vl'},
-   {cap:'no reason, just this',id:'1VuJ_n-R_fWOJmpNhrZBtkGEazm1VvCRO'},
-   {cap:'quick one',id:'1PBywc3FqGXckGsBM8nxVj8xMir75ytC5'}],
- reel:{id:'1Y4EoeAXR1Zo2Q7qPwzW24Ch7cGNTN9uF',name:'zara_pool_blackbikini_waterslide_09_audio',overlay:'some people just move different',src:'https://www.instagram.com/reel/DZkyVm9AlDz/'}},
+   {cap:'couldn\'t not share this',id:'1yEwgipU0DlBSh6v_jbEO9PV9OD3ebqIF'},
+   {cap:'this hour hits different',id:'1OrVkr4T1CbWzYi_Cfx5jPyxr-2E45cVM'}],
+ reel:{id:'1Y4EoeAXR1Zo2Q7qPwzW24Ch7cGNTN9uF',name:'zara_pool_blackbikini_waterslide_09_audio',overlay:'the lighting had no business doing that',src:'https://www.instagram.com/reel/DZkyVm9AlDz/'}},
 
-{loc:'✨ zara',
- feed:{id:'1rzSnzA4KosASW5Tg9JQflHfGkEjmVak5',time:'10:00',
+{loc:'🛏️ bedroom',threads_cap:'soft on here. you already know where the rest goes.',x_cap:'soft on the feed. less soft on fanvue. 🔒',
+ feed:{id:'1ipispfDNxF5vgWS1gnCJMuMMqIItHMh2',time:'17:00',
+   cap:'the light at this hour.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
+ stories:[
+   {cap:'new post ↑',id:'1ipispfDNxF5vgWS1gnCJMuMMqIItHMh2'},
+   {cap:'the light right now',id:'1lrGBxm8ZPbjMDXL_ZZEQsML53FsPvtSx'},
+   {cap:'the vibe rn',id:'1lAXhNv8JClLMrMRTKbUWVGTfA3LhFhm7'}]},
+
+{loc:'✨ zara',threads_cap:'soft on here. less soft elsewhere.',x_cap:'soft on the feed. less soft on fanvue. 🔒',
+ feed:{id:'1rzSnzA4KosASW5Tg9JQflHfGkEjmVak5',time:'18:00',
    cap:'posting and logging off.',tags:'#softlife #quietluxury #aesthetic #soft'},
  stories:[
    {cap:'new post ↑',id:'1rzSnzA4KosASW5Tg9JQflHfGkEjmVak5'},
-   {cap:'quick one',id:'1OpAUQbAfVEdqss9CfjejCjASbaL-0xr7'},
-   {cap:'couldn\'t not share this',id:'1mwSEZP16ZE7RCaFLsrKIhfgLCCKAXTj-'}],
- reel:{id:'1XHouO3s70BbftIcyGUPUdlYbkESOKEgk',name:'zara_car_whitetop_selfie_24_audio',overlay:'the way she just exists 😮‍💨',src:'https://www.instagram.com/reel/DWMVeFCgu2g/'}},
+   {cap:'quick one',id:'1f67wKi8vEHRydQz3DscCxcAbo8pah5Gh'},
+   {cap:'random but here',id:'1LuRk9okP4LRnn05akrLuQYB35cauQrSP'}],
+ reel:{id:'1XHouO3s70BbftIcyGUPUdlYbkESOKEgk',name:'zara_car_whitetop_selfie_24_audio',overlay:'soft reminder that i exist. you\'re welcome. 😏',src:'https://www.instagram.com/reel/DWMVeFCgu2g/'}},
 
-{loc:'🛏️ bedroom',
- feed:{id:'1fFzyXyG5hG1XraCJBT-z0w050wYApYLF',time:'18:00',
-   cap:'the light at this hour.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
+{loc:'✈️ travel',threads_cap:'the trip had a chapter i didn\'t post. 🔒',x_cap:'passport full, feed half-empty on purpose. 🔒',
+ feed:{id:'1sdDsTBd1bT_6ZTXOkOCVaM488hlF9RcP',time:'17:00',
+   cap:'new place, same me.',tags:'#travel #quietluxury #slowtravel #wanderlust'},
  stories:[
-   {cap:'new post ↑',id:'1fFzyXyG5hG1XraCJBT-z0w050wYApYLF'},
-   {cap:'this hour hits different',id:'1YATTWy98mjuez1S6p_QGf5WSlE2k3d9j'},
-   {cap:'the light right now',id:'1lrGBxm8ZPbjMDXL_ZZEQsML53FsPvtSx'}],
- reel:{id:'1bVva0-kNYXX8YPkeSlFfadnSaC9z-KsF',name:'zara_lakeview_whitetank_guitar_26_audio',overlay:'following for the content. meaning something completely different. 😈',src:'https://www.instagram.com/reel/DW8h5BMAqG-/'}},
+   {cap:'new post ↑',id:'1sdDsTBd1bT_6ZTXOkOCVaM488hlF9RcP'},
+   {cap:'no reason, just this',id:'1mMTHxHIsycGT05cXB09hC_xi64tjlOZx'},
+   {cap:'the light right now',id:'1_3y97_8G7KB0ZFUGLl1a8rbR5Uf1sPHD'}]},
 
-{loc:'✨ zara',
- feed:{id:'1BPzdODZ58lz5dbVTNgqFeO0B0sPHldBN',time:'21:00',
-   cap:'this one felt right. 🤍',tags:'#softlife #quietluxury #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1BPzdODZ58lz5dbVTNgqFeO0B0sPHldBN'},
-   {cap:'the light right now',id:'1k-aat0J-sAC7VPggNJ-4umsgC6IqFSuE'},
-   {cap:'quick one',id:'1d161RPdQfMgECf-PBo0_oCIToGcBk-SI'}]},
-
-{loc:'🍳 kitchen',
- feed:{id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL',time:'18:00',
-   cap:'mornings in the kitchen, always. ☕',tags:'#morningvibes #quietluxury #softlife #home'},
- stories:[
-   {cap:'new post ↑',id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL'},
-   {cap:'the vibe rn',id:'1_2FpdS-L4HRV_1AR-bdVRbw-pFipzecD'},
-   {cap:'random but here',id:'14ldaAyfL6KtND46dhXrZmfM9XV3uJMDo'}],
- reel:{id:'1ToEDmCFWcYKcGQruAN1bGIsAQ2NKDdEd',name:'zara_kitchen_whitebandeau_selfie_15_audio',overlay:'my love language is cooking for you at midnight or not talking to you at all. 🍳',src:'https://www.instagram.com/reel/DZgOkTiky0e/'}},
-
-{loc:'🏖️ beach',
- feed:{id:'1y1RNDbbqPZQ8FaGhk3IGl5ngDNxl4MuT',time:'21:00',
-   cap:'this is the assignment.',tags:'#saltwater #summer #beachvibes #softlife'},
- stories:[
-   {cap:'new post ↑',id:'1y1RNDbbqPZQ8FaGhk3IGl5ngDNxl4MuT'},
-   {cap:'the light right now',id:'1YATTWy98mjuez1S6p_QGf5WSlE2k3d9j'},
-   {cap:'this hour hits different',id:'1vr98cNGc2j9B4HcCj9L4NPKLVpCorwlW'}]},
-
-{loc:'🚶 street',
- feed:{id:'14XA7TGMbcSgh5YTyqNtvxfMueZvldNFb',time:'20:00',
-   cap:'walked it off.',tags:'#streetstyle #citylife #softlife #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'14XA7TGMbcSgh5YTyqNtvxfMueZvldNFb'},
-   {cap:'saving this one 🤍',id:'1f67wKi8vEHRydQz3DscCxcAbo8pah5Gh'},
-   {cap:'no reason, just this',id:'1Pqj8dq2tSi-uyFVZBu_2xD3HLs7VqdnJ'}],
- reel:{id:'1o9rEZe-FvZMnUKvvCFEGba_GlHAafSms',name:'zara_street_tankskirt_pose_23_audio',overlay:'the algorithm knew what it was doing',src:'https://www.instagram.com/reel/DZx3Wj6s04t/'}},
-
-{loc:'🎮 cozy',
- feed:{id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49',time:'18:00',
-   cap:'soft launch of doing nothing.',tags:'#cozyvibes #slowliving #soft #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49'},
-   {cap:'couldn\'t not share this',id:'1DYfg6a5w8dmuSW8CoEEhGXnvekKkDx78'},
-   {cap:'quick one',id:'1hmw2xEK-J14dyvg1WFXADnQ5_Mokt6g8'}],
- reel:{id:'1tDZ5ozabVVp0ozXF0PmkrfT9U1GUCspi',name:'zara_gamerroom_whitecami_cozy_11_audio',overlay:'bring coffee in the morning and we\'re already off to a good start. ☕',src:'https://www.instagram.com/reel/DZisfGnCM6Z/'}},
-
-{loc:'✨ zara',
- feed:{id:'1jXzMNzqGnyud8Hz2zaOas8y5ABqEGJGL',time:'16:00',
-   cap:'you had to be there 🤍',tags:'#softlife #quietluxury #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1jXzMNzqGnyud8Hz2zaOas8y5ABqEGJGL'},
-   {cap:'no reason, just this',id:'1cVhpHBa-ibsQA_VmMvitl35NX-TsMcQ0'},
-   {cap:'saving this one 🤍',id:'1g7xfWYq28CnbGrmsKo6WYSJ4O2rG5wmm'}],
- reel:{id:'1D0BeEAMIK-YS4ErcUta02Fx2nw1yrmQa',name:'zara_musicroom_creamsweater_guitar_25_audio',overlay:'don\'t tell anyone you were here. ❤️',song:'Thinking about you',src:'https://www.instagram.com/reel/DWyytBzggjW/'}},
-
-{loc:'✨ glam',
- feed:{id:'1sSMHZ0716vENer9l31xv0lcri3psTIQS',time:'10:00',
-   cap:'overdressed is a myth.',tags:'#glam #fashion #nightout #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'1sSMHZ0716vENer9l31xv0lcri3psTIQS'},
-   {cap:'felt like it',id:'1J59xnfy1HQG20pllJ-VCfjARwxQ2A-Nt'},
-   {cap:'random but here',id:'1APlu4EiZFtwVUGSZrMKg9nhoWGzGxBK9'}],
- reel:{id:'15EFhTkHcq8-iVSKNIk6Xz-RLKIpq3L-5',name:'zara_street_floraldress_walk_21_audio',overlay:'the unbothered energy is doing a lot of work here',src:'https://www.instagram.com/reel/DW2IhOVkaWL/'}},
-
-{loc:'✨ zara',
- feed:{id:'1HHk0mrc7vdrhJevFKc3kdl8Godg1ejlo',time:'11:00',
-   cap:'felt cute, posting it.',tags:'#softlife #quietluxury #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1HHk0mrc7vdrhJevFKc3kdl8Godg1ejlo'},
-   {cap:'quick one',id:'1lb6UGzbpZ93Im_z5lEiMaVZCnJjNzEvN'},
-   {cap:'felt like it',id:'1nLcYu1JhslTQRDrzvJWr_F2AjKolHm9K'}]},
-
-{loc:'🚶 street',
- feed:{id:'1vkrWV_XvEnNjPnGTgBBaMp6WFJp9-81U',time:'11:00',
-   cap:'walked it off.',tags:'#streetstyle #citylife #softlife #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'1vkrWV_XvEnNjPnGTgBBaMp6WFJp9-81U'},
-   {cap:'the vibe rn',id:'1PsBCMmF8UVVRMmaykVY2AZIVytuPdMgN'},
-   {cap:'this hour hits different',id:'1WO06ZkiNA6MDI1MJPtZXGQ_LaDXw-J_C'}]},
-
-{loc:'🛏️ bedroom',
- feed:{id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl',time:'12:00',
-   cap:'staying in was the only option.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
- stories:[
-   {cap:'new post ↑',id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl'},
-   {cap:'felt like it',id:'1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-'},
-   {cap:'this hour hits different',id:'1Yp0CkVzWYHANg7geKGzykhhJdJV7-xrb'}],
- reel:{id:'1bJg2N9K9J4QzmPS_olREGm_A_qfSI7Ta',name:'zara_bedroom_whitelace_selfie_08_audio',overlay:'could learn a lot more about you. offline.',src:'https://www.instagram.com/reel/DZlABBfDhEp/'}},
-
-{loc:'🛏️ bedroom',
- feed:{id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj',time:'22:00',
-   cap:'consider this your sign to stay in bed.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
- stories:[
-   {cap:'new post ↑',id:'1y8qOJuHu4_rHw7iR-U96J_LtL21jlluj'},
-   {cap:'couldn\'t not share this',id:'1meDkIYRT08ZKZmpZm8tJ9Od5beTEI_XS'},
-   {cap:'saving this one 🤍',id:'1Us9a3SRmy9ohUzYyYA4g5XW9bNIzFe-v'}],
- reel:{id:'1f9RqeG_SksbKtCP8L9opDKQ-WXlcfYwL',name:'zara_bedroom_whitetank_hairflip_10_audio',overlay:'instagram allowed it. i just took the opportunity. 😈',src:'https://www.instagram.com/reel/DZizT_PiZTO/'}},
-
-{loc:'🛏️ bedroom',
- feed:{id:'1a7LQ5WDkZaSxFiFZYK0nIOCTdmc1wmjG',time:'18:00',
-   cap:'the light at this hour.',tags:'#slowmornings #softlife #cozy #35mm'},
- stories:[
-   {cap:'new post ↑',id:'1a7LQ5WDkZaSxFiFZYK0nIOCTdmc1wmjG'},
-   {cap:'felt like it',id:'1UXqGDd6Ex8yAG2ZZNKoBnM_jJBrPt5r_'},
-   {cap:'random but here',id:'1WCykyuPbcslYtK_WB1ajHtjMw15Veaio'}]},
-
-{loc:'🏠 apartment',
- feed:{id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes',time:'16:00',
-   cap:'soft hours only.',tags:'#cozyhome #slowliving #softlife #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'},
-   {cap:'saving this one 🤍',id:'1GSVSZaHmwKD3G7nIguA7u3JzK0c_Odlg'},
-   {cap:'random but here',id:'1TOkAHyZYZQTY912bPWteoku-xK3E7lzX'}],
- reel:{id:'1vRrIndPmllkXerPHUu6Gefmdec1Ybbaq',name:'zara_apartment_pinkset_doorway_05_audio',overlay:'i\'m not hard to love. i\'m just easy to overlook. that\'s the difference.',src:'https://www.instagram.com/reel/DZnazrbDTVC/'}},
-
-{loc:'✨ zara',
- feed:{id:'1iA-2ZVytFBKX3Zrd-L0uw4SsXSIz4gKJ',time:'14:00',
-   cap:'posting and logging off.',tags:'#softlife #quietluxury #aesthetic #soft'},
- stories:[
-   {cap:'new post ↑',id:'1iA-2ZVytFBKX3Zrd-L0uw4SsXSIz4gKJ'},
-   {cap:'this hour hits different',id:'1R4Ci03gWwlY-N26Xx3BxQqG2-gQBIa_x'},
-   {cap:'later 🤍',id:'1Avl2vFv08LLBc4QbGmnflBZ7nGkdV8Qh'}]},
-
-{loc:'🛋️ livingroom',
- feed:{id:'10RXW7OcyS8eBGC6jpGQg5nneto2PFrpi',time:'22:00',
-   cap:'reading, rereading, not reading. 📖',tags:'#softlife #quietluxury #homesweethome #35mm'},
+{loc:'🛋️ livingroom',threads_cap:'the couch sees a lot it doesn\'t repeat. 🔒',x_cap:'the quiet nights have a version this app won\'t host.',
+ feed:{id:'10RXW7OcyS8eBGC6jpGQg5nneto2PFrpi',time:'14:00',
+   cap:'this couch and i have history.',tags:'#softlife #quietluxury #homesweethome #35mm'},
  stories:[
    {cap:'new post ↑',id:'10RXW7OcyS8eBGC6jpGQg5nneto2PFrpi'},
-   {cap:'the vibe rn',id:'1DYfg6a5w8dmuSW8CoEEhGXnvekKkDx78'},
-   {cap:'later 🤍',id:'1h07BQJegPvIcs-JaJhhHEXjFEKYhg6KB'}],
- reel:{id:'1p_BECBlHhTurO7yi3396SNGju5Ict6ZN',name:'zara_livingroom_leopard_reading_07_audio',overlay:'not hard to find. just hard to forget. 🤍',src:'https://www.instagram.com/reel/DZlKYSEjpp2/'}},
+   {cap:'this hour hits different',id:'1CZMF8YCt8WLxqnw7iNM7KsEhYqsHzSkY'},
+   {cap:'later 🤍',id:'1kObDymErVeZ6VQXAQnKBpMZmmAEuOyPK'}],
+ reel:{id:'1p_BECBlHhTurO7yi3396SNGju5Ict6ZN',name:'zara_livingroom_leopard_reading_07_audio',overlay:'selective. intentional. worth it. 🤍',src:'https://www.instagram.com/reel/DZlKYSEjpp2/'}},
 
-{loc:'🍳 kitchen',
- feed:{id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE',time:'22:00',
-   cap:'mornings in the kitchen, always. ☕',tags:'#morningvibes #quietluxury #softlife #home'},
+{loc:'🛏️ bedroom',threads_cap:'what happens after i put the phone down stays off here. 🔒',x_cap:'soft on the feed. less soft on fanvue. 🔒',
+ feed:{id:'1fFzyXyG5hG1XraCJBT-z0w050wYApYLF',time:'20:00',
+   cap:'consider this your sign to stay in bed.',tags:'#slowmornings #softlife #cozy #35mm'},
  stories:[
-   {cap:'new post ↑',id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE'},
-   {cap:'the light right now',id:'1ixG_5fQfha4pGt4z6o67zJ88n_uzRBW9'},
-   {cap:'quick one',id:'1-2syz9r6YqI5DAnkGZ3MlzjGc3mUWW21'}],
- reel:{id:'1lYs1Zcdz9QwYQTLkxAlzkT_Qr36YwUsh',name:'zara_kitchen_bluesweater_overshoulder_18_audio',overlay:'i give a lot. i just stopped giving it to the wrong people.',src:'https://www.instagram.com/reel/DZf5op_ETMj/'}},
+   {cap:'new post ↑',id:'1fFzyXyG5hG1XraCJBT-z0w050wYApYLF'},
+   {cap:'saving this one 🤍',id:'1-q5CQG7vL5flKh119F7bvBg7sqXNWdka'},
+   {cap:'no reason, just this',id:'1lh9gSRIPdIFkxcCnecDX1MgafztS6dTH'}],
+ reel:{id:'1bVva0-kNYXX8YPkeSlFfadnSaC9z-KsF',name:'zara_lakeview_whitetank_guitar_26_audio',overlay:'could learn a lot more about you. offline.',src:'https://www.instagram.com/reel/DW8h5BMAqG-/'}},
 
-{loc:'🚶 street',
- feed:{id:'14l3wuHEY5FfHWvgmOpRrlmoV-ExWFqh7',time:'10:00',
-   cap:'the city at this hour.',tags:'#streetstyle #citylife #softlife #aesthetic'},
- stories:[
-   {cap:'new post ↑',id:'14l3wuHEY5FfHWvgmOpRrlmoV-ExWFqh7'},
-   {cap:'felt like it',id:'1ZxkXfTQndVf7mJgF-0K9uLkYqzdSaP5C'},
-   {cap:'no reason, just this',id:'10vv1VDfc544lyVueAvTZHprSWkXqS5-d'}]},
-
-{loc:'🛋️ livingroom',
- feed:{id:'1Q711yyuv7__jS_VwdesODo6fLgHLGmLu',time:'18:00',
-   cap:'nowhere to be, love that.',tags:'#softlife #quietluxury #homesweethome #35mm'},
- stories:[
-   {cap:'new post ↑',id:'1Q711yyuv7__jS_VwdesODo6fLgHLGmLu'},
-   {cap:'quick one',id:'16z90sB-nGNC-y_a2OPJm6aD38JrPjGMS'},
-   {cap:'the vibe rn',id:'1XWw-yeI-UX9r1D9RYAJDUUMM8NMWDePV'}]},
-
-{loc:'🏨 hotel',
- feed:{id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti',time:'17:00',
-   cap:'this bed isn\'t mine but i\'m attached.',tags:'#hotel #quietluxury #nightvibes #softlife'},
- stories:[
-   {cap:'new post ↑',id:'1TyMb1WTh7ID00Jy0wUl3z1Bq7B-yYuti'},
-   {cap:'the vibe rn',id:'1GSVSZaHmwKD3G7nIguA7u3JzK0c_Odlg'},
-   {cap:'quick one',id:'1PsBCMmF8UVVRMmaykVY2AZIVytuPdMgN'}],
- reel:{id:'1Vl7CV6VHJutZUx-kpqt0wzTGdMRuhiGV',name:'zara_hotel_blackbralette_dance_17_audio',overlay:'paris did something to her or she did something to paris',src:'https://www.instagram.com/reel/DZf_Pm1jm01/'}},
-
-{loc:'✨ glam',
- feed:{id:'1ASLj9L2l_CMH1uX2YfJMDTWkpwK_5nXT',time:'18:00',
-   cap:'the mirror said yes.',tags:'#ootd #quietluxury #nightout #editorial'},
- stories:[
-   {cap:'new post ↑',id:'1ASLj9L2l_CMH1uX2YfJMDTWkpwK_5nXT'},
-   {cap:'the vibe rn',id:'1FGMu2XzF05NfN919jSe3OOj_zw2zsKBu'},
-   {cap:'couldn\'t not share this',id:'1-2syz9r6YqI5DAnkGZ3MlzjGc3mUWW21'}],
- reel:{id:'1cpfjM2muTBgt_tzlMbDq4oTlJ1Y9ZgSc',name:'zara_nightclub_slipdress_turn_22_audio',overlay:'your face said everything your mouth didn\'t. 🙃',src:'https://www.instagram.com/reel/DZg2_eHN8PK/'}},
-
-{loc:'✨ zara',
- feed:{id:'1zOSlvTasrjCf-4zuv8SpF6gpoFMydgbr',time:'22:00',
+{loc:'✨ zara',threads_cap:'soft on here. less soft elsewhere.',x_cap:'soft on the feed. less soft on fanvue. 🔒',
+ feed:{id:'1jXzMNzqGnyud8Hz2zaOas8y5ABqEGJGL',time:'12:00',
    cap:'she exists, that\'s the post.',tags:'#softlife #quietluxury #aesthetic #soft'},
  stories:[
-   {cap:'new post ↑',id:'1zOSlvTasrjCf-4zuv8SpF6gpoFMydgbr'},
-   {cap:'later 🤍',id:'1WBf7I4uVtHuqIr_hyeD2wo6icEBAlLGF'},
-   {cap:'felt like it',id:'16BMvM8DUPGUz4s5tNuubXU7W7zJoG04s'}],
- reel:{id:'1VethzrmkBaQoTad2ulSa3JAGzXsgp3zt',name:'zara_stadium_cardigan_sunglasses_27_audio',overlay:'didn\'t mean to stop your scroll. actually, i did. 😏',src:'https://www.instagram.com/reel/DYUi_rNClXw/'}},
+   {cap:'new post ↑',id:'1jXzMNzqGnyud8Hz2zaOas8y5ABqEGJGL'},
+   {cap:'random but here',id:'1aW6dTb5grRrgdodV2JoXCQY63m7CY66e'},
+   {cap:'saving this one 🤍',id:'1RTgjk2XTeMU71Wxq0N5E8T1EWTsme-Yz'}],
+ reel:{id:'1D0BeEAMIK-YS4ErcUta02Fx2nw1yrmQa',name:'zara_musicroom_creamsweater_guitar_25_audio',overlay:'watched this 3 times. for the reel, obviously 😏',song:'Thinking about you',src:'https://www.instagram.com/reel/DWyytBzggjW/'}},
 
-{loc:'🏖️ beach',
- feed:{id:'1wbyb4QgmyPHg9VUNNaWJtx5c-21GgP4G',time:'17:00',
-   cap:'came for the water, stayed for the quiet.',tags:'#saltwater #summer #beachvibes #softlife'},
- stories:[
-   {cap:'new post ↑',id:'1wbyb4QgmyPHg9VUNNaWJtx5c-21GgP4G'},
-   {cap:'random but here',id:'10J2_lAf3tyBUjwOahkTm9jrpDmxW9f3J'},
-   {cap:'saving this one 🤍',id:'1zV2bBcpNwIABxfVnEhV6eOfAEzAoqakr'}]},
-
-{loc:'🏖️ beach',
- feed:{id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B',time:'14:00',
-   cap:'came for the water, stayed for the quiet.',tags:'#saltwater #summer #beachvibes #softlife'},
- stories:[
-   {cap:'new post ↑',id:'1WV1z7TrNTqNKlUvk7ScjQLPTRCtbtn7B'},
-   {cap:'later 🤍',id:'1oDbBkjNIzLW8f27mYiQzGuWJHPWcKgFJ'},
-   {cap:'quick one',id:'17Sq_3sCX9aCDEDedGs1kqArgKWn5A88r'}],
- reel:{id:'1A0wr_oNJ7zpNGeCLki9xdd0er-maF5eh',name:'zara_beach_yellowtop_greenbikini_12_audio',overlay:'that smile at 0:04 should\'ve come with a warning',src:'https://www.instagram.com/reel/DZifaVCgSec/'}},
-
-{loc:'🌿 outdoor',
- feed:{id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa',time:'11:00',
-   cap:'green everywhere, mind quiet.',tags:'#slowliving #greenery #softlife #wander'},
+{loc:'🌿 outdoor',threads_cap:'the walk home looked different. 🔒',x_cap:'good light. better secrets. one of them has a link. 🔒',
+ feed:{id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa',time:'18:00',
+   cap:'found this spot 🌿',tags:'#slowliving #greenery #softlife #wander'},
  stories:[
    {cap:'new post ↑',id:'1HanJdc3KBVwYmMUxeCbom4HfyTQk5TDa'},
-   {cap:'random but here',id:'1GmKt37tQXenG5vNWqmSlX_sAUtVZhzzR'},
-   {cap:'no reason, just this',id:'1fXqiotApfmzIwQPo6XhxyAGAYEUp505k'}],
- reel:{id:'1ZRa0KFr0Lrc0PQag34ISOwhfQx4ssLTs',name:'zara_jungle_redbikini_tree_13_audio',overlay:'the way you found this is already suspicious. 👀',src:'https://www.instagram.com/reel/DZibMLXCDi-/'}},
+   {cap:'couldn\'t not share this',id:'1RIXbFhJbnUUvQkQN6W3nG73KwViydx-h'},
+   {cap:'felt like it',id:'13yT_KXJVn7nxY_dZSVKFrxbIVx-9u5MF'}],
+ reel:{id:'1ZRa0KFr0Lrc0PQag34ISOwhfQx4ssLTs',name:'zara_jungle_redbikini_tree_13_audio',overlay:'the algorithm knew what it was doing',src:'https://www.instagram.com/reel/DZibMLXCDi-/'}},
 
-{loc:'🚶 street',
- feed:{id:'1Djs_bOXS-9FTQ4ECCfQ5vbvVIaMr9BE6',time:'17:00',
-   cap:'walked it off.',tags:'#citywalk #ootd #slowliving #soft'},
+{loc:'🎮 cozy',threads_cap:'lazy has an unedited version.',x_cap:'what cozy actually looks like needs a subscription. link in bio.',
+ feed:{id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49',time:'11:00',
+   cap:'warm and unbothered 🤍',tags:'#softlife #quietluxury #cozy #homesweethome'},
  stories:[
-   {cap:'new post ↑',id:'1Djs_bOXS-9FTQ4ECCfQ5vbvVIaMr9BE6'},
-   {cap:'random but here',id:'1p_xt4bgJ_79jcXVarbKh9jFkZ-MZzv30'},
-   {cap:'felt like it',id:'1meDkIYRT08ZKZmpZm8tJ9Od5beTEI_XS'}],
- reel:{id:'1bGA0FmqylhYO-YbLp_go8swu2Cz8-GyR',name:'zara_street_blackset_walk_19_audio',overlay:'that\'s called an unfair advantage 🔥',src:'https://www.instagram.com/reel/DVB3XdCEfDu/'}}
+   {cap:'new post ↑',id:'1TCerhpbXphMJgUyDswC-Gmgj6kRoXg49'},
+   {cap:'couldn\'t not share this',id:'1OpAUQbAfVEdqss9CfjejCjASbaL-0xr7'},
+   {cap:'saving this one 🤍',id:'1zOvGlrn1gM9atAUveRWLShngPsDplI2_'}],
+ reel:{id:'1tDZ5ozabVVp0ozXF0PmkrfT9U1GUCspi',name:'zara_gamerroom_whitecami_cozy_11_audio',overlay:'someone out there is going to think they got lucky. they did.',src:'https://www.instagram.com/reel/DZisfGnCM6Z/'}},
+
+{loc:'✨ zara',threads_cap:'soft on here. less soft elsewhere.',x_cap:'daily content. some of it goes places instagram doesn\'t allow.',
+ feed:{id:'1ZNRx_A9Eq0dW5WxzSC1DN17Y3xbR0LjM',time:'22:00',
+   cap:'you had to be there 🤍',tags:'#softlife #quietluxury #aesthetic #soft'},
+ stories:[
+   {cap:'new post ↑',id:'1ZNRx_A9Eq0dW5WxzSC1DN17Y3xbR0LjM'},
+   {cap:'this hour hits different',id:'1e6Lv3lHCryEi9dqIeYjLHxs9MzJl2F3u'},
+   {cap:'later 🤍',id:'1mGsI7huyHXwhDjMxC51Bgi-duQTB1kfp'}]},
+
+{loc:'🚶 street',threads_cap:'you caught me between places. the rest isn\'t mapped.',x_cap:'good light. better secrets. one of them has a link. 🔒',
+ feed:{id:'1D4gCX13DH9canUgIxMMog8aD0ge1RP73',time:'15:00',
+   cap:'wandered, no destination. 🚶',tags:'#citywalk #ootd #slowliving #soft'},
+ stories:[
+   {cap:'new post ↑',id:'1D4gCX13DH9canUgIxMMog8aD0ge1RP73'},
+   {cap:'later 🤍',id:'11cgucyCU1X8ynZIeQMX2vCMokOHXT1hp'},
+   {cap:'the light right now',id:'15i0amS8suqZrltU7-e6FhvhOzxwqyMsc'}]},
+
+{loc:'🏠 apartment',threads_cap:'the version of me at home is a different story.',x_cap:'what i actually wear at home isn\'t instagram-approved. link in bio.',
+ feed:{id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes',time:'16:00',
+   cap:'not going anywhere tonight.',tags:'#softlife #quietluxury #homesweethome #35mm'},
+ stories:[
+   {cap:'new post ↑',id:'1tqovXTGG3uAO85pzNXaxKs3fL_z0hOes'},
+   {cap:'later 🤍',id:'1dmxLD_D_1uBOBbxlt7892FUi8n0v1PwQ'},
+   {cap:'no reason, just this',id:'1e08mffbZioTpEY75d8YobYmkqJeDhvWx'}],
+ reel:{id:'1vRrIndPmllkXerPHUu6Gefmdec1Ybbaq',name:'zara_apartment_pinkset_doorway_05_audio',overlay:'my love language is cooking for you at midnight or not talking to you at all. 🍳',src:'https://www.instagram.com/reel/DZnazrbDTVC/'}},
+
+{loc:'🏨 hotel',threads_cap:'checked in. the feed only gets the lobby version.',x_cap:'checked in. instagram only gets the lobby.',
+ feed:{id:'1mGsI7huyHXwhDjMxC51Bgi-duQTB1kfp',time:'12:00',
+   cap:'hotel rooms hit different after midnight. 🖤',tags:'#hotel #quietluxury #nightvibes #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1mGsI7huyHXwhDjMxC51Bgi-duQTB1kfp'},
+   {cap:'this hour hits different',id:'1ExUl40TxUJr_EpjwBWgjtJVgh9AIdBdN'},
+   {cap:'the light right now',id:'1idYLkIAVmG4ZzlqufG61ibJkUeS05kOO'}]},
+
+{loc:'🛏️ bedroom',threads_cap:'some of these never leave the bedroom. most don\'t.',x_cap:'this is the safe-for-here edit. the other one needs a subscription.',
+ feed:{id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl',time:'17:00',
+   cap:'not sorry about this post.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
+ stories:[
+   {cap:'new post ↑',id:'1qKOkFf1pfQmgSI5zzQk3kXlUrNNJ5YBl'},
+   {cap:'couldn\'t not share this',id:'1iaYw4Tl9NKi9LqRJB2dBwa3zXZq1HDJY'},
+   {cap:'quick one',id:'1qsKQ9Qa4m-7WAueiy88RIvtKGJL9pqyA'}],
+ reel:{id:'1bJg2N9K9J4QzmPS_olREGm_A_qfSI7Ta',name:'zara_bedroom_whitelace_selfie_08_audio',overlay:'this wasn\'t an accident. neither was your reaction. 😏',src:'https://www.instagram.com/reel/DZlABBfDhEp/'}},
+
+{loc:'🛏️ bedroom',threads_cap:'mornings like this have a longer version.',x_cap:'this is the safe-for-here edit. the other one needs a subscription.',
+ feed:{id:'1aysRpsfHG-aQp1yhiwiicvGrtVj2Ymr0',time:'21:00',
+   cap:'slow morning, slower thoughts.',tags:'#softlife #quietluxury #bedroom #nightvibes'},
+ stories:[
+   {cap:'new post ↑',id:'1aysRpsfHG-aQp1yhiwiicvGrtVj2Ymr0'},
+   {cap:'later 🤍',id:'1R1OqIJCS6yoLWZ7HyTt3Lhn9w5S2Sy7k'},
+   {cap:'quick one',id:'1102cbtz5QBhA6iQz1oS91XFrJNh8BvnF'}],
+ reel:{id:'1JmQXw36jKj4R_N2-uTYkbTzmBniAgn1_',name:'zara_patio_corset_hairflip_20_audio',overlay:'the caption is innocent. the vibe is not. 😈',src:'https://www.instagram.com/reel/DVnwtVKjpOO/'}},
+
+{loc:'✨ zara',threads_cap:'not everything makes it to the feed. 🔒',x_cap:'there\'s a version of me that doesn\'t make it to instagram. link in bio.',
+ feed:{id:'1ZtkoSM9poPlZQqO1sV6qTKjdVGf3UPu8',time:'18:00',
+   cap:'she exists, that\'s the post.',tags:'#softlife #quietluxury #aesthetic #soft'},
+ stories:[
+   {cap:'new post ↑',id:'1ZtkoSM9poPlZQqO1sV6qTKjdVGf3UPu8'},
+   {cap:'quick one',id:'1-W73vg-IgWUQjZNcIQbm5JePpGWELmjZ'},
+   {cap:'later 🤍',id:'1lwS94eMnf4mCKj17L4lJbCniTMfXNoHG'}]},
+
+{loc:'🚶 street',threads_cap:'this is the part of the day i let you see.',x_cap:'good light. better secrets. one of them has a link. 🔒',
+ feed:{id:'14XA7TGMbcSgh5YTyqNtvxfMueZvldNFb',time:'18:00',
+   cap:'the streets at golden hour 🌇',tags:'#citywalk #ootd #slowliving #soft'},
+ stories:[
+   {cap:'new post ↑',id:'14XA7TGMbcSgh5YTyqNtvxfMueZvldNFb'},
+   {cap:'the vibe rn',id:'1i80T9wS7qGaMgsUf3cH4w7U9uSoiF6yV'},
+   {cap:'the light right now',id:'1ykOsF8qPN3SOHg9RaCSoZqj5lE8bUyz2'}],
+ reel:{id:'1o9rEZe-FvZMnUKvvCFEGba_GlHAafSms',name:'zara_street_tankskirt_pose_23_audio',overlay:'camera likes her a little too much',src:'https://www.instagram.com/reel/DZx3Wj6s04t/'}},
+
+{loc:'🍳 kitchen',threads_cap:'the apron\'s just for the feed.',x_cap:'midnight in my kitchen looks different where the rules are looser.',
+ feed:{id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL',time:'12:00',
+   cap:'mornings in the kitchen, always. ☕',tags:'#slowliving #coffee #cozy #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1aVXyQs_mArhwP_N8ko1gkY9-IMN1jHhL'},
+   {cap:'quick one',id:'1RmVbWOddF3eIS_iDYIklMYB4tQZkLAty'},
+   {cap:'later 🤍',id:'1U-6Q4EGG0m4KKpgWUkll54KO58j1yG_-'}],
+ reel:{id:'1ToEDmCFWcYKcGQruAN1bGIsAQ2NKDdEd',name:'zara_kitchen_whitebandeau_selfie_15_audio',overlay:'not hard to find. just hard to forget. 🤍',src:'https://www.instagram.com/reel/DZgOkTiky0e/'}},
+
+{loc:'✨ glam',threads_cap:'this is the before. the after lives elsewhere.',x_cap:'the dress came off camera eventually. link in bio.',
+ feed:{id:'1-1LvChru-qkZmXewLbV3o96NrlsRWFbP',time:'18:00',
+   cap:'the mirror said yes.',tags:'#ootd #quietluxury #nightout #editorial'},
+ stories:[
+   {cap:'new post ↑',id:'1-1LvChru-qkZmXewLbV3o96NrlsRWFbP'},
+   {cap:'the vibe rn',id:'1CPBC4EVFkWoOod6UnXY23b5pmNTsyEwX'},
+   {cap:'the light right now',id:'1UP2HjR_G92sG6xg-W5ZYYIVCu2AJeghw'}],
+ reel:{id:'1LxMdg9vWiZQR3ztQ2qUt6G8SX-aUWidt',name:'zara_redcarpet_blackgown_glam_28_audio',overlay:'i already know your type. the comment section will confirm it. 😇',src:'https://www.instagram.com/reel/DZARRBeifPA/'}},
+
+{loc:'✨ zara',threads_cap:'the things i don\'t post here go somewhere else.',x_cap:'you found the public version. there\'s another one. 😌',
+ feed:{id:'1YTwvvBsBtZMKUUcApbb-IW2PLWsoy8At',time:'10:00',
+   cap:'this one felt right. 🤍',tags:'#softlife #quietluxury #aesthetic #soft'},
+ stories:[
+   {cap:'new post ↑',id:'1YTwvvBsBtZMKUUcApbb-IW2PLWsoy8At'},
+   {cap:'random but here',id:'1x9Hwbcc8g7FdUzloeuzllaLNzd2sYJj4'},
+   {cap:'quick one',id:'1TwfImlEPPo-gQseXCNgI6AuKeK6F_yjf'}]},
+
+{loc:'🍳 kitchen',threads_cap:'what i make at midnight isn\'t always dinner. 😏',x_cap:'midnight in my kitchen looks different where the rules are looser.',
+ feed:{id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE',time:'18:00',
+   cap:'breakfast for one, no complaints.',tags:'#morningvibes #quietluxury #softlife #home'},
+ stories:[
+   {cap:'new post ↑',id:'1oJt8JR8cWz-uNT9aWgWAFQBjjPbDbVSE'},
+   {cap:'this hour hits different',id:'1IRoeWdzNe3oQm2aAvy1LPkD_kVLm1Sov'},
+   {cap:'later 🤍',id:'1uCPj_D7zzmL_vUqDs7SdvM0uPY7STUs0'}],
+ reel:{id:'1lYs1Zcdz9QwYQTLkxAlzkT_Qr36YwUsh',name:'zara_kitchen_bluesweater_overshoulder_18_audio',overlay:'the right person won\'t need convincing. 🤍',src:'https://www.instagram.com/reel/DZf5op_ETMj/'}},
+
+{loc:'🏖️ beach',threads_cap:'this is the version with sunscreen on.',x_cap:'what happened after this photo isn\'t allowed here. link in bio.',
+ feed:{id:'1-W73vg-IgWUQjZNcIQbm5JePpGWELmjZ',time:'14:00',
+   cap:'salt water fixes most things.',tags:'#saltwater #summer #beachvibes #softlife'},
+ stories:[
+   {cap:'new post ↑',id:'1-W73vg-IgWUQjZNcIQbm5JePpGWELmjZ'},
+   {cap:'saving this one 🤍',id:'1f5Iatz0kCx5F9oHE8UcRW49kCnbWlssU'},
+   {cap:'felt like it',id:'1zsHpllrFTMd283BpuhpOuR6VUiB1-D4I'}]}
 ];
 
 function getPosted(){try{return JSON.parse(localStorage.getItem('dp4_posted')||'{}')}catch(e){return{}}}
@@ -553,8 +560,35 @@ function buildDay(d,dayNum,compact){
       if(d.reel.src) html+='<a class="btn btn-gold" href="'+d.reel.src+'" target="_blank">🎬 Use audio — open original reel ↗</a>';
       html+='</div>';
     }
+    html+=socialCard(d);
   }
   return html;
+}
+
+function socialCard(d){
+  if(!d||(!d.threads_cap&&!d.x_cap))return'';
+  var h='<div class="card"><div class="section-label">Threads & X</div>';
+  if(d.threads_cap){
+    h+='<div class="social-platform">Threads <span class="social-note">🔒 teasing tone</span></div>';
+    h+='<div class="caption-box">'+d.threads_cap+'</div>';
+    h+='<button class="btn btn-gold" onclick="copy(\''+escQ(d.threads_cap)+'\',\'Threads copied\')">Copy for Threads</button>';
+  }
+  if(d.threads_cap&&d.x_cap)h+='<div class="social-divider"></div>';
+  if(d.x_cap){
+    var over=d.x_cap.length>220;
+    h+='<div class="social-platform">X / Twitter</div>';
+    h+='<div class="caption-box">'+d.x_cap+'</div>';
+    h+='<div class="char-counter'+(over?' over':'')+'">'+d.x_cap.length+' / 220</div>';
+    h+='<button class="btn btn-gold" onclick="copy(\''+escQ(d.x_cap)+'\',\'X copied\')">Copy for X</button>';
+  }
+  return h+'</div>';
+}
+function renderSocial(){
+  var dayNum=getActiveDay();var d=DAYS[dayNum];
+  var html='<div class="week-pill">Day '+dayNum+' of '+TOTAL+'</div><span class="loc-badge">'+(d?d.loc:'')+'</span>';
+  html+='<div style="clear:both;margin-top:8px"></div>';
+  html+=socialCard(d)||'<div style="text-align:center;padding:40px;color:var(--muted2);font-style:italic">No social captions for this day</div>';
+  document.getElementById('social-content').innerHTML=html;
 }
 
 function renderToday(){
@@ -614,6 +648,8 @@ function renderReels(){
     if(d.reel.song)html+='<div style="font-size:10px;color:var(--gold);font-weight:600;margin-bottom:6px">🎵 '+d.reel.song+'</div>';
     html+='<div style="display:flex;gap:6px">';
     html+='<button class="reel-copy" onclick="copy(\''+escQ(d.reel.overlay)+'\',\'Copied\')">Copy</button>';
+    if(d.threads_cap)html+='<button class="reel-copy" title="Copy Threads caption" onclick="copy(\''+escQ(d.threads_cap)+'\',\'Threads copied\')">T</button>';
+    if(d.x_cap)html+='<button class="reel-copy" title="Copy X caption" onclick="copy(\''+escQ(d.x_cap)+'\',\'X copied\')">X</button>';
     html+='<a href="'+driveUrl(d.reel.id)+'" target="_blank" style="background:var(--blue-light);color:var(--blue);border:1px solid var(--blue-border);padding:5px 10px;border-radius:6px;font-size:10px;font-weight:600;text-decoration:none">Drive ↗</a>';
     html+='</div></div></div>';
   });
@@ -635,6 +671,7 @@ function showPanel(name,btn){
   if(name==='calendar')renderCalendar();
   if(name==='reels')renderReels();
   if(name==='browse')renderBrowse();
+  if(name==='social')renderSocial();
 }
 renderToday();
 </script>
